@@ -1,0 +1,9 @@
+package com.example.venyoo
+
+object Constants {
+    const val FOURSQUARE_CLIENT_ID = "XCKC0ISLZW4UEE0VWQPB4WZL3RHZKP2PFX0GN1DDPAG1YHX2"
+    const val FOURSQUARE_CLIENT_SECRET = "T5BRX5XRS1FCWSLETA5FTZHLY2ASJHFWW2I5AFNOLSHAQC0N"
+
+    const val BASE_URL = "https://api.foursquare.com"
+
+}

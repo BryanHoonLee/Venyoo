@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Venyoo</string>
+
+    <string name="search_venue">Search Venue...</string>
+</resources>
