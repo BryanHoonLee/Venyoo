@@ -6,11 +6,13 @@ import javax.inject.Inject
 
 class UrlProvider @Inject constructor(){
 
-    fun fourSquareBaseUrl(): String{
+    fun fourSquareBaseUrl(
+    ): String{
         return Constants.FOURSQUARE_BASE_URL
     }
 
-    fun ticketMasterBaseUrl(): String{
+    fun ticketMasterBaseUrl(
+    ): String{
         return Constants.TICKETMASTER_BASE_URL
     }
 }

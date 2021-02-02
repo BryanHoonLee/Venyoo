@@ -1,4 +1,4 @@
-package com.example.venyoo.screens.common
+package com.example.venyoo.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.venyoo.R
 
-class SearchVenueFragment: Fragment() {
+class SearchVenueFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

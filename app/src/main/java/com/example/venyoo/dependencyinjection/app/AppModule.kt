@@ -9,55 +9,75 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class AppModule(){
-
-    @AppScope
-    @Provides
-    @FourSquareOkHttpClient
-    fun okHttpClientFourSquare(@FourSquareOkHttpClient okHttpClient: OkHttpClient, requestInterceptor: FourSquareRequestInterceptor): OkHttpClient {
-        return okHttpClient.newBuilder()
-                .addInterceptor(requestInterceptor)
-                .build()
-    }
+class AppModule() {
 
     @AppScope
     @Provides
     @FourSquareRetrofit
-    fun fourSquareRetrofit(okHttpClient: OkHttpClient, urlProvider: UrlProvider, gsonConverterFactory: GsonConverterFactory): Retrofit{
+    fun fourSquareRetrofit(
+        @FourSquareOkHttpClient okHttpClient: OkHttpClient,
+        urlProvider: UrlProvider,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(urlProvider.fourSquareBaseUrl())
-                .addConverterFactory(gsonConverterFactory)
-                .build()
+            .client(okHttpClient)
+            .baseUrl(urlProvider.fourSquareBaseUrl())
+            .addConverterFactory(gsonConverterFactory)
+            .build()
     }
+
     @AppScope
     @Provides
-    fun fourSquareApi(@FourSquareRetrofit retrofit: Retrofit): FourSquareApi{
-        return retrofit.create(FourSquareApi::class.java)
-    }
-    @AppScope
-    @Provides
-    @TicketMasterOkHttpClient
-    fun ticketMasterOkHttpClient(@TicketMasterOkHttpClient okHttpClient: OkHttpClient, requestInterceptor: TicketMasterRequestInterceptor): OkHttpClient {
+    @FourSquareOkHttpClient
+    fun okHttpClientFourSquare(
+            @FourSquareOkHttpClient okHttpClient: OkHttpClient,
+            requestInterceptor: FourSquareRequestInterceptor
+    ): OkHttpClient {
         return okHttpClient.newBuilder()
                 .addInterceptor(requestInterceptor)
                 .build()
+    }
+
+    @AppScope
+    @Provides
+    fun fourSquareApi(
+            @FourSquareRetrofit retrofit: Retrofit
+    ): FourSquareApi {
+        return retrofit.create(FourSquareApi::class.java)
     }
 
     @AppScope
     @Provides
     @TicketMasterRetrofit
-    fun ticketMasterRetrofit(okHttpClient: OkHttpClient, urlProvider: UrlProvider, gsonConverterFactory: GsonConverterFactory): Retrofit{
+    fun ticketMasterRetrofit(
+        @TicketMasterOkHttpClient okHttpClient: OkHttpClient,
+        urlProvider: UrlProvider,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(urlProvider.ticketMasterBaseUrl())
-                .addConverterFactory(gsonConverterFactory)
+            .client(okHttpClient)
+            .baseUrl(urlProvider.ticketMasterBaseUrl())
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @AppScope
+    @Provides
+    @TicketMasterOkHttpClient
+    fun ticketMasterOkHttpClient(
+            @TicketMasterOkHttpClient okHttpClient: OkHttpClient,
+            requestInterceptor: TicketMasterRequestInterceptor
+    ): OkHttpClient {
+        return okHttpClient.newBuilder()
+                .addInterceptor(requestInterceptor)
                 .build()
     }
 
     @AppScope
     @Provides
-    fun ticketMasterApi(@TicketMasterRetrofit retrofit: Retrofit): TicketMasterApi{
+    fun ticketMasterApi(
+            @TicketMasterRetrofit retrofit: Retrofit
+    ): TicketMasterApi {
         return retrofit.create(TicketMasterApi::class.java)
     }
 
@@ -85,7 +105,8 @@ class AppModule(){
     @AppScope
     @Provides
     @BaseOkHttpClient
-    fun okHttpClientBase(): OkHttpClient {
+    fun okHttpClientBase(
+    ): OkHttpClient {
         return OkHttpClient.Builder()
                 .build()
     }

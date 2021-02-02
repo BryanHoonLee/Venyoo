@@ -1,9 +1,7 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -71,9 +69,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-rc01'
 
     // Dagger 2
+    implementation "com.google.dagger:dagger:$dagger2"
+    kapt "com.google.dagger:dagger-compiler:$dagger2"
     implementation "com.google.dagger:dagger-android:$dagger2"
     implementation "com.google.dagger:dagger-android-support:$dagger2"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2"
+
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

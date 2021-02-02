@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_search_venue"
-        android:name="com.example.venyoo.screens.common.SearchVenueFragment"
+        android:name="com.example.venyoo.screens.SearchVenueFragment"
         android:label="Search Venue"
         tools:layout="@layout/fragment_search_venue">
 

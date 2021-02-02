@@ -6,7 +6,10 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class TicketMasterRequestInterceptor @Inject constructor(): Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(
+            chain: Interceptor.Chain
+    ): Response {
+
         val url = chain.request()
                 .url()
                 .newBuilder()
@@ -18,6 +21,6 @@ class TicketMasterRequestInterceptor @Inject constructor(): Interceptor {
                 .url(url)
                 .build()
 
-        return chain.proceed(request    )
+        return chain.proceed(request)
     }
 }
