@@ -1,5 +1,6 @@
 package com.example.venyoo.dependencyinjection.app
 
+import android.app.Application
 import com.example.venyoo.dependencyinjection.qualifiers.*
 import com.example.venyoo.networking.*
 import dagger.Module
@@ -9,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class AppModule() {
+class AppModule(private val application: Application) {
 
     @AppScope
     @Provides
@@ -30,8 +31,8 @@ class AppModule() {
     @Provides
     @FourSquareOkHttpClient
     fun okHttpClientFourSquare(
-            @FourSquareOkHttpClient okHttpClient: OkHttpClient,
-            requestInterceptor: FourSquareRequestInterceptor
+        @BaseOkHttpClient okHttpClient: OkHttpClient,
+        requestInterceptor: FourSquareRequestInterceptor
     ): OkHttpClient {
         return okHttpClient.newBuilder()
                 .addInterceptor(requestInterceptor)
@@ -65,8 +66,8 @@ class AppModule() {
     @Provides
     @TicketMasterOkHttpClient
     fun ticketMasterOkHttpClient(
-            @TicketMasterOkHttpClient okHttpClient: OkHttpClient,
-            requestInterceptor: TicketMasterRequestInterceptor
+        @BaseOkHttpClient okHttpClient: OkHttpClient,
+        requestInterceptor: TicketMasterRequestInterceptor
     ): OkHttpClient {
         return okHttpClient.newBuilder()
                 .addInterceptor(requestInterceptor)
@@ -110,4 +111,7 @@ class AppModule() {
         return OkHttpClient.Builder()
                 .build()
     }
+
+    @Provides
+    fun application() = application
 }

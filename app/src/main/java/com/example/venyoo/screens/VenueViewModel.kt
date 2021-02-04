@@ -1,14 +1,14 @@
 package com.example.venyoo.screens
 
 import androidx.lifecycle.*
+import com.example.venyoo.screens.common.viewmodel.SavedStateViewModel
 import com.example.venyoo.venues.Venue
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class VenueViewModel @Inject constructor(
-        private val savedStateHandle: SavedStateHandle,
         private val venueRepository: VenueRepository
-): ViewModel() {
+): SavedStateViewModel() {
 
     val venues: LiveData<List<Venue>> get() = savedStateHandle.getLiveData("venues")
 
