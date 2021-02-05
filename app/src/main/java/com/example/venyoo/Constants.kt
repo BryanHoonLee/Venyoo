@@ -14,7 +14,7 @@ object Constants {
     /*****************************
      * TICKETMASTER CONSTANTS
      *****************************/
-    const val TICKETMASTER_BASE_URL = "https://app.ticketmaster.com"
+    const val TICKETMASTER_BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
     const val TICKETMASTER_CLIENT_ID_PARAMETER = "apikey"
 
     const val TICKETMASTER_CLIENT_ID = "4zFQzMTW57jLb8nfWCbJ4rlIyX5NnBAA"

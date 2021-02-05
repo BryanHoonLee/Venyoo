@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Venue(
-        val name: String
+data class Embedded (
+        val venues: List<Venue>
         ): Parcelable
