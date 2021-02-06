@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Embedded (
-        val venues: List<Venue>
+        val venues: List<VenueResponse>
         ): Parcelable
