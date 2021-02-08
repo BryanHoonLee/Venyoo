@@ -112,6 +112,7 @@ class AppModule(private val application: Application) {
                 .build()
     }
 
+
     @Provides
     fun application() = application
 }
