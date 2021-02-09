@@ -19,15 +19,20 @@ import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class SearchVenueFragment : BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var locationService: LocationService
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var locationService: LocationService
     private lateinit var requestMultiplePermissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val venueViewModel: VenueViewModel by viewModels{ viewModelFactory}
+    private val venueViewModel: VenueViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: FragmentSearchVenueBinding
 
@@ -39,9 +44,9 @@ class SearchVenueFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchVenueBinding.inflate(layoutInflater)
         val view = binding.root
@@ -52,13 +57,13 @@ class SearchVenueFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        venueViewModel.venues.observe(viewLifecycleOwner, Observer {
-            venue -> Toast.makeText(requireContext(), "${venue.size}", Toast.LENGTH_SHORT).show()
+        venueViewModel.venues.observe(viewLifecycleOwner, Observer { venue ->
+            Toast.makeText(requireContext(), "${venue.size}", Toast.LENGTH_SHORT).show()
         })
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query != null){
+                if (query != null) {
                     venueViewModel.fetchVenue(query)
                 }
                 return false
@@ -70,12 +75,18 @@ class SearchVenueFragment : BaseFragment() {
         })
 
         binding.discoverButton.setOnClickListener {
-            if(locationService.checkLocationPermission()){
-                val result = locationService.getLatitudeLongitude()
-                if(result is LocationService.Result.Success) {
-
+            if (locationService.checkLocationPermission()) {
+                coroutineScope.launch{
+                    if(locationService.checkLocationSettings()){
+                        Toast.makeText(requireContext(), "WORKED", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }else{
+
+//                val result = locationService.getLatitudeLongitude()
+//                if (result is LocationService.Result.Success) {
+//
+//                }
+            } else {
                 requestMultiplePermissionsLauncher.launch(
                         arrayOf(
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -86,18 +97,16 @@ class SearchVenueFragment : BaseFragment() {
         }
     }
 
-
     /**
      * https://developer.android.com/training/permissions/requesting
      */
-    private fun initPermissionLauncher(){
-        requestMultiplePermissionsLauncher = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissions ->
-            if(permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true  && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true){
+    private fun initPermissionLauncher() {
+        requestMultiplePermissionsLauncher = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
                 //Do something here if permission granted for COARSE and FINE location
             }
         }
     }
-
 
 
 }

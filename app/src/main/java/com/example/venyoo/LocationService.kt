@@ -14,6 +14,8 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class LocationService @Inject constructor(private val activity: AppCompatActivity): Service() {
 
@@ -36,7 +38,7 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
     /**
      * https://developer.android.com/training/location/change-location-settings
      */
-    fun checkLocationSettings(){
+    suspend fun checkLocationSettings(): Boolean{
         val locationRequest = LocationRequest.create()?.apply {
             interval = 100000
             fastestInterval = 50000
@@ -50,23 +52,26 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
         val client: SettingsClient = LocationServices.getSettingsClient(activity)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder?.build())
 
-        task.addOnSuccessListener { locationSettingsResponse ->
-            // All location settings are satisfied. The client can initialize
-            // location requests here.
-            // ...
-        }
+        return suspendCoroutine<Boolean> { cont ->
+            task.addOnSuccessListener { locationSettingsResponse ->
+                // All location settings are satisfied. The client can initialize
+                // location requests here.
+                // ...
+                cont.resume(true)
+            }
 
-        task.addOnFailureListener { exception ->
-            if (exception is ResolvableApiException){
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    exception.startResolutionForResult(activity,
-                        9)
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    // Ignore the error.
+            task.addOnFailureListener { exception ->
+                if (exception is ResolvableApiException) {
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        exception.startResolutionForResult(activity, 9)
+                    } catch (sendEx: IntentSender.SendIntentException) {
+                        // Ignore the error.
+
+                    }
                 }
             }
         }
