@@ -16,9 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Venyoo">
 
-        <service android:name=".LocationService"
-            android:foregroundServiceType="location"
-            tools:ignore="Instantiatable" />
+
 
         <activity android:name=".screens.MainActivity"
             android:windowSoftInputMode="adjustPan">

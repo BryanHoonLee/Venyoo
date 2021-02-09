@@ -58,7 +58,7 @@ class SearchVenueFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueViewModel.venues.observe(viewLifecycleOwner, Observer { venue ->
-            Toast.makeText(requireContext(), "${venue.size}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "${venue[0].name}, ${venue[0].city}, ${venue[0].address}, ${venue[0].city}, ${venue[0].description}", Toast.LENGTH_LONG).show()
         })
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -78,15 +78,15 @@ class SearchVenueFragment : BaseFragment() {
             if (locationService.checkLocationPermission()) {
                 coroutineScope.launch{
                     if(locationService.checkLocationSettings()){
-                        Toast.makeText(requireContext(), "WORKED", Toast.LENGTH_SHORT).show()
+                        val result = locationService.getLatitudeLongitude()
+                        if(result is LocationService.Result.Success){
+                            val latLong = "${result.latitude},${result.longitude}"
+                            venueViewModel.fetchVenueByCoordinates(latLong)
+                        }
                     }
                 }
-
-//                val result = locationService.getLatitudeLongitude()
-//                if (result is LocationService.Result.Success) {
-//
-//                }
-            } else {
+            }
+            else {
                 requestMultiplePermissionsLauncher.launch(
                         arrayOf(
                                 Manifest.permission.ACCESS_COARSE_LOCATION,

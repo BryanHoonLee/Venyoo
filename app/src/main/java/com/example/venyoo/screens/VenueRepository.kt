@@ -8,4 +8,8 @@ class VenueRepository @Inject constructor(private val ticketMasterApi: TicketMas
     suspend fun fetchVenue(venueName: String): List<VenueResponse>{
         return ticketMasterApi.fetchVenue(venueName)._embedded.venues
     }
+
+    suspend fun fetchVenueByCoordinates(latLong: String): List<VenueResponse>{
+        return ticketMasterApi.fetchVenueByCoordinates(latLong)._embedded.venues
+    }
 }

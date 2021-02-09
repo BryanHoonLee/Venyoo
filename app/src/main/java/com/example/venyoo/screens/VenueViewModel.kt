@@ -17,4 +17,10 @@ class VenueViewModel @Inject constructor(
             savedStateHandle["venues"] = venueRepository.fetchVenue(venueName)
         }
     }
+
+    fun fetchVenueByCoordinates(latLong: String){
+        viewModelScope.launch {
+            savedStateHandle["venues"] = venueRepository.fetchVenueByCoordinates(latLong)
+        }
+    }
 }
