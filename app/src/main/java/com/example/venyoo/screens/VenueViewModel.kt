@@ -12,15 +12,15 @@ class VenueViewModel @Inject constructor(
 
     val venues: LiveData<List<VenueResponse>> get() = savedStateHandle.getLiveData("venues")
 
-    fun fetchVenue(venueName: String){
+    fun fetchMultipleVenues(venueName: String){
         viewModelScope.launch {
-            savedStateHandle["venues"] = venueRepository.fetchVenue(venueName)
+            savedStateHandle["venues"] = venueRepository.fetchMultipleVenues(venueName)
         }
     }
 
-    fun fetchVenueByCoordinates(latLong: String){
+    fun fetchMultipleVenuesByCoordinates(latLong: String){
         viewModelScope.launch {
-            savedStateHandle["venues"] = venueRepository.fetchVenueByCoordinates(latLong)
+            savedStateHandle["venues"] = venueRepository.fetchMultipleVenuesByCoordinates(latLong)
         }
     }
 }

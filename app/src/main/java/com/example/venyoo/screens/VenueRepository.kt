@@ -5,11 +5,11 @@ import com.example.venyoo.venues.VenueResponse
 import javax.inject.Inject
 
 class VenueRepository @Inject constructor(private val ticketMasterApi: TicketMasterApi) {
-    suspend fun fetchVenue(venueName: String): List<VenueResponse>{
-        return ticketMasterApi.fetchVenue(venueName)._embedded.venues
+    suspend fun fetchMultipleVenues(venueName: String): List<VenueResponse>{
+        return ticketMasterApi.fetchMultipleVenues(venueName)._embedded.venues
     }
 
-    suspend fun fetchVenueByCoordinates(latLong: String): List<VenueResponse>{
-        return ticketMasterApi.fetchVenueByCoordinates(latLong)._embedded.venues
+    suspend fun fetchMultipleVenuesByCoordinates(latLong: String): List<VenueResponse>{
+        return ticketMasterApi.fetchMultipleVenuesByCoordinates(latLong)._embedded.venues
     }
 }

@@ -1,8 +1,8 @@
 package com.example.venyoo.screens
 
 import android.Manifest
-import android.content.IntentSender
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +13,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.venyoo.LocationService
+import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentSearchVenueBinding
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
-import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -64,7 +62,7 @@ class SearchVenueFragment : BaseFragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    venueViewModel.fetchVenue(query)
+                    venueViewModel.fetchMultipleVenues(query)
                 }
                 return false
             }
@@ -81,7 +79,7 @@ class SearchVenueFragment : BaseFragment() {
                         val result = locationService.getLatitudeLongitude()
                         if(result is LocationService.Result.Success){
                             val latLong = "${result.latitude},${result.longitude}"
-                            venueViewModel.fetchVenueByCoordinates(latLong)
+                            venueViewModel.fetchMultipleVenuesByCoordinates(latLong)
                         }
                     }
                 }
@@ -104,6 +102,8 @@ class SearchVenueFragment : BaseFragment() {
         requestMultiplePermissionsLauncher = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
                 //Do something here if permission granted for COARSE and FINE location
+            }else{
+                Toast.makeText(requireContext(), R.string.location_permission_denied, Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -10,11 +10,14 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class LocationService @Inject constructor(private val activity: AppCompatActivity, private val fusedLocationClient: FusedLocationProviderClient, private val locationRequest: LocationRequest, private val task: Task<LocationSettingsResponse>) {
+
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     companion object {
         const val REQUEST_CHECK_SETTINGS = 1
@@ -42,10 +45,19 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
         }
     }
 
+    fun getLocation(){
+        coroutineScope.launch {
+
+        }
+    }
+
     fun checkLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.ACCESS_COARSE_LOCATION
+        ) + ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 
