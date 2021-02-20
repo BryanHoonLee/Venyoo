@@ -11,7 +11,14 @@
         android:label="Search Venue"
         tools:layout="@layout/fragment_search_venue">
 
+        <action
+            android:id="@+id/action_fragment_search_venue_to_venueListFragment"
+            app:destination="@id/venue_list_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/venue_list_fragment"
+        android:name="com.example.venyoo.screens.VenueListFragment"
+        android:label="VenueListFragment" />
 
 
 </navigation>

@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.venyoo.LocationService
 import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentSearchVenueBinding
@@ -30,7 +32,7 @@ class SearchVenueFragment : BaseFragment() {
     lateinit var locationService: LocationService
     private lateinit var requestMultiplePermissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val venueViewModel: VenueViewModel by viewModels { viewModelFactory }
+    private val venueViewModel: VenueViewModel by activityViewModels { viewModelFactory }
 
     private lateinit var binding: FragmentSearchVenueBinding
 
@@ -63,6 +65,7 @@ class SearchVenueFragment : BaseFragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     venueViewModel.fetchMultipleVenues(query)
+                    navigateToVenueListFragment()
                 }
                 return false
             }
@@ -74,15 +77,22 @@ class SearchVenueFragment : BaseFragment() {
 
         binding.discoverButton.setOnClickListener {
             if (locationService.checkLocationPermission()) {
+                Log.d("GUH1", "hahahaha")
                 coroutineScope.launch{
+                    Log.d("GUH2", "hahaha")
                     if(locationService.checkLocationSettings()){
+                        Log.d("GUH3", "hahaha")
                         val result = locationService.getLatitudeLongitude()
                         if(result is LocationService.Result.Success){
                             val latLong = "${result.latitude},${result.longitude}"
                             venueViewModel.fetchMultipleVenuesByCoordinates(latLong)
+                            navigateToVenueListFragment()
+                            venueViewModel.test("TEST1")
                         }
                     }
                 }
+                venueViewModel.test("TEST2")
+//                navigateToVenueListFragment()
             }
             else {
                 requestMultiplePermissionsLauncher.launch(
@@ -92,6 +102,12 @@ class SearchVenueFragment : BaseFragment() {
                         )
                 )
             }
+        }
+    }
+
+    private fun navigateToVenueListFragment(){
+        if(findNavController().currentDestination?.id != R.id.venue_list_fragment){
+            findNavController().navigate(R.id.action_fragment_search_venue_to_venueListFragment)
         }
     }
 

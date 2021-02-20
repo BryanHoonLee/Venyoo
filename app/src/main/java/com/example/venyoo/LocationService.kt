@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -77,10 +78,13 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
                 if (exception is ResolvableApiException) {
                     // Location settings are not satisfied, but this can be fixed
                     // by showing the user a dialog.
+                    cont.resume(true)
                     try {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
                         exception.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS)
+                        Log.d("GUH5", "hahaha")
+
                     } catch (sendEx: IntentSender.SendIntentException) {
                         // Ignore the error.
 
