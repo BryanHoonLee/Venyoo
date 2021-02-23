@@ -17,7 +17,6 @@ class ActivityModule(
     @Provides
     fun locationRequest(): LocationRequest = LocationRequest.create().apply {
         interval = 100000
-        fastestInterval = 50000
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -29,9 +28,9 @@ class ActivityModule(
     @Provides
     fun settingsClient(activity: AppCompatActivity): SettingsClient = LocationServices.getSettingsClient(activity)
 
-    @Provides
-    fun locationSettingResponseTask(settingsClient: SettingsClient, builder: LocationSettingsRequest.Builder): Task<LocationSettingsResponse> =
-            settingsClient.checkLocationSettings(builder?.build())
+//    @Provides
+//    fun locationSettingResponseTask(settingsClient: SettingsClient, builder: LocationSettingsRequest.Builder): Task<LocationSettingsResponse> =
+//            settingsClient.checkLocationSettings(builder?.build())
 
     @Provides
     fun fusedLocationClient(activity: AppCompatActivity): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)

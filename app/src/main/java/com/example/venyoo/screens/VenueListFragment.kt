@@ -52,9 +52,6 @@ class VenueListFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("TEST", "${venueListViewModel.venues.value?.size}")
-        venueListViewModel.test("TEST3")
-
         venueListViewModel.venues.observe(viewLifecycleOwner, Observer { venues ->
             adapter.bindData(venues)
         })

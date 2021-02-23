@@ -16,9 +16,14 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class LocationService @Inject constructor(private val activity: AppCompatActivity, private val fusedLocationClient: FusedLocationProviderClient, private val locationRequest: LocationRequest, private val task: Task<LocationSettingsResponse>) {
+class LocationService @Inject constructor(
+        private val activity: AppCompatActivity,
+        private val fusedLocationClient: FusedLocationProviderClient,
+        private val client: SettingsClient,
+        private val builder: LocationSettingsRequest.Builder
+) {
 
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private lateinit var task: Task<LocationSettingsResponse>
 
     companion object {
         const val REQUEST_CHECK_SETTINGS = 1
@@ -29,26 +34,17 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
         object Failure : Result()
     }
 
-    suspend fun getLatitudeLongitude(): Result {
+    suspend fun getLocation(): Result {
         return suspendCoroutine { cont ->
             if (checkLocationPermission()) {
-                fusedLocationClient.requestLocationUpdates(
-                        locationRequest,
-                        object : LocationCallback() {
-                            override fun onLocationResult(locationResult: LocationResult) {
-                                val lastLocation = locationResult.lastLocation
-                                cont.resume(Result.Success(lastLocation.latitude, lastLocation.longitude))
-                            }
-                        },
-                        Looper.myLooper())
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        cont.resume(Result.Success(location.latitude, location.longitude))
+                    } else {
+                        cont.resume(Result.Failure)
+                    }
+                }
             }
-
-        }
-    }
-
-    fun getLocation(){
-        coroutineScope.launch {
-
         }
     }
 
@@ -65,32 +61,7 @@ class LocationService @Inject constructor(private val activity: AppCompatActivit
     /**
      * https://developer.android.com/training/location/change-location-settings
      */
-    suspend fun checkLocationSettings(): Boolean {
-        return suspendCoroutine { cont ->
-            task.addOnSuccessListener { locationSettingsResponse ->
-                // All location settings are satisfied. The client can initialize
-                // location requests here.
-                // ...
-                cont.resume(true)
-            }
-
-            task.addOnFailureListener { exception ->
-                if (exception is ResolvableApiException) {
-                    // Location settings are not satisfied, but this can be fixed
-                    // by showing the user a dialog.
-                    cont.resume(true)
-                    try {
-                        // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
-                        exception.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS)
-                        Log.d("GUH5", "hahaha")
-
-                    } catch (sendEx: IntentSender.SendIntentException) {
-                        // Ignore the error.
-
-                    }
-                }
-            }
-        }
+    fun checkLocationSettings(): Task<LocationSettingsResponse> {
+        return client.checkLocationSettings(builder.build())
     }
 }

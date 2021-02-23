@@ -15,7 +15,10 @@ class VenueViewModel @Inject constructor(
     val venues: LiveData<List<VenueResponse>> get() = savedStateHandle.getLiveData("venues")
 
     fun test(string: String){
-        Log.d(string, "${savedStateHandle.getLiveData<List<VenueResponse>>("venues")}")
+        Log.d(string, "${savedStateHandle.getLiveData<List<VenueResponse>>("venues")} + ${savedStateHandle}")
+        Log.d(string , "${savedStateHandle.keys()}")
+        Log.d(string , "${savedStateHandle.get<List<VenueResponse>>("venues")}")
+
     }
 
     fun fetchMultipleVenues(venueName: String){
@@ -26,10 +29,7 @@ class VenueViewModel @Inject constructor(
 
     fun fetchMultipleVenuesByCoordinates(latLong: String){
         viewModelScope.launch {
-            Log.d("TEST6", "${venues.value?.size}")
             savedStateHandle["venues"] = venueRepository.fetchMultipleVenuesByCoordinates(latLong)
-            Log.d("TEST7", "${venues.value?.size}")
-
         }
     }
 }
