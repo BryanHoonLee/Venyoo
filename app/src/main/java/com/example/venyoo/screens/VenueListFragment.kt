@@ -1,6 +1,7 @@
 package com.example.venyoo.screens
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class VenueListFragment: BaseFragment() {
+class VenueListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -27,7 +28,7 @@ class VenueListFragment: BaseFragment() {
     private lateinit var adapter: VenueResponseAdapter
 
 
-    private val venueListViewModel: VenueViewModel by activityViewModels { viewModelFactory}
+    private val venueListViewModel: VenueViewModel by activityViewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +36,16 @@ class VenueListFragment: BaseFragment() {
         injector.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentVenueResultListBinding.inflate(inflater)
         val view = binding.root
 
-        adapter = VenueResponseAdapter{
-            Toast.makeText(requireContext(), "CLICKED", Toast.LENGTH_LONG).show()
+        adapter = VenueResponseAdapter { response ->
+            Toast.makeText(requireContext(), "${response.name}", Toast.LENGTH_LONG).show()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -53,8 +58,13 @@ class VenueListFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueListViewModel.venues.observe(viewLifecycleOwner, Observer { venues ->
+            venueListViewModel.test("Test6")
             adapter.bindData(venues)
         })
+        Handler().postDelayed(Runnable {
+            binding.progressBar.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }, 600)
 
     }
 

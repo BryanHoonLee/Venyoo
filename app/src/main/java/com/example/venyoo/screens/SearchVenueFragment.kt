@@ -59,10 +59,6 @@ class SearchVenueFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        venueViewModel.venues.observe(viewLifecycleOwner, Observer { venue ->
-            Toast.makeText(requireContext(), "${venue[0].name}, ${venue[0].city}, ${venue[0].address}, ${venue[0].city}, ${venue[0].description}", Toast.LENGTH_LONG).show()
-        })
-
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
