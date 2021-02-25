@@ -3,6 +3,7 @@ package com.example.venyoo.screens
 import android.Manifest
 import android.content.IntentSender
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -46,9 +47,9 @@ class SearchVenueFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchVenueBinding.inflate(layoutInflater)
         val view = binding.root
@@ -76,39 +77,60 @@ class SearchVenueFragment : BaseFragment() {
         binding.discoverButton.setOnClickListener {
             if (locationService.checkLocationPermission()) {
                 locationService.checkLocationSettings()
-                        .addOnSuccessListener {
-                            coroutineScope.launch {
-                                val result = locationService.getLocation()
-                                if (result is LocationService.Result.Success) {
-                                    val latLong = "${result.latitude},${result.longitude}"
-                                    venueViewModel.fetchMultipleVenuesByCoordinates(latLong)
-                                    navigateToVenueListFragment()
-                                }
+                    .addOnSuccessListener {
+                        coroutineScope.launch {
+                            temporarilyEnableLoading()
+                            val result = locationService.getLocation()
+                            if (result is LocationService.Result.Success) {
+                                val latLong = "${result.latitude},${result.longitude}"
+                                venueViewModel.fetchMultipleVenuesByCoordinates(latLong)
+                                navigateToVenueListFragment()
+                            } else if(result is LocationService.Result.Failure){
+                                disableLoading()
+                                Toast.makeText(requireContext(), "Failed to fetch location", Toast.LENGTH_LONG).show()
                             }
                         }
-                        .addOnFailureListener { exception ->
-                            if (exception is ResolvableApiException) {
-                                // Location settings are not satisfied, but this can be fixed
-                                // by showing the user a dialog.
-                                try {
-                                    // Show the dialog by calling startResolutionForResult(),
-                                    // and check the result in onActivityResult().
-                                    exception.startResolutionForResult(activity, LocationService.REQUEST_CHECK_SETTINGS)
-                                } catch (sendEx: IntentSender.SendIntentException) {
-                                    // Ignore the error.
-                                }
+                    }
+                    .addOnFailureListener { exception ->
+                        if (exception is ResolvableApiException) {
+                            // Location settings are not satisfied, but this can be fixed
+                            // by showing the user a dialog.
+                            try {
+                                // Show the dialog by calling startResolutionForResult(),
+                                // and check the result in onActivityResult().
+                                exception.startResolutionForResult(
+                                    activity,
+                                    LocationService.REQUEST_CHECK_SETTINGS
+                                )
+                            } catch (sendEx: IntentSender.SendIntentException) {
+                                // Ignore the error.
                             }
                         }
+                    }
             } else {
                 // Launches dialog that requests permission if not already granted.
                 requestMultiplePermissionsLauncher.launch(
-                        arrayOf(
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION
-                        )
+                    arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
                 )
             }
         }
+    }
+
+    private fun temporarilyEnableLoading() {
+        binding.discoverButton.isEnabled = false
+        binding.progressBar.visibility = View.VISIBLE
+        Handler().postDelayed(Runnable {
+            binding.discoverButton.isEnabled = true
+            binding.progressBar.visibility = View.GONE
+        }, 8000)
+    }
+
+    private fun disableLoading(){
+        binding.discoverButton.isEnabled = true
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun navigateToVenueListFragment() {
@@ -121,13 +143,18 @@ class SearchVenueFragment : BaseFragment() {
      * https://developer.android.com/training/permissions/requesting
      */
     private fun initPermissionLauncher() {
-        requestMultiplePermissionsLauncher = this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-                //Do something here if permission granted for COARSE and FINE location
-            } else {
-                Toast.makeText(requireContext(), R.string.location_permission_denied, Toast.LENGTH_LONG).show()
+        requestMultiplePermissionsLauncher =
+            this.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
+                    //Do something here if permission granted for COARSE and FINE location
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.location_permission_denied,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
-        }
     }
 
 
