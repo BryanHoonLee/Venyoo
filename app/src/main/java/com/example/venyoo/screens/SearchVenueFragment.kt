@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.venyoo.LocationService
 import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentSearchVenueBinding
@@ -33,9 +34,10 @@ class SearchVenueFragment : BaseFragment() {
 
     @Inject
     lateinit var locationService: LocationService
+
     private lateinit var requestMultiplePermissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val venueViewModel: VenueViewModel by activityViewModels { viewModelFactory }
+    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
 
     private lateinit var binding: FragmentSearchVenueBinding
 

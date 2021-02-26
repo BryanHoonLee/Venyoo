@@ -2,17 +2,15 @@ package com.example.venyoo.screens
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentVenueResultListBinding
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
@@ -27,8 +25,10 @@ class VenueListFragment : BaseFragment() {
 
     private lateinit var adapter: VenueResponseAdapter
 
+    private var isDataLoaded = false
 
-    private val venueListViewModel: VenueViewModel by activityViewModels { viewModelFactory }
+
+    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +44,11 @@ class VenueListFragment : BaseFragment() {
         binding = FragmentVenueResultListBinding.inflate(inflater)
         val view = binding.root
 
-        adapter = VenueResponseAdapter { response ->
-            Toast.makeText(requireContext(), "${response.name}", Toast.LENGTH_LONG).show()
+        adapter = VenueResponseAdapter { venueResponse ->
+            venueViewModel.updateCurrentVenue(venueResponse)
+            navigateToVenueDetailFragment()
         }
+
 
         binding.recyclerView.layoutManager = LinearLayoutManager(view.context)
         binding.recyclerView.adapter = adapter
@@ -57,15 +59,25 @@ class VenueListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        venueListViewModel.venues.observe(viewLifecycleOwner, Observer { venues ->
-            venueListViewModel.test("Test6")
+        venueViewModel.venueList.observe(viewLifecycleOwner, Observer { venues ->
             adapter.bindData(venues)
         })
-        Handler().postDelayed(Runnable {
+
+        if(!isDataLoaded){
+            isDataLoaded = true
+            Handler().postDelayed(Runnable {
+                binding.progressBar.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+            }, 600)
+        }else{
             binding.progressBar.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
-        }, 600)
-
+        }
     }
 
+    private fun navigateToVenueDetailFragment(){
+            if (findNavController().currentDestination?.id != R.id.venueDetailFragment) {
+                findNavController().navigate(R.id.action_venue_list_fragment_to_venueDetailFragment)
+        }
+    }
 }

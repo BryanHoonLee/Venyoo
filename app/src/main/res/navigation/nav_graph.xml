@@ -3,22 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_search_venue">
+    app:startDestination="@id/venue_navigation">
 
-    <fragment
-        android:id="@+id/fragment_search_venue"
-        android:name="com.example.venyoo.screens.SearchVenueFragment"
-        android:label="Search Venue"
-        tools:layout="@layout/fragment_search_venue">
+    <navigation android:id="@+id/venue_navigation"
+        app:startDestination="@id/fragment_search_venue">
+        <fragment
+            android:id="@+id/fragment_search_venue"
+            android:name="com.example.venyoo.screens.SearchVenueFragment"
+            android:label="Search Venue"
+            tools:layout="@layout/fragment_search_venue">
 
-        <action
-            android:id="@+id/action_fragment_search_venue_to_venueListFragment"
-            app:destination="@id/venue_list_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/venue_list_fragment"
-        android:name="com.example.venyoo.screens.VenueListFragment"
-        android:label="VenueListFragment" />
-
-
+            <action
+                android:id="@+id/action_fragment_search_venue_to_venueListFragment"
+                app:destination="@id/venue_list_fragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/venue_list_fragment"
+            android:name="com.example.venyoo.screens.VenueListFragment"
+            android:label="VenueListFragment"
+            tools:layout="@layout/fragment_venue_result_list">
+            <action
+                android:id="@+id/action_venue_list_fragment_to_venueDetailFragment"
+                app:destination="@id/venueDetailFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/venueDetailFragment"
+            android:name="com.example.venyoo.screens.common.VenueDetailFragment"
+            android:label="VenueDetailFragment"
+            tools:layout="@layout/fragment_venue_detail" />
+    </navigation>
 </navigation>

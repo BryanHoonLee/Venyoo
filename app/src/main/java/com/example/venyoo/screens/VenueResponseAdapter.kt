@@ -70,6 +70,11 @@ class VenueResponseAdapter(
         return venueList.size
     }
 
+//    override fun getItemId(position: Int): Long {
+//        val venue = venueList[position]
+//        return venue.id.hashCode().toLong()
+//    }
+
     inner class VenueViewHolder(
             view: View
     ) : RecyclerView.ViewHolder(view) {
