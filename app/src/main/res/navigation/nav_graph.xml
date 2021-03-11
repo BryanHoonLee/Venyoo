@@ -28,7 +28,7 @@
         </fragment>
         <fragment
             android:id="@+id/venueDetailFragment"
-            android:name="com.example.venyoo.screens.common.VenueDetailFragment"
+            android:name="com.example.venyoo.screens.VenueDetailFragment"
             android:label="VenueDetailFragment"
             tools:layout="@layout/fragment_venue_detail" />
     </navigation>

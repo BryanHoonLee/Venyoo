@@ -1,30 +1,25 @@
 package com.example.venyoo.screens
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.clear
 import coil.load
 import coil.request.ImageRequest
 import coil.request.ImageResult
-import coil.size.Scale
-import coil.transform.CircleCropTransformation
 import com.example.venyoo.R
-import com.example.venyoo.venues.VenueResponse
+import com.example.venyoo.venues.TicketMasterVenueResponse
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 
 class VenueResponseAdapter(
-        private val onItemClicked: (VenueResponse) -> Unit
+        private val onItemClicked: (TicketMasterVenueResponse) -> Unit
 ) : RecyclerView.Adapter<VenueResponseAdapter.VenueViewHolder>() {
 
-    private var venueList: List<VenueResponse> = ArrayList(0)
+    private var venueList: List<TicketMasterVenueResponse> = ArrayList(0)
 
-    fun bindData(venues: List<VenueResponse>){
+    fun bindData(venues: List<TicketMasterVenueResponse>){
         venueList = ArrayList(venues)
         notifyDataSetChanged()
     }
@@ -34,7 +29,6 @@ class VenueResponseAdapter(
                 .inflate(R.layout.item_venue, parent, false)
         return VenueViewHolder(itemView)
     }
-
     override fun onBindViewHolder(holder: VenueViewHolder, position: Int) {
         val currentVenue = venueList[position]
 
@@ -51,7 +45,6 @@ class VenueResponseAdapter(
 
         if(currentVenue.images.isNotEmpty()){
             holder.venueImage.load(currentVenue.images[0].url){
-                placeholder(R.drawable.ic_launcher_foreground)
                 listener(onSuccess = { request: ImageRequest, metadata: ImageResult.Metadata ->
                     holder.progressBar.visibility = View.GONE
                 })

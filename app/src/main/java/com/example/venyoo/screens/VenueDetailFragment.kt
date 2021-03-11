@@ -1,4 +1,4 @@
-package com.example.venyoo.screens.common
+package com.example.venyoo.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
