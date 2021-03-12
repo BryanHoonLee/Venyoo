@@ -1,18 +1,25 @@
 package com.example.venyoo.networking
 
-import com.example.venyoo.venues.TicketMasterVenueListResponseSchema
+import com.example.venyoo.venues.TicketMasterEventSchema
+import com.example.venyoo.venues.TicketMasterVenueSchema
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface uTicketMasterApi {
+interface TicketMasterApi {
 
     @GET("venues?countryCode=US&radius=30&unit=miles")
-    suspend fun fetchMultipleVenues(
+    suspend fun fetchVenues(
             @Query("keyword") venueName: String,
-    ): TicketMasterVenueListResponseSchema
+    ): TicketMasterVenueSchema
 
     @GET("venues?countryCode=US&radius=30&unit=miles&sort=distance,asc")
-    suspend fun fetchMultipleVenuesByCoordinates(
+    suspend fun fetchVenuesByCoordinates(
             @Query("latlong") latLong: String
-    ): TicketMasterVenueListResponseSchema
+    ): TicketMasterVenueSchema
+
+    @GET("events?countryCode=US&radius=30&unit=miles")
+    suspend fun fetchVenueEvents(
+        @Query("venueId") venueId: String,
+        @Query("postalCode") postalCode: String
+    ): TicketMasterEventSchema
 }

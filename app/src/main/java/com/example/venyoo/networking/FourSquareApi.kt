@@ -13,7 +13,7 @@ interface FourSquareApi {
             "${Constants.FOURSQUARE_CATEGORY_MUSIC_FESTIVAL_EVENT}," +
             "${Constants.FOURSQUARE_CATEGORY_CONCERT_HALL}, " +
             "${Constants.FOURSQUARE_CATEGORY_OPERA_HOUSE}")
-    suspend fun fetchMultipleVenues(
+    suspend fun fetchVenues(
         @Query("query") query: String
     ): FourSquareVenueResponseSchema
 

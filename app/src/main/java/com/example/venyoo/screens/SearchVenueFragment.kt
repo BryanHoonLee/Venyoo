@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.IntentSender
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.venyoo.LocationService
@@ -65,7 +62,7 @@ class SearchVenueFragment : BaseFragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    venueViewModel.fetchMultipleVenues(query)
+                    venueViewModel.fetchVenues(query)
                     navigateToVenueListFragment()
                 }
                 return false
@@ -85,7 +82,7 @@ class SearchVenueFragment : BaseFragment() {
                             val result = locationService.getLocation()
                             if (result is LocationService.Result.Success) {
                                 val latLong = "${result.latitude},${result.longitude}"
-                                venueViewModel.fetchMultipleVenuesByCoordinates(latLong)
+                                venueViewModel.fetchVenuesByCoordinates(latLong)
                                 navigateToVenueListFragment()
                             } else if(result is LocationService.Result.Failure){
                                 disableLoading()

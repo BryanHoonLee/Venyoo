@@ -4,12 +4,12 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TicketMasterVenueListResponseSchema (
-        val _embedded: TicketMasterEmbedded
+data class TicketMasterVenueSchema (
+        val _embedded: TicketMasterVenueEmbedded
 ): Parcelable
 
 @Parcelize
-data class TicketMasterEmbedded (
+data class TicketMasterVenueEmbedded (
         val venues: List<TicketMasterVenueResponse>
 ): Parcelable
 
@@ -18,11 +18,11 @@ data class TicketMasterVenueResponse(
         val id: String = "",
         val name: String = "",
         val description: String = "",
-        val address: TicketMasterVenueAddressResponse = TicketMasterVenueAddressResponse("","",""),
-        val city: TicketMasterVenueCityResponse = TicketMasterVenueCityResponse(""),
-        val state: TicketMasterVenueStateResponse = TicketMasterVenueStateResponse("",""),
+        val address: TicketMasterVenueAddress = TicketMasterVenueAddress("","",""),
+        val city: TicketMasterVenueCity = TicketMasterVenueCity(""),
+        val state: TicketMasterVenueState = TicketMasterVenueState("",""),
         val postalCode: String = "",
-        val location: TicketMasterVenueLocationResponse = TicketMasterVenueLocationResponse(0.0f, 0.0f),
+        val location: TicketMasterVenueLocation = TicketMasterVenueLocation(0.0f, 0.0f),
         val url: String = (""),
         val additionalInfo: String = "",
         val images: List<TicketMasterVenueImage> = emptyList(),
@@ -32,25 +32,25 @@ data class TicketMasterVenueResponse(
         ): Parcelable
 
 @Parcelize
-data class TicketMasterVenueAddressResponse(
+data class TicketMasterVenueAddress(
         val line1: String = "",
         val line2: String = "",
         val line3: String = ""
 ): Parcelable
 
 @Parcelize
-data class TicketMasterVenueCityResponse(
+data class TicketMasterVenueCity(
         val name: String = ""
 ): Parcelable
 
 @Parcelize
-data class TicketMasterVenueStateResponse(
+data class TicketMasterVenueState(
         val stateCode: String = "",
         val name: String = ""
 ): Parcelable
 
 @Parcelize
-data class TicketMasterVenueLocationResponse(
+data class TicketMasterVenueLocation(
         val longitude: Float = 0.0f,
         val latitude: Float = 0.0f
 ): Parcelable
