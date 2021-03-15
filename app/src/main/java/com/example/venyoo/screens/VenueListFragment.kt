@@ -68,6 +68,9 @@ class VenueListFragment : BaseFragment() {
             Handler().postDelayed(Runnable {
                 binding.progressBar.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
+                if(adapter.itemCount == 0){
+                    binding.pageNotFoundImageView.visibility = View.VISIBLE
+                }
             }, 600)
         }else{
             binding.progressBar.visibility = View.GONE

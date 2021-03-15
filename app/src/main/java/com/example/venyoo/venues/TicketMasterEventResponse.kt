@@ -5,12 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TicketMasterEventSchema(
-    val _embedded: TicketMasterEventEmbedded
+    val _embedded: TicketMasterEventEmbedded = TicketMasterEventEmbedded()
 ):Parcelable
 
 @Parcelize
 data class TicketMasterEventEmbedded(
-    val events: List<TicketMasterEventResponse>
+    val events: List<TicketMasterEventResponse> = emptyList()
 ): Parcelable
 
 @Parcelize

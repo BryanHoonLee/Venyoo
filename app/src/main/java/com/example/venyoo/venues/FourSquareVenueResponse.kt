@@ -5,12 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FourSquareVenueResponseSchema(
-    val response: FourSquareResponse
+    val response: FourSquareResponse = FourSquareResponse()
 ): Parcelable
 
 @Parcelize
 data class FourSquareResponse(
-    val venues: List<FourSquareVenueResponse>
+    val venues: List<FourSquareVenueResponse> = emptyList()
 ): Parcelable
 
 @Parcelize

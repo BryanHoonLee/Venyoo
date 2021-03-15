@@ -1,16 +1,16 @@
-package com.example.venyoo.venues
+        package com.example.venyoo.venues
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TicketMasterVenueSchema (
-        val _embedded: TicketMasterVenueEmbedded
+        val _embedded: TicketMasterVenueEmbedded = TicketMasterVenueEmbedded()
 ): Parcelable
 
 @Parcelize
 data class TicketMasterVenueEmbedded (
-        val venues: List<TicketMasterVenueResponse>
+        val venues: List<TicketMasterVenueResponse> = emptyList()
 ): Parcelable
 
 @Parcelize

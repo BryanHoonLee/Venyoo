@@ -1,5 +1,6 @@
 package com.example.venyoo.screens
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +36,8 @@ class VenueResponseAdapter(
         holder.name.text = currentVenue.name
 
         var address = currentVenue.address.line1
-        if(currentVenue.address.line2 != null) address += ", ${currentVenue.address.line2}"
-        if(currentVenue.address.line3 != null) address += ", ${currentVenue.address.line3}"
+        if(!currentVenue.address.line2.isNullOrBlank()) address += ", ${currentVenue.address.line2}"
+        if(!currentVenue.address.line3.isNullOrBlank()) address += ", ${currentVenue.address.line3}"
         holder.address.text = address
 
         holder.cityStatePostal.text = "${currentVenue.city.name}, ${currentVenue.state.stateCode} ${currentVenue.postalCode}"
