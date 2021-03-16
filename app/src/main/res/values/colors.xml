@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="hyper_link">#1ccebe</color>
+    <color name="line_divider">#9DA3A3</color>
 </resources>
