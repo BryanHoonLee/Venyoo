@@ -63,7 +63,7 @@ class VenueDetailFragment : BaseFragment() {
 
             val twitter: String = venue.social.twitter.handle
             if (twitter.isNullOrBlank()) {
-                binding.twitterTextView.visibility = View.GONE
+                binding.twitterTextView.text = "-"
             } else {
                 binding.twitterTextView.text = twitter
                 val url = "https://twitter.com/${twitter}"
@@ -83,7 +83,7 @@ class VenueDetailFragment : BaseFragment() {
 
             val phoneNumber: String = venue.boxOfficeInfo.phoneNumberDetail
             if (phoneNumber.isEmpty()) {
-                binding.phoneNumberTextView.visibility = View.GONE
+                binding.phoneNumberTextView.text = "-"
             } else {
                 binding.phoneNumberTextView.text = phoneNumber
                 Linkify.addLinks(binding.phoneNumberTextView, Linkify.PHONE_NUMBERS)

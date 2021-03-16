@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hyper_link">#1ccebe</color>
     <color name="line_divider">#9DA3A3</color>
+    <color name="dark_background">#202125</color>
 </resources>
