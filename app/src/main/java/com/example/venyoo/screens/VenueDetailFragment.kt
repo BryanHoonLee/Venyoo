@@ -3,8 +3,10 @@ package com.example.venyoo.screens
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +21,12 @@ import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class VenueDetailFragment: BaseFragment() {
+class VenueDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
     private lateinit var binding: FragmentVenueDetailBinding
 
@@ -48,43 +50,60 @@ class VenueDetailFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueViewModel.currentVenue.observe(viewLifecycleOwner, Observer { venue ->
-            if(venue.images.isNotEmpty()){
+            if (venue.images.isNotEmpty()) {
                 binding.venueImageView.load(venue.images[0].url)
-            }else{
+            } else {
                 binding.venueImageView.load(R.drawable.ic_launcher_foreground)
             }
             binding.nameTextView.text = venue.name
 
-            Log.d("TEST123", "name: ${venue.name}")
+            if (venue.distance == null || venue.distance <= 0.0) binding.distanceTextView.text =
+                "" else binding.distanceTextView.text = "${venue.distance} mi"
+
 
             val twitter: String = venue.social.twitter.handle
-            if(twitter.isNullOrBlank()){
+            if (twitter.isNullOrBlank()) {
                 binding.twitterTextView.visibility = View.GONE
-            }else{
+            } else {
                 binding.twitterTextView.text = twitter
                 val url = "https://twitter.com/${twitter}"
                 binding.twitterTextView.setOnClickListener {
-                    try{
+                    try {
                         val intent = Intent("android.intent.action.Main")
                         intent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"))
                         intent.addCategory("android.intent.category.LAUNCHER")
                         intent.setData(Uri.parse(url))
                         startActivity(intent)
-                    }catch (e: ActivityNotFoundException){
+                    } catch (e: ActivityNotFoundException) {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         startActivity(intent)
                     }
                 }
             }
 
+            val phoneNumber: String = venue.boxOfficeInfo.phoneNumberDetail
+            if (phoneNumber.isEmpty()) {
+                binding.phoneNumberTextView.visibility = View.GONE
+            } else {
+                binding.phoneNumberTextView.text = phoneNumber
+                Linkify.addLinks(binding.phoneNumberTextView, Linkify.PHONE_NUMBERS)
+            }
+
             var address = venue.address.line1
-            if(!venue.address.line2.isNullOrBlank()) address += ", ${venue.address.line2}"
-            if(!venue.address.line3.isNullOrBlank()) address += ", ${venue.address.line3}"
+            if (!venue.address.line2.isNullOrBlank()) address += ", ${venue.address.line2}"
+            if (!venue.address.line3.isNullOrBlank()) address += ", ${venue.address.line3}"
+            address += ", ${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
             binding.addressTextView.text = address
+            binding.addressTextView.setOnClickListener {
+                val uri = Uri.parse("geo:0,0?q=${address}")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.google.android.apps.maps")
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivity(intent);
+                }
 
-            binding.cityStatePostalTextView.text = "${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
-
-            if(venue.distance == null || venue.distance <= 0.0) binding.distanceTextView.text = "" else binding.distanceTextView.text = "${venue.distance} mi"
+            }
         })
+
     }
 }

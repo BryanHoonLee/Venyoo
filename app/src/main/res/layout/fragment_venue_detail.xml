@@ -34,53 +34,59 @@
         app:layout_constraintTop_toBottomOf="@id/venue_image_view" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/distance_text_view"
+        style="@style/Theme.Venyoo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="3 mi"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name_text_view" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/twitter_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="\@twitter_handle"
+        android:textColor="@color/hyper_link"
         android:textSize="15sp"
-        android:textStyle="bold"
-        style="@style/Theme.Venyoo"
-        app:layout_constraintEnd_toEndOf="@+id/name_text_view"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
         app:layout_constraintStart_toStartOf="@+id/name_text_view"
         app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/phone_number_text_view"
+        style="@style/Theme.Venyoo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="909-123-1234"
+        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
+        app:layout_constraintStart_toStartOf="@+id/name_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/twitter_text_view" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="twitter_text_view,phone_number_text_view"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/address_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:maxLines="1"
-        android:text="33333 Monte Vu"
+        android:text="33333 Monte Vu, Temecula, CA, 91769"
+        android:textColor="@color/hyper_link"
         android:textSize="15sp"
-        style="@style/Theme.Venyoo"
-        app:layout_constraintEnd_toEndOf="@+id/name_text_view"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
         app:layout_constraintStart_toStartOf="@+id/name_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/twitter_text_view" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/city_state_postal_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Temecula, CA, 91769"
-        android:textSize="15sp"
-        style="@style/Theme.Venyoo"
-        app:layout_constraintEnd_toEndOf="@id/address_text_view"
-        app:layout_constraintStart_toStartOf="@id/address_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/address_text_view" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/distance_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="3 mi"
-        android:textSize="15sp"
-        style="@style/Theme.Venyoo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/name_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
