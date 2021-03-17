@@ -7,12 +7,12 @@ import retrofit2.http.Query
 
 interface TicketMasterApi {
 
-    @GET("venues?countryCode=US&radius=30&unit=miles")
+    @GET("venues?countryCode=US&radius=30&unit=miles&size=80")
     suspend fun fetchVenues(
             @Query("keyword") venueName: String,
     ): TicketMasterVenueSchema
 
-    @GET("venues?countryCode=US&radius=30&unit=miles&sort=distance,asc")
+    @GET("venues?countryCode=US&radius=30&unit=miles&sort=distance,asc&size=80")
     suspend fun fetchVenuesByCoordinates(
             @Query("latlong") latLong: String
     ): TicketMasterVenueSchema

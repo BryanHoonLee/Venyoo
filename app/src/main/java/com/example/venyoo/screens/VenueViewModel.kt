@@ -38,13 +38,21 @@ class VenueViewModel @Inject constructor(
 
     fun fetchVenues(venueName: String){
         viewModelScope.launch {
-            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venueRepository.fetchVenues(venueName)
+            val venues: MutableList<TicketMasterVenueResponse> = venueRepository.fetchVenues(venueName).toMutableList()
+            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
+                !response.images.isNullOrEmpty() || !response.social.twitter.handle.isNullOrEmpty() || !response.boxOfficeInfo.phoneNumberDetail.isNullOrEmpty()
+            }
+
+//            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venueRepository.fetchVenues(venueName)
         }
     }
 
     fun fetchVenuesByCoordinates(latLong: String){
         viewModelScope.launch {
-            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venueRepository.fetchVenuesByCoordinates(latLong)
+            val venues: MutableList<TicketMasterVenueResponse> = venueRepository.fetchVenuesByCoordinates(latLong).toMutableList()
+            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST]  = venues.filter { response ->
+                !response.images.isNullOrEmpty() || !response.social.twitter.handle.isNullOrEmpty() || !response.boxOfficeInfo.phoneNumberDetail.isNullOrEmpty()
+            }
         }
     }
 
