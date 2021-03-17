@@ -7,10 +7,13 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.util.Linkify
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import coil.load
@@ -29,6 +32,7 @@ class VenueDetailFragment : BaseFragment() {
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
     private lateinit var binding: FragmentVenueDetailBinding
+    private var trayIsOpen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,20 +54,25 @@ class VenueDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueViewModel.currentVenue.observe(viewLifecycleOwner, Observer { venue ->
-            if (venue.images.isNotEmpty()) {
-                binding.venueImageView.load(venue.images[0].url)
-            } else {
-                binding.venueImageView.load(R.drawable.ic_launcher_foreground)
-            }
+//            if (venue.images.isNotEmpty()) {
+//                binding.venueImageView.load(venue.images[0].url)
+//            } else {
+//                binding.venueImageView.load(R.drawable.ic_launcher_foreground)
+//            }
+
+            /** VENUE NAME **/
             binding.nameTextView.text = venue.name
 
-            if (venue.distance == null || venue.distance <= 0.0) binding.distanceTextView.text =
-                "" else binding.distanceTextView.text = "${venue.distance} mi"
+            /** DISTANCE **/
+            if (venue.distance == null || venue.distance <= 0.0) {
+                binding.distanceTextView.text = ""
+            } else binding.distanceTextView.text = "${venue.distance} mi"
 
-
+            /** TWITTER **/
             val twitter: String = venue.social.twitter.handle
             if (twitter.isNullOrBlank()) {
                 binding.twitterTextView.text = "-"
+                binding.openHoursTextView.isClickable = false
             } else {
                 binding.twitterTextView.text = twitter
                 val url = "https://twitter.com/${twitter}"
@@ -81,6 +90,7 @@ class VenueDetailFragment : BaseFragment() {
                 }
             }
 
+            /** PHONE **/
             val phoneNumber: String = venue.boxOfficeInfo.phoneNumberDetail
             if (phoneNumber.isEmpty()) {
                 binding.phoneNumberTextView.text = "-"
@@ -89,6 +99,7 @@ class VenueDetailFragment : BaseFragment() {
                 Linkify.addLinks(binding.phoneNumberTextView, Linkify.PHONE_NUMBERS)
             }
 
+            /** ADDRESS **/
             var address = venue.address.line1
             if (!venue.address.line2.isNullOrBlank()) address += ", ${venue.address.line2}"
             if (!venue.address.line3.isNullOrBlank()) address += ", ${venue.address.line3}"
@@ -101,9 +112,39 @@ class VenueDetailFragment : BaseFragment() {
                 if (intent.resolveActivity(requireActivity().packageManager) != null) {
                     startActivity(intent);
                 }
+            }
 
+            /** TWITTER **/
+            var openHours: String = venue.boxOfficeInfo.openHoursDetail
+            if (openHours.isEmpty()) {
+                binding.openHoursTextView.text = "-"
+                binding.openHoursTextView.isClickable = false
+            } else {
+                binding.openHoursTextView.text = openHours
+                binding.openHoursTextView.setOnClickListener {
+                    if (binding.openHoursTextView.maxLines == 1) {
+                        TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                        binding.openHoursTextView.maxLines = 10
+                    } else {
+                        TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                        binding.openHoursTextView.maxLines = 1
+                    }
+                }
+            }
+
+            /** TRAY ARROW **/
+            binding.trayArrowImageView.setOnClickListener{
+                if(trayIsOpen){
+                    TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                    binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_down_24)
+                    binding.trayGroup.visibility = View.GONE
+                }else{
+                    TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                    binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_up_24)
+                    binding.trayGroup.visibility = View.VISIBLE
+                }
+                trayIsOpen = !trayIsOpen
             }
         })
-
     }
 }

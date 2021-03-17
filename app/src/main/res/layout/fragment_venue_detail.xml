@@ -1,172 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/venue_image_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/venue_image_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent=".2"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/name_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:layout_marginEnd="8dp"
-        android:text="Venue Name"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        style="@style/Theme.Venyoo"
-        app:layout_constraintEnd_toStartOf="@+id/distance_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/venue_image_view" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/distance_text_view"
-        style="@style/Theme.Venyoo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="3 mi"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/name_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/name_text_view" />
-
-    <View
-        android:id="@+id/name_divider"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:background="@color/line_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_text_view" />
-
-    <ImageView
-        android:id="@+id/twitter_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/twitter"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintBottom_toBottomOf="@id/twitter_text_view"
-        app:layout_constraintStart_toStartOf="@id/name_text_view"
-        app:layout_constraintTop_toTopOf="@+id/twitter_text_view" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/twitter_text_view"
-        style="@style/Theme.Venyoo"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="\@twitter_handle"
-        android:textSize="15sp"
-        android:clickable="true"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
-        app:layout_constraintStart_toEndOf="@id/twitter_icon"
-        app:layout_constraintTop_toBottomOf="@+id/name_divider" />
-
-    <View
-        android:id="@+id/twitter_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_divider"
-        android:layout_marginTop="@dimen/vertical_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/twitter_text_view"/>
-
-    <ImageView
-        android:id="@+id/phone_number_icon"
-        android:src="@drawable/ic_baseline_phone_android_24"
-        app:layout_constraintTop_toTopOf="@id/phone_number_text_view"
-        app:layout_constraintBottom_toBottomOf="@id/phone_number_text_view"
-        app:layout_constraintStart_toStartOf="@id/twitter_icon"
-        app:layout_constraintEnd_toEndOf="@id/twitter_icon"
-        android:adjustViewBounds="true"
-        app:layout_constraintDimensionRatio="1:1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/phone_number_text_view"
-        style="@style/Theme.Venyoo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:text="909-123-1234"
-        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
-        app:layout_constraintStart_toStartOf="@+id/twitter_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/twitter_divider" />
-
-    <View
-        android:id="@+id/phone_number_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:background="@color/line_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_number_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/venue_image_recycler_view"
+        app:shapeAppearanceOverlay="@style/BottomRoundedCardCorner">
 
-<!--    <androidx.constraintlayout.widget.Barrier-->
-<!--        android:id="@+id/barrier1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:barrierDirection="bottom"-->
-<!--        app:constraint_referenced_ids="twitter_text_view,phone_number_text_view"/>-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tray_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/address_text_view"
-        style="@style/Theme.Venyoo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:clickable="true"
-        android:ellipsize="end"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:text="33333 Monte Vu, Temecula, CA, 91769"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
-        app:layout_constraintStart_toStartOf="@+id/twitter_text_view"
-        app:layout_constraintTop_toBottomOf="@id/phone_number_divider" />
-<!--        app:layout_constraintTop_toBottomOf="@+id/barrier1" />-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:layout_marginEnd="8dp"
+                android:text="Venue Name"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/distance_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/address_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        app:layout_constraintDimensionRatio="1:1"
-        android:src="@drawable/ic_baseline_location_on_24"
-        app:layout_constraintBottom_toBottomOf="@+id/address_text_view"
-        app:layout_constraintEnd_toEndOf="@id/twitter_icon"
-        app:layout_constraintStart_toStartOf="@id/twitter_icon"
-        app:layout_constraintTop_toTopOf="@+id/address_text_view" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/distance_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="3 mi"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/name_text_view" />
 
-    <View
-        android:id="@+id/address_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:background="@color/line_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/address_text_view" />
+            <View
+                android:id="@+id/name_divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:background="@color/line_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name_text_view" />
+
+            <ImageView
+                android:id="@+id/twitter_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/twitter"
+                app:layout_constraintBottom_toBottomOf="@id/twitter_text_view"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="@id/name_text_view"
+                app:layout_constraintTop_toTopOf="@+id/twitter_text_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/twitter_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:maxLines="1"
+                android:text="\@twitter_handle"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/distance_text_view"
+                app:layout_constraintStart_toEndOf="@id/twitter_icon"
+                app:layout_constraintTop_toBottomOf="@+id/name_divider" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/tray_group"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="twitter_divider, phone_number_icon, phone_number_divider, phone_number_text_view, address_text_view, address_divider, address_icon, open_hours_icon, open_hours_text_view"/>
+
+            <View
+                android:id="@+id/twitter_divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:background="@color/line_divider"
+                app:layout_constraintEnd_toEndOf="@+id/name_divider"
+                app:layout_constraintStart_toStartOf="@+id/name_divider"
+                app:layout_constraintTop_toBottomOf="@id/twitter_text_view" />
+
+            <ImageView
+                android:id="@+id/phone_number_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_baseline_phone_android_24"
+                app:layout_constraintBottom_toBottomOf="@id/phone_number_text_view"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@id/twitter_icon"
+                app:layout_constraintStart_toStartOf="@id/twitter_icon"
+                app:layout_constraintTop_toTopOf="@id/phone_number_text_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phone_number_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="909-123-1234"
+                app:layout_constraintEnd_toEndOf="@+id/twitter_text_view"
+                app:layout_constraintStart_toStartOf="@+id/twitter_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/twitter_divider" />
+
+            <View
+                android:id="@+id/phone_number_divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:background="@color/line_divider"
+                app:layout_constraintEnd_toEndOf="@+id/twitter_divider"
+                app:layout_constraintStart_toStartOf="@+id/twitter_divider"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_text_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/address_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:text="33333 Monte Vu, Temecula, CA, 91769"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/phone_number_text_view"
+                app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_divider" />
+
+            <ImageView
+                android:id="@+id/address_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:layout_constraintBottom_toBottomOf="@+id/address_text_view"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/phone_number_icon"
+                app:layout_constraintStart_toStartOf="@+id/phone_number_icon"
+                app:layout_constraintTop_toTopOf="@+id/address_text_view" />
+
+            <View
+                android:id="@+id/address_divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:background="@color/line_divider"
+                app:layout_constraintEnd_toEndOf="@+id/phone_number_divider"
+                app:layout_constraintStart_toStartOf="@+id/phone_number_divider"
+                app:layout_constraintTop_toBottomOf="@id/address_text_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/open_hours_text_view"
+                style="@style/Theme.Venyoo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:maxLines="1"
+                android:text="9:00am - 8:00pm"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/address_text_view"
+                app:layout_constraintStart_toStartOf="@+id/address_text_view"
+                app:layout_constraintTop_toBottomOf="@id/address_divider" />
+
+            <ImageView
+                android:id="@+id/open_hours_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_baseline_open_hours"
+                app:layout_constraintBottom_toBottomOf="@+id/open_hours_text_view"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/address_icon"
+                app:layout_constraintStart_toStartOf="@+id/address_icon"
+                app:layout_constraintTop_toTopOf="@+id/open_hours_text_view" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/tray_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="open_hours_text_view, twitter_text_view" />
+
+            <ImageView
+                android:id="@+id/tray_arrow_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                app:layout_constraintEnd_toEndOf="@id/tray_barrier"
+                app:layout_constraintStart_toStartOf="@id/tray_barrier"
+                app:layout_constraintTop_toBottomOf="@id/tray_barrier" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
