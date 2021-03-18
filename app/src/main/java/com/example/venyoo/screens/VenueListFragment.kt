@@ -2,11 +2,13 @@ package com.example.venyoo.screens
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,8 @@ import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentVenueResultListBinding
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class VenueListFragment : BaseFragment() {
@@ -61,17 +65,21 @@ class VenueListFragment : BaseFragment() {
 
         venueViewModel.venueList.observe(viewLifecycleOwner, Observer { venues ->
             adapter.bindData(venues)
+            if(venues.size == 0){
+                binding.pageNotFoundImageView.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+            }else{
+                binding.pageNotFoundImageView.visibility = View.GONE
+            }
         })
 
         if(!isDataLoaded){
             isDataLoaded = true
-            Handler().postDelayed(Runnable {
+            lifecycleScope.launch {
+                delay(600)
                 binding.progressBar.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
-                if(adapter.itemCount == 0){
-                    binding.pageNotFoundImageView.visibility = View.VISIBLE
-                }
-            }, 600)
+            }
         }else{
             binding.progressBar.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE

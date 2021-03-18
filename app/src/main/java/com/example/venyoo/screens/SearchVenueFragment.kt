@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.venyoo.LocationService
@@ -62,8 +63,12 @@ class SearchVenueFragment : BaseFragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
+                    temporarilyEnableLoading(8000)
                     venueViewModel.fetchVenues(query)
-                    navigateToVenueListFragment()
+                    lifecycleScope.launch{
+                        delay(600)
+                        navigateToVenueListFragment()
+                    }
                 }
                 return false
             }
@@ -78,12 +83,15 @@ class SearchVenueFragment : BaseFragment() {
                 locationService.checkLocationSettings()
                     .addOnSuccessListener {
                         coroutineScope.launch {
-                            temporarilyEnableLoading()
+                            temporarilyEnableLoading(8000)
                             val result = locationService.getLocation()
                             if (result is LocationService.Result.Success) {
                                 val latLong = "${result.latitude},${result.longitude}"
                                 venueViewModel.fetchVenuesByCoordinates(latLong)
-                                navigateToVenueListFragment()
+                                lifecycleScope.launch{
+                                    delay(600)
+                                    navigateToVenueListFragment()
+                                }
                             } else if(result is LocationService.Result.Failure){
                                 disableLoading()
                                 Toast.makeText(requireContext(), "Failed to fetch location", Toast.LENGTH_LONG).show()
@@ -118,13 +126,14 @@ class SearchVenueFragment : BaseFragment() {
         }
     }
 
-    private fun temporarilyEnableLoading() {
+    private fun temporarilyEnableLoading(delayTime: Long) {
         binding.discoverButton.isEnabled = false
         binding.progressBar.visibility = View.VISIBLE
-        Handler().postDelayed(Runnable {
+        lifecycleScope.launch {
+         delay(delayTime)
             binding.discoverButton.isEnabled = true
             binding.progressBar.visibility = View.GONE
-        }, 8000)
+        }
     }
 
     private fun disableLoading(){

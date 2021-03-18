@@ -3,23 +3,19 @@ package com.example.venyoo.screens
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.util.Linkify
 import android.transition.AutoTransition
 import android.transition.TransitionManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import coil.load
 import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentVenueDetailBinding
-import com.example.venyoo.screens.VenueViewModel
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -92,7 +88,7 @@ class VenueDetailFragment : BaseFragment() {
 
             /** PHONE **/
             val phoneNumber: String = venue.boxOfficeInfo.phoneNumberDetail
-            if (phoneNumber.isEmpty()) {
+            if (phoneNumber.isBlank()) {
                 binding.phoneNumberTextView.text = "-"
             } else {
                 binding.phoneNumberTextView.text = phoneNumber
@@ -114,9 +110,9 @@ class VenueDetailFragment : BaseFragment() {
                 }
             }
 
-            /** TWITTER **/
+            /** Open Hours **/
             var openHours: String = venue.boxOfficeInfo.openHoursDetail
-            if (openHours.isEmpty()) {
+            if (openHours.isBlank()) {
                 binding.openHoursTextView.text = "-"
                 binding.openHoursTextView.isClickable = false
             } else {
@@ -132,14 +128,40 @@ class VenueDetailFragment : BaseFragment() {
                 }
             }
 
+            /** URL **/
+            var url: String = venue.url
+            if(url.isBlank()){
+                binding.urlTextView.text = "-"
+                binding.urlTextView.isClickable = false
+            }else {
+                binding.urlTextView.text = url
+                binding.urlTextView.setOnClickListener {
+                    if(binding.urlTextView.maxLines == 1){
+                        TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                        binding.urlTextView.maxLines = 10
+                    }else{
+                        try {
+                            val intent = Intent("android.intent.action.Main")
+                            intent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"))
+                            intent.addCategory("android.intent.category.LAUNCHER")
+                            intent.setData(Uri.parse(url))
+                            startActivity(intent)
+                        } catch (e: ActivityNotFoundException) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
+
             /** TRAY ARROW **/
             binding.trayArrowImageView.setOnClickListener{
                 if(trayIsOpen){
-                    TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                    TransitionManager.beginDelayedTransition(binding.testRoot, AutoTransition())
                     binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_down_24)
                     binding.trayGroup.visibility = View.GONE
                 }else{
-                    TransitionManager.beginDelayedTransition(binding.trayRoot, AutoTransition())
+                    TransitionManager.beginDelayedTransition(binding.testRoot, AutoTransition())
                     binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_up_24)
                     binding.trayGroup.visibility = View.VISIBLE
                 }
