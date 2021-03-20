@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.venyoo.screens.common.viewmodel.SavedStateViewModel
 import com.example.venyoo.venues.TicketMasterEventResponse
+import com.example.venyoo.venues.TicketMasterVenueImage
 import com.example.venyoo.venues.TicketMasterVenueResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class VenueViewModel @Inject constructor(
         const val SAVED_STATE_HANDLE_VENUE_LIST = "venues"
         const val SAVED_STATE_HANDLE_VENUE = "venue"
         const val SAVED_STATE_HANDLE_EVENTS = "events"
+        const val SAVED_STATE_HANDLE_IMAGES = "images"
     }
 
 
@@ -25,12 +27,7 @@ class VenueViewModel @Inject constructor(
 
     val venueEventList: LiveData<List<TicketMasterEventResponse>> get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_EVENTS)
 
-    fun test(string: String){
-        Log.d(string, "${savedStateHandle.getLiveData<List<TicketMasterVenueResponse>>(SAVED_STATE_HANDLE_VENUE_LIST)} + ${savedStateHandle}")
-        Log.d(string , "${savedStateHandle.keys()}")
-        Log.d(string , "${savedStateHandle.get<List<TicketMasterVenueResponse>>(SAVED_STATE_HANDLE_VENUE_LIST)}")
-
-    }
+    val venueImageList: LiveData<List<TicketMasterVenueImage>> get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_IMAGES)
 
     fun updateCurrentVenue(venue: TicketMasterVenueResponse){
         savedStateHandle[SAVED_STATE_HANDLE_VENUE] = venue

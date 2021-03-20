@@ -18,7 +18,7 @@ class VenueResponseAdapter(
         private val onItemClicked: (TicketMasterVenueResponse) -> Unit
 ) : RecyclerView.Adapter<VenueResponseAdapter.VenueViewHolder>() {
 
-    private var venueList: List<TicketMasterVenueResponse> = ArrayList(0)
+    private var venueList: List<TicketMasterVenueResponse> = emptyList()
 
     fun bindData(venues: List<TicketMasterVenueResponse>){
         venueList = ArrayList(venues)

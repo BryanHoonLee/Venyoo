@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.text.util.Linkify
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentVenueDetailBinding
@@ -27,6 +30,7 @@ class VenueDetailFragment : BaseFragment() {
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
+    private lateinit var adapter: VenueImageAdapter
     private lateinit var binding: FragmentVenueDetailBinding
     private var trayIsOpen = true
 
@@ -43,6 +47,12 @@ class VenueDetailFragment : BaseFragment() {
         binding = FragmentVenueDetailBinding.inflate(inflater)
         val view = binding.root
 
+        adapter = VenueImageAdapter { image ->
+            Toast.makeText(requireContext(), "IMAGE CLICKED", Toast.LENGTH_LONG).show()
+        }
+        binding.venueImageRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        binding.venueImageRecyclerView.adapter = adapter
+
         return view
     }
 
@@ -50,11 +60,8 @@ class VenueDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueViewModel.currentVenue.observe(viewLifecycleOwner, Observer { venue ->
-//            if (venue.images.isNotEmpty()) {
-//                binding.venueImageView.load(venue.images[0].url)
-//            } else {
-//                binding.venueImageView.load(R.drawable.ic_launcher_foreground)
-//            }
+            /** VENUE IMAGES **/
+            adapter.bindData(venue.images)
 
             /** VENUE NAME **/
             binding.nameTextView.text = venue.name
@@ -156,14 +163,16 @@ class VenueDetailFragment : BaseFragment() {
 
             /** TRAY ARROW **/
             binding.trayArrowImageView.setOnClickListener{
+                val transition = AutoTransition()
+                transition.duration = 500
                 if(trayIsOpen){
-                    TransitionManager.beginDelayedTransition(binding.testRoot, AutoTransition())
                     binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_down_24)
                     binding.trayGroup.visibility = View.GONE
+                    TransitionManager.beginDelayedTransition(binding.root, transition)
                 }else{
-                    TransitionManager.beginDelayedTransition(binding.testRoot, AutoTransition())
                     binding.trayArrowImageView.load(R.drawable.ic_baseline_keyboard_arrow_up_24)
                     binding.trayGroup.visibility = View.VISIBLE
+                    TransitionManager.beginDelayedTransition(binding.root, transition)
                 }
                 trayIsOpen = !trayIsOpen
             }
