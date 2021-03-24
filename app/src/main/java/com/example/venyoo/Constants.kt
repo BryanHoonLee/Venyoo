@@ -7,9 +7,11 @@ object Constants {
     const val FOURSQUARE_BASE_URL = "https://api.foursquare.com/v2/"
     const val FOURSQUARE_CLIENT_ID_PARAMETER = "client_id"
     const val FOURSQUARE_CLIENT_SECRET_PARAMETER = "client_secret"
+    const val FOURSQUARE_VERSION_PARAMETER = "v"
 
     const val FOURSQUARE_CLIENT_ID = "XCKC0ISLZW4UEE0VWQPB4WZL3RHZKP2PFX0GN1DDPAG1YHX2"
     const val FOURSQUARE_CLIENT_SECRET = "T5BRX5XRS1FCWSLETA5FTZHLY2ASJHFWW2I5AFNOLSHAQC0N"
+    const val FOURSQUARE_VERSION = "20210323"
 
     // https://developer.foursquare.com/docs/build-with-foursquare/categories/
     const val FOURSQUARE_CATEGORY_CONCERT_HALL = "5032792091d4c4b30a586d5c"

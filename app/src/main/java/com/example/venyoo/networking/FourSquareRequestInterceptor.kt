@@ -15,6 +15,7 @@ class FourSquareRequestInterceptor @Inject constructor(): Interceptor {
                 .newBuilder()
                 .addQueryParameter(Constants.FOURSQUARE_CLIENT_ID_PARAMETER, Constants.FOURSQUARE_CLIENT_ID)
                 .addQueryParameter(Constants.FOURSQUARE_CLIENT_SECRET_PARAMETER, Constants.FOURSQUARE_CLIENT_SECRET)
+                .addQueryParameter(Constants.FOURSQUARE_VERSION_PARAMETER, Constants.FOURSQUARE_VERSION)
                 .build()
 
         val request = chain.request()

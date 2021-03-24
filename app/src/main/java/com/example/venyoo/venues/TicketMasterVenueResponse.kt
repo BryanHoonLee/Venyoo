@@ -58,11 +58,8 @@ data class TicketMasterVenueLocation(
 @Parcelize
 data class TicketMasterVenueImage(
         val url: String = "",
-        val ratio: String = "",
         val width: Int = 0,
-        val height: Int = 0,
-        val fallback: Boolean = false,
-        val attribution: String = ""
+        val height: Int = 0
 ): Parcelable
 
 @Parcelize

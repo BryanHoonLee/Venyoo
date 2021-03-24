@@ -69,20 +69,16 @@ class VenueImageAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(image: TicketMasterVenueImage){
             if(imageList.isNotEmpty()){
-                Log.d("TEST123", "IMAGE")
                 binding.venueImageView.load(image.url){
                     Log.d("TEST123", "ahhh: ${image.url}")
                     listener(onSuccess = { request: ImageRequest, metadata: ImageResult.Metadata ->
-                        Log.d("TEST123", "SUCCESS")
                         binding.progressCircular.visibility = View.GONE
                     }, onCancel = {
-                        Log.d("TEST123", "CANCEL")
                     }, onError = { request: ImageRequest, throwable: Throwable ->
                         Log.d("TEST123", "${throwable.stackTrace}")
                     })
                 }
             }else{
-                Log.d("TEST123", "NO IMAGE")
                 binding.venueImageView.load(R.drawable.ic_launcher_foreground)
                 binding.progressCircular.visibility = View.GONE
             }

@@ -60,8 +60,6 @@ class VenueDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         venueViewModel.currentVenue.observe(viewLifecycleOwner, Observer { venue ->
-            /** VENUE IMAGES **/
-            adapter.bindData(venue.images)
 
             /** VENUE NAME **/
             binding.nameTextView.text = venue.name
@@ -175,6 +173,24 @@ class VenueDetailFragment : BaseFragment() {
                     TransitionManager.beginDelayedTransition(binding.root, transition)
                 }
                 trayIsOpen = !trayIsOpen
+            }
+
+            venueViewModel.fetchFourSquareVenue("${venue.location.latitude},${venue.location.longitude}")
+        })
+
+        venueViewModel.additionalCurrentVenueInfo.observe(viewLifecycleOwner, Observer{ venue ->
+            Log.d("TEST126", "${venue[0].id}")
+            venueViewModel.fetchFourSquarePhotos(venue[0].id)
+        })
+
+        venueViewModel.additionalCurrentVenuePhotos.observe(viewLifecycleOwner, Observer {
+            venueViewModel.fetchImages()
+        })
+
+        venueViewModel.imageList.observe(viewLifecycleOwner, Observer { images ->
+            if(images != null){
+                /** VENUE IMAGES **/
+                adapter.bindData(images)
             }
         })
     }
