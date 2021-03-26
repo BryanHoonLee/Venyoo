@@ -6,5 +6,6 @@
 
     <string name="location_permission_denied">Location Permission Must Be Enabled To Use This Feature</string>
     <string name="page_not_found">No Results Found\nTry Different Keywords</string>
+    <string name="no_upcoming_events">No Events Upcoming</string>
 
 </resources>

@@ -65,7 +65,7 @@ class VenueListFragment : BaseFragment() {
 
         venueViewModel.venueList.observe(viewLifecycleOwner, Observer { venues ->
             adapter.bindData(venues)
-            if(venues.size == 0){
+            if(venues.isEmpty()){
                 binding.pageNotFoundImageView.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
             }else{

@@ -206,7 +206,13 @@ class VenueDetailFragment : BaseFragment() {
             Log.d("EVENT", "eventList: ${events.size}")
             if(events != null){
                 venueEventAdapter.bindData(events)
+                if(events.isEmpty()){
+                    binding.noUpcomingEventsGroup.visibility = View.GONE
+                }else{
+                    binding.noUpcomingEventsGroup.visibility = View.VISIBLE
+                }
             }
+
         })
 
     }

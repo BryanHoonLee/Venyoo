@@ -286,7 +286,7 @@
             android:id="@+id/upcoming_events_text_view"
             style="@style/Theme.Venyoo"
             android:text="Upcoming Events"
-            android:textSize="22sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
@@ -304,15 +304,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/no_upcoming_events_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="no_upcoming_events_image_view, no_upcoming_events_text_view"/>
+
         <ImageView
-            android:id="@+id/no_events_upcoming_image_view"
+            android:id="@+id/no_upcoming_events_image_view"
             android:layout_width="0dp"
             android:layout_height="260dp"
             app:layout_constraintDimensionRatio="1:1"
-            android:src="@drawable/page_not_found"
+            android:src="@drawable/no_upcoming_events"
             app:layout_constraintTop_toBottomOf="@id/upcoming_events_text_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/no_upcoming_events_text_view"
+            android:text="@string/no_upcoming_events"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            style="@style/Theme.Venyoo"
+            app:layout_constraintBottom_toBottomOf="@id/no_upcoming_events_image_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
