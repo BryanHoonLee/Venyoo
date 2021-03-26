@@ -1,8 +1,7 @@
 package com.example.venyoo.networking
 
 import com.example.venyoo.Constants
-import com.example.venyoo.venues.FourSquareImageResponse
-import com.example.venyoo.venues.FourSquareVenueImageResponseObject
+import com.example.venyoo.venues.FourSquareVenueImageSchema
 import com.example.venyoo.venues.FourSquareVenueResponseSchema
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -28,6 +27,6 @@ interface FourSquareApi {
     @GET("venues/{VENUE_ID}/photos?limit=20")
     suspend fun fetchFourSquarePhotos(
         @Path(value = "VENUE_ID", encoded = true) venueId: String
-    ): FourSquareVenueImageResponseObject
+    ): FourSquareVenueImageSchema
 
 }

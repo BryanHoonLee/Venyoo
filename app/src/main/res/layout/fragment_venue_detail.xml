@@ -14,7 +14,6 @@
             android:id="@+id/venue_image_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline"
@@ -24,7 +23,7 @@
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25"
+            app:layout_constraintGuide_begin="160dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -304,6 +303,16 @@
             app:layout_constraintTop_toBottomOf="@id/upcoming_events_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/no_events_upcoming_image_view"
+            android:layout_width="0dp"
+            android:layout_height="260dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:src="@drawable/page_not_found"
+            app:layout_constraintTop_toBottomOf="@id/upcoming_events_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

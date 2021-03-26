@@ -15,18 +15,11 @@ class VenueRepository @Inject constructor(private val ticketMasterApi: TicketMas
         return ticketMasterApi.fetchVenuesByCoordinates(latLong)._embedded.venues
     }
 
-    suspend fun fetchVenueEvents(venueId: String, postalCode: String): List<TicketMasterEventResponse>{
-        return ticketMasterApi.fetchVenueEvents(venueId, postalCode)._embedded.events
-    }
-
     suspend fun fetchFourSquareVenue(latlng: String): List<FourSquareVenueResponse>{
         return fourSquareApi.fetchFourSquareVenue(latlng).response.venues
     }
 
     suspend fun fetchFourSquarePhotos(venueId: String): List<FourSquareImageItem>{
-        Log.d("TEST126", "repo: ${venueId}")
-        val test = fourSquareApi.fetchFourSquarePhotos(venueId)
-        Log.d("TEST129", "test: ${test}")
         return fourSquareApi.fetchFourSquarePhotos(venueId).response.photos.items
     }
 }

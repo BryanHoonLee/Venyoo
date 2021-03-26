@@ -19,7 +19,6 @@ interface TicketMasterApi {
 
     @GET("events?countryCode=US&radius=30&unit=miles")
     suspend fun fetchVenueEvents(
-        @Query("venueId") venueId: String,
-        @Query("postalCode") postalCode: String
+        @Query("venueId") venueId: String
     ): TicketMasterEventSchema
 }

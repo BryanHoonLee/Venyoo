@@ -33,31 +33,7 @@ class VenueImageAdapter(
     }
 
     override fun onBindViewHolder(holder: VenueImageViewHolder, position: Int) {
-//            if(imageList.isNotEmpty()){
-//                Log.d("TEST123", "IMAGE")
-//                holder.binding.venueImageView.load(imageList[position].url){
-//                    Log.d("TEST123", "${position}: ${imageList[position].url}")
-//                    listener(onSuccess = { request: ImageRequest, metadata: ImageResult.Metadata ->
-//                        Log.d("TEST123", "SUCCESS")
-//                        holder.binding.progressCircular.visibility = View.GONE
-//                    }, onCancel = {
-//                        Log.d("TEST123", "CANCEL")
-//                    }, onError = { request: ImageRequest, throwable: Throwable ->
-//                        Log.d("TEST123", "${throwable.stackTrace}")
-//                    })
-//                }
-//            }else{
-//                Log.d("TEST123", "NO IMAGE")
-//                holder.binding.venueImageView.load(R.drawable.ic_launcher_foreground)
-//                holder.binding.progressCircular.visibility = View.GONE
-//            }
         holder.bind(imageList[position])
-
-//        holder.itemView.setOnClickListener {
-//            onItemClicked(imageList[position])
-//        }
-
-
     }
 
     override fun getItemCount(): Int {

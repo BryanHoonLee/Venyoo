@@ -29,8 +29,10 @@ class VenueDetailFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
-    private lateinit var adapter: VenueImageAdapter
+    private lateinit var venueImageAdapter: VenueImageAdapter
+    private lateinit var venueEventAdapter: EventAdapter
     private lateinit var binding: FragmentVenueDetailBinding
     private var trayIsOpen = true
 
@@ -47,11 +49,17 @@ class VenueDetailFragment : BaseFragment() {
         binding = FragmentVenueDetailBinding.inflate(inflater)
         val view = binding.root
 
-        adapter = VenueImageAdapter { image ->
-            Toast.makeText(requireContext(), "IMAGE CLICKED", Toast.LENGTH_LONG).show()
+        venueImageAdapter = VenueImageAdapter { image ->
+            Toast.makeText(requireContext(), "${image.url} CLICKED", Toast.LENGTH_LONG).show()
         }
         binding.venueImageRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
-        binding.venueImageRecyclerView.adapter = adapter
+        binding.venueImageRecyclerView.adapter = venueImageAdapter
+
+        venueEventAdapter = EventAdapter { event ->
+            Toast.makeText(requireContext(), "Date: ${event.dates.start.dateTBA} | ${event.dates.start.dateTime} | ${event.name}: ${event._embedded.attractions[0].name} CLICKED", Toast.LENGTH_LONG).show()
+        }
+        binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.eventRecyclerView.adapter = venueEventAdapter
 
         return view
     }
@@ -175,11 +183,11 @@ class VenueDetailFragment : BaseFragment() {
                 trayIsOpen = !trayIsOpen
             }
 
+            eventViewModel.fetchVenueEvents(venue.id)
             venueViewModel.fetchFourSquareVenue("${venue.location.latitude},${venue.location.longitude}")
         })
 
         venueViewModel.additionalCurrentVenueInfo.observe(viewLifecycleOwner, Observer{ venue ->
-            Log.d("TEST126", "${venue[0].id}")
             venueViewModel.fetchFourSquarePhotos(venue[0].id)
         })
 
@@ -190,8 +198,16 @@ class VenueDetailFragment : BaseFragment() {
         venueViewModel.imageList.observe(viewLifecycleOwner, Observer { images ->
             if(images != null){
                 /** VENUE IMAGES **/
-                adapter.bindData(images)
+                venueImageAdapter.bindData(images)
             }
         })
+
+        eventViewModel.venueEventList.observe(viewLifecycleOwner, Observer { events ->
+            Log.d("EVENT", "eventList: ${events.size}")
+            if(events != null){
+                venueEventAdapter.bindData(events)
+            }
+        })
+
     }
 }

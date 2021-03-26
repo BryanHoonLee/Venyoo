@@ -15,6 +15,7 @@ data class TicketMasterEventEmbedded(
 
 @Parcelize
 data class TicketMasterEventResponse(
+    val _embedded: TicketMasterEventAttractionEmbedded = TicketMasterEventAttractionEmbedded(),
     val id: String = "",
     val name: String = "",
     val description: String = "",
@@ -26,6 +27,21 @@ data class TicketMasterEventResponse(
     val sales: TicketMasterEventSales = TicketMasterEventSales(),
     val info: String = "",
     val pleaseNote: String = ""
+): Parcelable
+
+@Parcelize
+data class TicketMasterEventAttractionEmbedded(
+    val attractions: List<TicketMasterEventAttraction> = emptyList()
+): Parcelable
+
+@Parcelize
+data class TicketMasterEventAttraction(
+    val id: String = "",
+    val name: String = "",
+    val description: String = "",
+    val additionalInfo: String = "",
+    val url: String = "",
+    val images: List<TicketMasterEventImage> = emptyList()
 ): Parcelable
 
 @Parcelize
@@ -43,7 +59,8 @@ data class TicketMasterEventImage(
 
 @Parcelize
 data class TicketMasterEventDates(
-    val dates: TicketMasterEventDateStart = TicketMasterEventDateStart()
+    val start: TicketMasterEventDateStart = TicketMasterEventDateStart(),
+    val status: TicketMasterEventDateStatus = TicketMasterEventDateStatus()
 ): Parcelable
 
 @Parcelize
@@ -53,6 +70,16 @@ data class TicketMasterEventDateStart(
     val dateTBA: Boolean = false,
     val noSpecificTime: Boolean = false
 ): Parcelable
+
+@Parcelize
+data class TicketMasterEventDateStatus(
+    val code: TicketMasterEventDateStatusCode = TicketMasterEventDateStatusCode.postponed
+): Parcelable
+
+
+enum class TicketMasterEventDateStatusCode(val codeName: String){
+    onsale("Onsale"), offsale("Offsale"), cancelled("Cancelled"), postponed("Postponed"), rescheduled("Rescheduled")
+}
 
 @Parcelize
 data class TicketMasterEventSales(

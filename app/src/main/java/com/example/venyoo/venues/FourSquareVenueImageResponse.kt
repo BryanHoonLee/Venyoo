@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class FourSquareVenueImageResponseObject(
+data class FourSquareVenueImageSchema(
     val response: FourSquareImageResponse = FourSquareImageResponse()
 ): Parcelable
 

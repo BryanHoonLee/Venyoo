@@ -38,13 +38,10 @@ class VenueViewModel @Inject constructor(
         get() = savedStateHandle.getLiveData(
             SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS
         )
-    val venueImageList: LiveData<List<TicketMasterVenueImage>>
-        get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_IMAGES)
+//    val venueImageList: LiveData<List<TicketMasterVenueImage>>
+//        get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_IMAGES)
 
-    val venueEventList: LiveData<List<TicketMasterEventResponse>>
-        get() = savedStateHandle.getLiveData(
-            SAVED_STATE_HANDLE_EVENTS
-        )
+
 
     val imageList = MediatorLiveData<List<TicketMasterVenueImage>>()
 
@@ -78,18 +75,14 @@ class VenueViewModel @Inject constructor(
                 return emptyList()
             }
 
-            Log.d("TEST125", "${additionalPhotos.size}")
-
             val transformFourSquareToTicketMasterImages =
                 additionalPhotos.map { photo ->
-                    Log.d("TEST123", "${photo.prefix}-${photo.suffix}")
                     TicketMasterVenueImage(
                         "${photo.prefix}${photo.width}x${photo.height}${photo.suffix}", photo.width, photo.height
                     )
                 }
 
             val combinedList =  currentPhotos  + transformFourSquareToTicketMasterImages
-            Log.d("TEST123", "size: ${combinedList.size}")
             return combinedList
         }
     }
@@ -105,8 +98,6 @@ class VenueViewModel @Inject constructor(
             savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
                 !response.images.isNullOrEmpty() || !response.social.twitter.handle.isNullOrEmpty() || !response.boxOfficeInfo.phoneNumberDetail.isNullOrEmpty()
             }
-
-//            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venueRepository.fetchVenues(venueName)
         }
     }
 
@@ -122,7 +113,6 @@ class VenueViewModel @Inject constructor(
 
     fun fetchFourSquareVenue(latlng: String) {
         viewModelScope.launch {
-            Log.d("TEST124", latlng)
             savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_VENUE] =
                 venueRepository.fetchFourSquareVenue(latlng)
         }
@@ -130,20 +120,8 @@ class VenueViewModel @Inject constructor(
 
     fun fetchFourSquarePhotos(venueId: String) {
         viewModelScope.launch {
-            Log.d("TEST127", "id: ${venueId}")
-            val list = venueRepository.fetchFourSquarePhotos(venueId)
-            Log.d("TEST127", "${list.size}")
             savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS] =
                 venueRepository.fetchFourSquarePhotos(venueId)
-        }
-
-//        savedStateHandle[SAVED_STATE_HANDLE_IMAGES] = fetchImages().value
-    }
-
-    fun fetchVenueEvents(venueId: String, postalCode: String) {
-        viewModelScope.launch {
-            savedStateHandle[SAVED_STATE_HANDLE_EVENTS] =
-                venueRepository.fetchVenueEvents(venueId, postalCode)
         }
     }
 }
