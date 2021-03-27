@@ -98,3 +98,9 @@ data class TicketMasterEventSalesPresales(
     val startDateTime: String = "",
     val url: String = ""
 ): Parcelable
+
+data class TicketMasterConvertedLocalData(
+    val month: String = "N/A",
+    val day: String = "",
+    val year: String = ""
+)

@@ -204,13 +204,14 @@ class VenueDetailFragment : BaseFragment() {
 
         eventViewModel.venueEventList.observe(viewLifecycleOwner, Observer { events ->
             Log.d("EVENT", "eventList: ${events.size}")
-            if(events != null){
+            if(!events.isNullOrEmpty()){
                 venueEventAdapter.bindData(events)
-                if(events.isEmpty()){
-                    binding.noUpcomingEventsGroup.visibility = View.GONE
-                }else{
-                    binding.noUpcomingEventsGroup.visibility = View.VISIBLE
-                }
+                binding.eventRecyclerView.visibility = View.VISIBLE
+                binding.noUpcomingEventsGroup.visibility = View.GONE
+            }else{
+                binding.eventRecyclerView.visibility = View.GONE
+                binding.noUpcomingEventsGroup.visibility = View.VISIBLE
+
             }
 
         })

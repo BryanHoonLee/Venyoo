@@ -17,14 +17,29 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/event_date_text_view"
-            android:text="Mar 21"
+            android:id="@+id/event_month_text_view"
+            android:text="Mar"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/attraction_name_text_view"
+            app:layout_constraintBottom_toBottomOf="@id/attraction_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_day_text_view"
+            android:text="21"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/attraction_name_text_view"
+            app:layout_constraintStart_toStartOf="@id/event_month_text_view"
+            app:layout_constraintEnd_toEndOf="@id/event_month_text_view"
+            app:layout_constraintTop_toTopOf="@id/event_status_text_view"
             app:layout_constraintBottom_toBottomOf="@id/event_status_text_view"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
@@ -36,7 +51,8 @@
             android:textStyle="bold"
             android:maxLines="1"
             style="@style/Theme.Venyoo"
-            app:layout_constraintStart_toEndOf="@id/event_date_text_view"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toEndOf="@id/event_month_text_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
