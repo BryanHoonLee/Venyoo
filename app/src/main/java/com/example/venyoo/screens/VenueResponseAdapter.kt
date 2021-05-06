@@ -42,7 +42,7 @@ class VenueResponseAdapter(
 
         holder.cityStatePostal.text = "${currentVenue.city.name}, ${currentVenue.state.stateCode} ${currentVenue.postalCode}"
 
-        if(currentVenue.distance == null || currentVenue.distance <= 0.0) holder.distance.text = "" else holder.distance.text = "${currentVenue.distance} mi"
+        if(currentVenue.distance == null || currentVenue.distance <= 0.0) holder.distance.visibility = View.GONE else holder.distance.text = "${currentVenue.distance} mi"
 
         if(currentVenue.images.isNotEmpty()){
             holder.venueImage.load(currentVenue.images[0].url){

@@ -46,12 +46,10 @@ class VenueImageAdapter(
         fun bind(image: TicketMasterVenueImage){
             if(imageList.isNotEmpty()){
                 binding.venueImageView.load(image.url){
-                    Log.d("TEST123", "ahhh: ${image.url}")
                     listener(onSuccess = { request: ImageRequest, metadata: ImageResult.Metadata ->
                         binding.progressCircular.visibility = View.GONE
                     }, onCancel = {
                     }, onError = { request: ImageRequest, throwable: Throwable ->
-                        Log.d("TEST123", "${throwable.stackTrace}")
                     })
                 }
             }else{

@@ -24,12 +24,38 @@
             tools:layout="@layout/fragment_venue_result_list">
             <action
                 android:id="@+id/action_venue_list_fragment_to_venueDetailFragment"
-                app:destination="@id/venueDetailFragment" />
+                app:destination="@id/event_navigation" />
         </fragment>
-        <fragment
-            android:id="@+id/venueDetailFragment"
-            android:name="com.example.venyoo.screens.VenueDetailFragment"
-            android:label="VenueDetailFragment"
-            tools:layout="@layout/fragment_venue_detail" />
+<!--        <fragment-->
+<!--            android:id="@+id/venueDetailFragment"-->
+<!--            android:name="com.example.venyoo.screens.VenueDetailFragment"-->
+<!--            android:label="VenueDetailFragment"-->
+<!--            tools:layout="@layout/fragment_venue_detail" >-->
+
+<!--        </fragment>-->
+
+        <navigation android:id="@+id/event_navigation"
+            app:startDestination="@id/venueDetailFragment">
+            <fragment
+                android:id="@+id/venueDetailFragment"
+                android:name="com.example.venyoo.screens.VenueDetailFragment"
+                android:label="VenueDetailFragment"
+                tools:layout="@layout/fragment_venue_detail" >
+
+                <action
+                    android:id="@+id/action_venueDetailFragment_to_eventDetailFragment"
+                    app:destination="@id/eventDetailFragment" />
+            </fragment>
+
+            <fragment
+                android:id="@+id/eventDetailFragment"
+                android:name="com.example.venyoo.screens.EventDetailFragment"
+                android:label="VenueDetailFragment"
+                tools:layout="@layout/fragment_event_detail" />
+
+        </navigation>
     </navigation>
+
+
+
 </navigation>

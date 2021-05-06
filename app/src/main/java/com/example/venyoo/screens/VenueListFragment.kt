@@ -1,12 +1,9 @@
 package com.example.venyoo.screens
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -88,7 +85,7 @@ class VenueListFragment : BaseFragment() {
 
     private fun navigateToVenueDetailFragment(){
             if (findNavController().currentDestination?.id != R.id.venueDetailFragment) {
-                findNavController().navigate(R.id.action_venue_list_fragment_to_venueDetailFragment)
+                findNavController().navigate(VenueListFragmentDirections.actionVenueListFragmentToVenueDetailFragment())
         }
     }
 }

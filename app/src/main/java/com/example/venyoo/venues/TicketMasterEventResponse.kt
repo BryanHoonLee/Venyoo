@@ -25,10 +25,15 @@ data class TicketMasterEventResponse(
     val images: List<TicketMasterEventImage> = emptyList(),
     val dates: TicketMasterEventDates = TicketMasterEventDates(),
     val sales: TicketMasterEventSales = TicketMasterEventSales(),
+    val seatmap: SeatMap = SeatMap(),
     val info: String = "",
     val pleaseNote: String = ""
 ): Parcelable
 
+@Parcelize
+data class SeatMap(
+    val staticUrl: String = ""
+): Parcelable
 @Parcelize
 data class TicketMasterEventAttractionEmbedded(
     val attractions: List<TicketMasterEventAttraction> = emptyList()

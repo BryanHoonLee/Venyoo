@@ -13,10 +13,8 @@ class VenueViewModel @Inject constructor(
 
     companion object {
         const val SAVED_STATE_HANDLE_VENUE_LIST = "venues"
-        const val SAVED_STATE_HANDLE_VENUE = "venue"
-        const val SAVED_STATE_HANDLE_EVENTS = "events"
+        const val SAVED_STATE_HANDLE_CURRENT_VENUE = "current_venue"
         const val SAVED_STATE_HANDLE_ADDITIONAL_VENUE = "additional_venue_info"
-        const val SAVED_STATE_HANDLE_IMAGES = "images"
         const val SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS = "photos"
     }
 
@@ -28,7 +26,7 @@ class VenueViewModel @Inject constructor(
 
     val currentVenue: LiveData<TicketMasterVenueResponse>
         get() = savedStateHandle.getLiveData(
-            SAVED_STATE_HANDLE_VENUE
+            SAVED_STATE_HANDLE_CURRENT_VENUE
         )
     val additionalCurrentVenueInfo: LiveData<List<FourSquareVenueResponse>>
         get() = savedStateHandle.getLiveData(
@@ -38,10 +36,6 @@ class VenueViewModel @Inject constructor(
         get() = savedStateHandle.getLiveData(
             SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS
         )
-//    val venueImageList: LiveData<List<TicketMasterVenueImage>>
-//        get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_IMAGES)
-
-
 
     val imageList = MediatorLiveData<List<TicketMasterVenueImage>>()
 
@@ -88,7 +82,7 @@ class VenueViewModel @Inject constructor(
     }
 
     fun updateCurrentVenue(venue: TicketMasterVenueResponse) {
-        savedStateHandle[SAVED_STATE_HANDLE_VENUE] = venue
+        savedStateHandle[SAVED_STATE_HANDLE_CURRENT_VENUE] = venue
     }
 
     fun fetchVenues(venueName: String) {

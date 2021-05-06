@@ -5,14 +5,13 @@
     android:id="@+id/cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     android:clickable="true"
     android:elevation="8dp"
     android:focusable="true"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,10 +20,11 @@
             android:text="Mar"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginStart="8dp"
+            style="@style/Theme.Venyoo"
+            android:gravity="center_vertical|start"
+            android:layout_marginEnd="8dp"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/attraction_name_text_view"
             app:layout_constraintBottom_toBottomOf="@id/attraction_name_text_view"
             android:layout_width="wrap_content"
@@ -33,14 +33,25 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/event_day_text_view"
             android:text="21"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintDimensionRatio="1:1"
+            style="@style/Theme.Venyoo"
             app:layout_constraintStart_toStartOf="@id/event_month_text_view"
             app:layout_constraintEnd_toEndOf="@id/event_month_text_view"
             app:layout_constraintTop_toTopOf="@id/event_status_text_view"
             app:layout_constraintBottom_toBottomOf="@id/event_status_text_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <ImageView
+            android:id="@+id/event_image_view"
+            app:layout_constraintDimensionRatio="1:1"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
 
@@ -50,25 +61,29 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:maxLines="1"
+            android:ellipsize="end"
             style="@style/Theme.Venyoo"
-            android:layout_marginStart="24dp"
-            app:layout_constraintStart_toEndOf="@id/event_month_text_view"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="18dp"
+            app:layout_constraintStart_toEndOf="@id/event_image_view"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/event_month_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/event_status_text_view"
-            android:text="Attraction"
-            android:textSize="18sp"
-            android:maxLines="1"
             style="@style/Theme.Venyoo"
-            app:layout_constraintStart_toStartOf="@id/attraction_name_text_view"
-            app:layout_constraintEnd_toEndOf="@id/attraction_name_text_view"
-            app:layout_constraintTop_toBottomOf="@id/attraction_name_text_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginBottom="8dp"
+            android:text="Cancelled"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/attraction_name_text_view"
+            app:layout_constraintStart_toStartOf="@id/attraction_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/attraction_name_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

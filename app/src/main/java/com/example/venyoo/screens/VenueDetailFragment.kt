@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
@@ -29,7 +30,7 @@ class VenueDetailFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
-    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.event_navigation) { viewModelFactory }
 
     private lateinit var venueImageAdapter: VenueImageAdapter
     private lateinit var venueEventAdapter: EventAdapter
@@ -56,7 +57,8 @@ class VenueDetailFragment : BaseFragment() {
         binding.venueImageRecyclerView.adapter = venueImageAdapter
 
         venueEventAdapter = EventAdapter { event ->
-            Toast.makeText(requireContext(), "Date: ${event.dates.start.dateTBA} | ${event.dates.start.dateTime} | ${event.name}: ${event._embedded.attractions[0].name} CLICKED", Toast.LENGTH_LONG).show()
+            eventViewModel.updateCurrentEvent(event)
+            navigateToEventDetailFragment()
         }
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.eventRecyclerView.adapter = venueEventAdapter
@@ -74,7 +76,7 @@ class VenueDetailFragment : BaseFragment() {
 
             /** DISTANCE **/
             if (venue.distance == null || venue.distance <= 0.0) {
-                binding.distanceTextView.text = ""
+                binding.distanceTextView.visibility = View.GONE
             } else binding.distanceTextView.text = "${venue.distance} mi"
 
             /** TWITTER **/
@@ -216,5 +218,11 @@ class VenueDetailFragment : BaseFragment() {
 
         })
 
+    }
+
+    private fun navigateToEventDetailFragment(){
+        if(findNavController().currentDestination?.id != R.id.eventDetailFragment){
+            findNavController().navigate(VenueDetailFragmentDirections.actionVenueDetailFragmentToEventDetailFragment())
+        }
     }
 }

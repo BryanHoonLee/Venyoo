@@ -14,7 +14,6 @@
             android:id="@+id/venue_image_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -299,6 +298,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/event_recycler_view"
             android:visibility="invisible"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/upcoming_events_text_view"
@@ -328,12 +328,13 @@
             android:textSize="24sp"
             android:textStyle="bold"
             style="@style/Theme.Venyoo"
-            app:layout_constraintBottom_toBottomOf="@id/no_upcoming_events_image_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintBottom_toBottomOf="@id/no_upcoming_events_image_view"
+            app:layout_constraintStart_toStartOf="@id/no_upcoming_events_image_view"
+            app:layout_constraintTop_toTopOf="@id/no_upcoming_events_image_view"
+            app:layout_constraintEnd_toEndOf="@id/no_upcoming_events_image_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

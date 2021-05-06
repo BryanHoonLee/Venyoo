@@ -3,7 +3,6 @@ package com.example.venyoo.screens
 import android.Manifest
 import android.content.IntentSender
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -142,9 +141,7 @@ class SearchVenueFragment : BaseFragment() {
     }
 
     private fun navigateToVenueListFragment() {
-        if (findNavController().currentDestination?.id != R.id.venue_list_fragment) {
-            findNavController().navigate(R.id.action_fragment_search_venue_to_venueListFragment)
-        }
+            findNavController().navigate(SearchVenueFragmentDirections.actionFragmentSearchVenueToVenueListFragment())
     }
 
     /**
