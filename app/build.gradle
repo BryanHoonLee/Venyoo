@@ -89,6 +89,13 @@ dependencies {
     // Facebook Shimmer Library
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    // Ticket View
+    implementation 'com.vipulasri:ticketview:1.1.2'
+
+    // QR Generator
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'com.google.zxing:core:3.3.2'
+
     implementation 'androidx.activity:activity-ktx:1.2.0-rc01'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

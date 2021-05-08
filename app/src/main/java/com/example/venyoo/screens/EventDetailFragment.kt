@@ -5,11 +5,13 @@ import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import coil.load
@@ -17,6 +19,7 @@ import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentEventDetailBinding
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
+import com.google.zxing.WriterException
 import javax.inject.Inject
 
 class EventDetailFragment: BaseFragment() {
@@ -88,9 +91,33 @@ class EventDetailFragment: BaseFragment() {
 //            val splitTimeIn24HourFormat = timeIn24HourFormat.split(":")
 //            val hourConvertedToPST = splitTimeIn24HourFormat[0].toInt() - 8
             if(event.dates.start.noSpecificTime || startTime.isNullOrEmpty()){
-                binding.eventStartTime.text = resources.getString(R.string.no_start_time_declared)
+                binding.eventStartTimeTextView.text = resources.getString(R.string.no_start_time_declared)
             }else{
-                binding.eventStartTime.text = timeIn24HourFormat
+                binding.eventStartTimeTextView.text = timeIn24HourFormat
+            }
+
+            /** Event URL QR CODE **/
+            val qrgEncoder = QRGEncoder(event._embedded.attractions[0].url, null, QRGContents.Type.TEXT, 500)
+            Log.d("TEST", event._embedded.attractions[0].url)
+            qrgEncoder.colorWhite = ContextCompat.getColor(requireContext(), R.color.white)
+            qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.orange)
+            try{
+                val qrBitmap = qrgEncoder.bitmap
+                binding.qrCodeImageView.load(qrBitmap)
+            } catch (e: WriterException){
+                Log.v("EventDetailFragmentQRGen", e.toString())
+            }
+
+            /** Event Price Range **/
+            if(!event.priceRanges.isNullOrEmpty()) {
+                val range = event.priceRanges[0]
+                if (range.min == null || range.max == null) {
+                    binding.eventPriceTextView.text = "Price TBA"
+                } else {
+                    binding.eventPriceTextView.text = "$${range.min} - $${range.max}"
+                }
+            }else{
+                binding.eventPriceTextView.text = "Price TBA"
             }
 
             /** EVENT DESCRIPTION **/

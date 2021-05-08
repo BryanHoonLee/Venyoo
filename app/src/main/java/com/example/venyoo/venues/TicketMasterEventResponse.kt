@@ -25,6 +25,7 @@ data class TicketMasterEventResponse(
     val images: List<TicketMasterEventImage> = emptyList(),
     val dates: TicketMasterEventDates = TicketMasterEventDates(),
     val sales: TicketMasterEventSales = TicketMasterEventSales(),
+    val priceRanges: List<TicketMasterPriceRanges> = emptyList(),
     val seatmap: SeatMap = SeatMap(),
     val info: String = "",
     val pleaseNote: String = ""
@@ -102,6 +103,12 @@ data class TicketMasterEventSalesPublic(
 data class TicketMasterEventSalesPresales(
     val startDateTime: String = "",
     val url: String = ""
+): Parcelable
+
+@Parcelize
+data class TicketMasterPriceRanges(
+    val min: Double = 0.0,
+    val max: Double = 0.0
 ): Parcelable
 
 data class TicketMasterConvertedLocalData(

@@ -62,11 +62,24 @@ class EventAdapter(
             }
 
             val convertedDate = ticketMasterLocalDateConverter(event.dates.start.localDate)
-            binding.eventMonthTextView.text = convertedDate.month
-            binding.eventDayTextView.text = convertedDate.day
+            binding.eventDateTextView.text = "${convertedDate.month} ${convertedDate.day}"
             if (event._embedded.attractions.isNotEmpty()) {
                 binding.attractionNameTextView.text = event._embedded.attractions[0].name
             }
+
+            if(!event.priceRanges.isNullOrEmpty()) {
+                val priceRange = event.priceRanges[0]
+                if (priceRange.min < 45) {
+                    binding.priceRangeTextView.text = "$"
+                } else if (priceRange.min >= 45 && priceRange.min < 90) {
+                    binding.priceRangeTextView.text = "$$"
+                } else {
+                    binding.priceRangeTextView.text = "$$$"
+                }
+            }else{
+                binding.priceRangeTextView.text = ""
+            }
+
             val eventStatus = event.dates.status.code
             if (eventStatus != null) {
                 binding.eventStatusTextView.text = eventStatus.codeName

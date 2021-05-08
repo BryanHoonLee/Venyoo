@@ -2,6 +2,7 @@
 
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,18 +30,51 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/guideline"/>
 
+        <com.vipulasri.ticketview.TicketView
+            android:id="@+id/ticket_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/test"
+            app:ticketBackgroundColor="@color/lighter_dark_background"
+            app:ticketBorderColor="@color/orange"
+            app:ticketBorderWidth="6dp"
+            app:ticketDividerPadding="0dp"
+            app:ticketDividerType="dash"
+            app:ticketElevation="14dp"
+            app:ticketOrientation="horizontal"
+            app:ticketScallopPositionPercent="70"
+            app:ticketScallopRadius="10dp"
+            app:ticketShowBorder="true"
+            app:ticketShowDivider="true"/>
+
+        <View
+            android:id="@+id/test"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="120dp"
+            android:background="@color/line_divider"
+            app:layout_constraintStart_toStartOf="@id/ticket_view"
+            app:layout_constraintEnd_toEndOf="@id/ticket_view"
+            app:layout_constraintTop_toBottomOf="@id/qr_code_image_view"/>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/event_month_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:gravity="center_horizontal|top"
             android:text="Mar"
             android:textSize="22sp"
             android:textStyle="bold"
             style="@style/Theme.Venyoo"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ticket_view"
             app:layout_constraintTop_toTopOf="@id/attraction_name_text_view" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -63,7 +97,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|top"
             android:text="2021"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/event_day_text_view"
             app:layout_constraintStart_toStartOf="@id/event_day_text_view"
@@ -75,14 +109,15 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_width="0dp"
+            android:maxLines="2"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
             style="@style/Theme.Venyoo"
             app:layout_constraintStart_toEndOf="@id/event_month_text_view"
-            app:layout_constraintTop_toBottomOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/ticket_view"
+            app:layout_constraintEnd_toEndOf="@id/ticket_view"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/event_status_text_view"
@@ -97,24 +132,48 @@
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/event_start_time"
+            android:id="@+id/event_start_time_text_view"
+            style="@style/Theme.Venyoo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
             android:text="7:30pm PST"
             android:textSize="18sp"
-            style="@style/Theme.Venyoo"
-            app:layout_constraintTop_toBottomOf="@id/event_status_text_view"
-            app:layout_constraintStart_toStartOf="@id/event_status_text_view"
             app:layout_constraintEnd_toEndOf="@id/event_status_text_view"
+            app:layout_constraintStart_toStartOf="@id/event_status_text_view"
+            app:layout_constraintTop_toBottomOf="@id/event_status_text_view" />
+
+        <ImageView
+            android:id="@+id/qr_code_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@+id/event_start_time_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/event_start_time_text_view" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_price_text_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="$50-$75"
+            android:textSize="14sp"
+            android:maxLines="1"
+            style="@style/Theme.Venyoo"
+            app:layout_constraintStart_toEndOf="@id/qr_code_image_view"
+            app:layout_constraintTop_toTopOf="@id/qr_code_image_view"
+            app:layout_constraintEnd_toEndOf="@id/event_start_time_text_view"/>
 
 
         <View
-            android:id="@+id/event_start_time_divider"
+            android:id="@+id/ticket_view_divider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/vertical_margin"
             android:background="@color/line_divider"
-            app:layout_constraintTop_toBottomOf="@id/event_start_time"
+            app:layout_constraintTop_toBottomOf="@id/ticket_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -122,7 +181,6 @@
             android:id="@+id/event_info_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:adjustViewBounds="true"
             android:src="@drawable/ic_outline_info_24"
             app:layout_constraintBottom_toBottomOf="@id/event_info_text_view"
@@ -146,7 +204,7 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="@id/event_status_text_view"
             app:layout_constraintStart_toEndOf="@id/event_info_icon"
-            app:layout_constraintTop_toBottomOf="@+id/event_start_time_divider" />
+            app:layout_constraintTop_toBottomOf="@+id/ticket_view_divider" />
 
         <View
             android:id="@+id/event_info_divider"
