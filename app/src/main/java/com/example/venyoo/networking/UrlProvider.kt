@@ -15,4 +15,9 @@ class UrlProvider @Inject constructor(){
     ): String{
         return Constants.TICKETMASTER_BASE_URL
     }
+
+    fun ticketMasterWebsiteUrl(
+    ): String{
+        return Constants.TICKETMASTER_WEBSITE_URL
+    }
 }

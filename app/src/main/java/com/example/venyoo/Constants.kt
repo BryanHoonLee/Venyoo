@@ -33,4 +33,6 @@ object Constants {
     const val TICKETMASTER_CLIENT_ID = "4zFQzMTW57jLb8nfWCbJ4rlIyX5NnBAA"
     const val TICKETMASTER_CLIENT_SECRET = "eE6TTccaGQZ0BoCA"
 
+    const val TICKETMASTER_WEBSITE_URL = "https://ticketmaster.com"
+
 }

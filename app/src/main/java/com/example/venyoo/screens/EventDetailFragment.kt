@@ -15,8 +15,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import coil.load
+import coil.transform.BlurTransformation
 import com.example.venyoo.R
 import com.example.venyoo.databinding.FragmentEventDetailBinding
+import com.example.venyoo.networking.UrlProvider
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import com.google.zxing.WriterException
@@ -30,6 +32,9 @@ class EventDetailFragment: BaseFragment() {
     private val eventViewModel: EventViewModel by navGraphViewModels(R.id.event_navigation){ viewModelFactory}
 
     private lateinit var binding: FragmentEventDetailBinding
+
+    @Inject
+    lateinit var urlProvider: UrlProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,19 +58,8 @@ class EventDetailFragment: BaseFragment() {
         eventViewModel.currentEvent.observe(viewLifecycleOwner, Observer{ event ->
 
             /** EVENT IMAGE **/
-            binding.eventImageView.load(event.images[0].url)
-            val url = event._embedded.attractions[0].url
-            binding.eventImageView.setOnClickListener {
-                try {
-                    val intent = Intent("android.intent.action.Main")
-                    intent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"))
-                    intent.addCategory("android.intent.category.LAUNCHER")
-                    intent.setData(Uri.parse(url))
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    startActivity(intent)
-                }
+            binding.eventImageView.load(event.images[0].url){
+                transformations(BlurTransformation(requireContext(), 10f))
             }
 
             /** EVENT NAME **/
@@ -103,10 +97,10 @@ class EventDetailFragment: BaseFragment() {
             }
 
             /** Event URL QR CODE **/
-            val qrgEncoder = QRGEncoder(event._embedded.attractions[0].url, null, QRGContents.Type.TEXT, 500)
+            val qrgEncoder = QRGEncoder(event._embedded.attractions[0].url, null, QRGContents.Type.TEXT, 800)
             Log.d("TEST", event._embedded.attractions[0].url)
             qrgEncoder.colorWhite = ContextCompat.getColor(requireContext(), R.color.white)
-            qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.orange)
+            qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.brand_secondary)
             try{
                 val qrBitmap = qrgEncoder.bitmap
                 binding.qrCodeImageView.load(qrBitmap)
@@ -128,6 +122,24 @@ class EventDetailFragment: BaseFragment() {
                 }
             }else{
                 binding.eventPriceTextView.text = "Price TBA"
+            }
+
+            /** Event Purchase Button **/
+            binding.eventPurchaseTicketButton.setOnClickListener {
+                var url = event._embedded.attractions[0].url
+                if(url.isNullOrBlank()){
+                    url = urlProvider.ticketMasterWebsiteUrl()
+                }
+                try {
+                    val intent = Intent("android.intent.action.Main")
+                    intent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"))
+                    intent.addCategory("android.intent.category.LAUNCHER")
+                    intent.setData(Uri.parse(url))
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                }
             }
 
             /** EVENT DESCRIPTION **/
