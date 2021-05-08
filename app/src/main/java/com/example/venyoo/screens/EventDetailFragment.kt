@@ -86,14 +86,20 @@ class EventDetailFragment: BaseFragment() {
 
             /** EVENT START TIME **/
             val startTime = event.dates.start.dateTime
-            val splitTime = startTime.split("T")
-            val timeIn24HourFormat = "${splitTime[1].dropLast(1)} UTC"
+            if(!startTime.isNullOrBlank()) {
+                val splitTime = startTime.split("T")
+                val timeIn24HourFormat = "${splitTime[1].dropLast(1)} UTC"
 //            val splitTimeIn24HourFormat = timeIn24HourFormat.split(":")
 //            val hourConvertedToPST = splitTimeIn24HourFormat[0].toInt() - 8
-            if(event.dates.start.noSpecificTime || startTime.isNullOrEmpty()){
-                binding.eventStartTimeTextView.text = resources.getString(R.string.no_start_time_declared)
+                if (event.dates.start.noSpecificTime || startTime.isNullOrEmpty()) {
+                    binding.eventStartTimeTextView.text =
+                        resources.getString(R.string.no_start_time_declared)
+                } else {
+                    binding.eventStartTimeTextView.text = timeIn24HourFormat
+                }
             }else{
-                binding.eventStartTimeTextView.text = timeIn24HourFormat
+                binding.eventStartTimeTextView.text =
+                    resources.getString(R.string.no_start_time_declared)
             }
 
             /** Event URL QR CODE **/
@@ -114,7 +120,11 @@ class EventDetailFragment: BaseFragment() {
                 if (range.min == null || range.max == null) {
                     binding.eventPriceTextView.text = "Price TBA"
                 } else {
-                    binding.eventPriceTextView.text = "$${range.min} - $${range.max}"
+                    if(range.min % 1.0 == 0.0){
+                        binding.eventPriceTextView.text = "$${range.min.toInt()} - $${range.max.toInt()}"
+                    }else{
+                        binding.eventPriceTextView.text = "$${range.min}0 - $${range.max}0"
+                    }
                 }
             }else{
                 binding.eventPriceTextView.text = "Price TBA"
