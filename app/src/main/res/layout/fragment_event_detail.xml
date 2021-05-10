@@ -3,6 +3,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@id/ticket_view_bottom_guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,16 +40,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/event_image_view"
         app:layout_constraintVertical_bias="0.0"
-        app:ticketBackgroundAfterDivider="@color/brand_secondary"
-        app:ticketBackgroundColor="@color/brand_primary"
-        app:ticketBorderColor="@color/brand_secondary"
+        app:ticketBackgroundAfterDivider="@color/brand_primary_700"
+        app:ticketBackgroundColor="@color/brand_secondary"
+        app:ticketBorderColor="@color/brand_primary_700"
         app:ticketBorderWidth="6dp"
         app:ticketDividerColor="@color/white"
         app:ticketDividerPadding="0dp"
         app:ticketDividerType="dash"
-        app:ticketElevation="14dp"
+        app:ticketElevation="22dp"
         app:ticketOrientation="horizontal"
-        app:ticketScallopPositionPercent="70"
+        app:ticketScallopPositionPercent="75"
         app:ticketScallopRadius="10dp"
         app:ticketShowBorder="true"
         app:ticketShowDivider="true" />
@@ -106,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="18dp"
         android:maxLines="2"
         android:text="Tame Impala"
         android:textSize="24sp"
@@ -116,11 +117,12 @@
         app:layout_constraintTop_toTopOf="@id/ticket_view" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/event_status_text_view"
+        android:id="@+id/event_price_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:text="Cancelled"
+        android:text="$50-$75"
+        android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/attraction_name_text_view"
         app:layout_constraintStart_toStartOf="@id/attraction_name_text_view"
@@ -133,31 +135,21 @@
         android:maxLines="1"
         android:text="7:30pm PST"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/event_status_text_view"
-        app:layout_constraintStart_toStartOf="@id/event_status_text_view"
-        app:layout_constraintTop_toBottomOf="@id/event_status_text_view" />
+        app:layout_constraintEnd_toEndOf="@id/event_price_text_view"
+        app:layout_constraintStart_toStartOf="@id/event_price_text_view"
+        app:layout_constraintTop_toBottomOf="@id/event_price_text_view" />
 
     <ImageView
         android:id="@+id/qr_code_image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="@+id/event_month_text_view"
+        app:layout_constraintEnd_toStartOf="@id/event_setlist_button"
+        app:layout_constraintStart_toStartOf="@+id/event_day_text_view"
         app:layout_constraintTop_toBottomOf="@+id/event_start_time_text_view" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/event_price_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:maxLines="1"
-        android:text="$50-$75"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/event_start_time_text_view"
-        app:layout_constraintStart_toEndOf="@id/qr_code_image_view"
-        app:layout_constraintTop_toTopOf="@id/qr_code_image_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/event_setlist_button"
@@ -167,24 +159,45 @@
         android:elevation="16dp"
         android:maxLines="1"
         android:text="Setlist"
-        android:textColor="@color/brand_secondary"
+        android:textColor="@color/brand_primary_700"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="6dp"
-        app:layout_constraintBottom_toBottomOf="@id/qr_code_image_view"
-        app:layout_constraintEnd_toEndOf="@+id/ticket_view"
-        app:layout_constraintStart_toStartOf="@+id/event_price_text_view" />
+        app:layout_constraintEnd_toEndOf="@+id/event_start_time_text_view"
+        app:layout_constraintStart_toEndOf="@+id/qr_code_image_view"
+        app:layout_constraintTop_toTopOf="@+id/qr_code_image_view"
+        app:rippleColor="@color/brand_primary_700" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/event_calendar_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:elevation="16dp"
+        android:text="Save"
+        android:textColor="@color/brand_primary_700"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="6dp"
+        app:icon="@drawable/ic_baseline_calendar_24"
+        app:iconGravity="end"
+        app:iconTint="@color/brand_primary_700"
+        app:layout_constraintBottom_toBottomOf="@+id/qr_code_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/event_setlist_button"
+        app:layout_constraintStart_toStartOf="@+id/event_setlist_button"
+        app:rippleColor="@color/brand_primary_700" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/event_purchase_ticket_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="18dp"
         android:backgroundTint="@color/white"
         android:elevation="16dp"
         android:maxLines="1"
         android:text="Tickets"
-        android:textColor="@color/brand_secondary"
+        app:rippleColor="@color/brand_primary_700"
+        android:textColor="@color/brand_primary_700"
         android:textSize="24sp"
         android:textStyle="bold"
         app:cornerRadius="6dp"
@@ -212,10 +225,12 @@
         android:elevation="16dp"
         android:insetLeft="0dp"
         android:insetRight="0dp"
+        android:paddingStart="12dp"
         app:cornerRadius="6dp"
         app:icon="@drawable/ic_baseline_share_24"
         app:iconGravity="start"
-        app:iconTint="@color/brand_secondary"
+        app:rippleColor="@color/brand_primary_700"
+        app:iconTint="@color/brand_primary_700"
         app:layout_constraintBottom_toBottomOf="@id/event_purchase_ticket_button"
         app:layout_constraintEnd_toEndOf="@id/ticket_view"
         app:layout_constraintHorizontal_weight="20"
@@ -231,6 +246,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ticket_view" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/brand_secondary_low_alpha"
+        android:alpha="20"
+        app:layout_constraintStart_toStartOf="@id/ticket_view_divider"
+        app:layout_constraintEnd_toEndOf="@id/ticket_view_divider"
+        app:layout_constraintTop_toBottomOf="@id/ticket_view_divider"
+        app:layout_constraintBottom_toTopOf="@id/event_info_divider"/>
 
     <ImageView
         android:id="@+id/event_info_icon"
@@ -248,6 +273,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="@dimen/vertical_margin"
         android:clickable="true"
         android:ellipsize="end"
@@ -255,7 +281,7 @@
         android:maxLines="3"
         android:text="20th Annual Music Festival Award Performer Performing Here Live For The 20th Time."
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@id/event_status_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/event_info_icon"
         app:layout_constraintTop_toBottomOf="@+id/ticket_view_divider" />
 

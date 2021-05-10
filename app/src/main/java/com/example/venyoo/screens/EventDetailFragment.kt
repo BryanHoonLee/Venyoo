@@ -70,13 +70,13 @@ class EventDetailFragment: BaseFragment() {
             binding.eventMonthTextView.text = convertedDate.month
             binding.eventDayTextView.text = convertedDate.day
 
-            /** EVENT STATUS **/
-            val eventStatus = event.dates.status.code
-            if(eventStatus != null) {
-                binding.eventStatusTextView.text = eventStatus.codeName
-            }else{
-                binding.eventStatusTextView.text = ""
-            }
+//            /** EVENT STATUS **/
+//            val eventStatus = event.dates.status.code
+//            if(eventStatus != null) {
+//                binding.eventStatusTextView.text = eventStatus.codeName
+//            }else{
+//                binding.eventStatusTextView.text = ""
+//            }
 
             /** EVENT START TIME **/
             val startTime = event.dates.start.dateTime
@@ -100,7 +100,7 @@ class EventDetailFragment: BaseFragment() {
             val qrgEncoder = QRGEncoder(event._embedded.attractions[0].url, null, QRGContents.Type.TEXT, 800)
             Log.d("TEST", event._embedded.attractions[0].url)
             qrgEncoder.colorWhite = ContextCompat.getColor(requireContext(), R.color.white)
-            qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.brand_secondary)
+            qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.brand_primary_700)
             try{
                 val qrBitmap = qrgEncoder.bitmap
                 binding.qrCodeImageView.load(qrBitmap)

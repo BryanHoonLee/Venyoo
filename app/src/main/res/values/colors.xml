@@ -9,9 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hyper_link">#1ccebe</color>
     <color name="line_divider">#9DA3A3</color>
-    <color name="brand_secondary">#F37018</color>
+    <color name="brand_primary_700">#F4511E</color>
+    <color name="brand_primary_400">#FF7043</color>
     <color name="transparent">#00000000</color>
-    <color name="brand_primary">#202125</color>
-    <color name="lighter_dark_background">#20202125</color>
+    <color name="brand_secondary">#202125</color>
+    <color name="brand_secondary_low_alpha">#66202125</color>
+    <color name="lighter_dark_background">#202125</color>
 
 </resources>
