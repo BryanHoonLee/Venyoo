@@ -20,4 +20,9 @@ class UrlProvider @Inject constructor(){
     ): String{
         return Constants.TICKETMASTER_WEBSITE_URL
     }
+
+    fun setlistFMBaseUrl(
+    ): String{
+        return Constants.SETLIST_BASE_URL
+    }
 }

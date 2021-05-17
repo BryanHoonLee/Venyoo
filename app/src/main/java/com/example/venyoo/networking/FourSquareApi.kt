@@ -29,4 +29,5 @@ interface FourSquareApi {
         @Path(value = "VENUE_ID", encoded = true) venueId: String
     ): FourSquareVenueImageSchema
 
+
 }

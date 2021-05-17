@@ -82,6 +82,41 @@ class AppModule(private val application: Application) {
         return retrofit.create(TicketMasterApi::class.java)
     }
 
+    @AppScope
+    @Provides
+    @SetlistFMRetrofit
+    fun setlistFMRetrofit(
+        @SetlistFMOkHttpClient okHttpClient: OkHttpClient,
+        urlProvider: UrlProvider,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit{
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(urlProvider.setlistFMBaseUrl())
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @AppScope
+    @Provides
+    @SetlistFMOkHttpClient
+    fun setlistFMOkHttpClient(
+        @BaseOkHttpClient okHttpClient: OkHttpClient,
+        requestinterceptor: SetlistFMRequestInterceptor
+    ): OkHttpClient{
+        return okHttpClient.newBuilder()
+            .addInterceptor(requestinterceptor)
+            .build()
+    }
+
+    @AppScope
+    @Provides
+    fun setlistFMApi(
+        @SetlistFMRetrofit retrofit: Retrofit
+    ): SetlistFMApi{
+        return retrofit.create(SetlistFMApi::class.java)
+    }
+
     /**
      * Want same instance of gsonconverterfactory because a factory holds a Gson instance.
      * The first time you request for gson to serialize/deserialize something, it figures out what object looks like and caches that
