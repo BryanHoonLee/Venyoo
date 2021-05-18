@@ -11,6 +11,7 @@ class SetlistFMRequestInterceptor @Inject constructor() : Interceptor {
             .url()
             .newBuilder()
             .addQueryParameter(Constants.SETLIST_API_KEY_PARAMETER, Constants.SETLIST_API_KEY)
+            .addQueryParameter(Constants.SETLIST_ACCEPT_HEADER_PARAMETER, Constants.SETLIST_ACCEPT_HEADER)
             .build()
 
         val request = chain.request()

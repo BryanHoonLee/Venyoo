@@ -1,9 +1,6 @@
 package com.example.venyoo.dependencyinjection.presentation
 
-import com.example.venyoo.screens.EventDetailFragment
-import com.example.venyoo.screens.SearchVenueFragment
-import com.example.venyoo.screens.VenueListFragment
-import com.example.venyoo.screens.VenueDetailFragment
+import com.example.venyoo.screens.*
 import dagger.Subcomponent
 
 @PresentationScope
@@ -13,4 +10,5 @@ interface PresentationComponent {
     fun inject(venueListFragment: VenueListFragment)
     fun inject(venueDetailFragment: VenueDetailFragment)
     fun inject(venueEventDetailFragment: EventDetailFragment)
+    fun inject(setlistBottomSheetDialogFragment: SetlistBottomSheetDialogFragment)
 }

@@ -43,7 +43,8 @@ object Constants {
     // https://api.setlist.fm/docs/1.0/index.html#resources
     const val SETLIST_BASE_URL = "https://api.setlist.fm/rest/1.0/"
     const val SETLIST_API_KEY_PARAMETER = "x-api-key"
-    const val SETLIST_ACCEPT_HEADER_PARAMETER = "application/json"
+    const val SETLIST_ACCEPT_HEADER_PARAMETER = "Accept"
 
     const val SETLIST_API_KEY = "IC61qfBX03imCYYDJAe2QU5KxlKhRWsr7b8r"
+    const val SETLIST_ACCEPT_HEADER = "application/json"
 }

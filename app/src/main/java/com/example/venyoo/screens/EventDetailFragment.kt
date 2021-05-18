@@ -13,6 +13,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import coil.load
 import coil.transform.BlurTransformation
@@ -108,6 +109,12 @@ class EventDetailFragment: BaseFragment() {
                 Log.v("EventDetailFragmentQRGen", e.toString())
             }
 
+            /** Event Setlist Button **/
+            binding.eventSetlistButton.setOnClickListener {
+                eventViewModel.fetchSetlist(event._embedded.attractions[0].id)
+                navigateToSetlistBottomSheetDialogFragment()
+            }
+
             /** Event Price Range **/
             if(!event.priceRanges.isNullOrEmpty()) {
                 val range = event.priceRanges[0]
@@ -155,7 +162,12 @@ class EventDetailFragment: BaseFragment() {
                 }
             }
         })
+    }
 
+    private fun navigateToSetlistBottomSheetDialogFragment(){
+        if (findNavController().currentDestination?.id != R.id.setlistBottomSheetDialogFragment) {
+            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToSetlistBottomSheetDialogNavigation())
+        }
     }
 }
 

@@ -51,8 +51,19 @@
                 android:id="@+id/eventDetailFragment"
                 android:name="com.example.venyoo.screens.EventDetailFragment"
                 android:label="VenueDetailFragment"
-                tools:layout="@layout/fragment_event_detail" />
+                tools:layout="@layout/fragment_event_detail">
 
+                <action
+                    android:id="@+id/action_eventDetailFragment_to_setlist_bottom_sheet_dialog_navigation"
+                    app:destination="@id/setlistBottomSheetDialogFragment"/>
+            </fragment>
+
+                <fragment android:id="@+id/setlistBottomSheetDialogFragment"
+                    android:name="com.example.venyoo.screens.SetlistBottomSheetDialogFragment"
+                    android:label="SetlistBottomSheetDialogFragment"
+                    tools:layout="@layout/bottom_sheet_dialog_fragment_setlist">
+
+                </fragment>
         </navigation>
     </navigation>
 
