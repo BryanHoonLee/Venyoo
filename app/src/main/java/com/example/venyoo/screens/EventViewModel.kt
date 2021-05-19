@@ -40,9 +40,9 @@ class EventViewModel @Inject constructor(
         savedStateHandle[SAVED_STATE_HANDLE_CURRENT_EVENT] = event
     }
 
-    fun fetchSetlist(artistTicketMasterId: String){
+    fun fetchSetlist(artistName: String){
         viewModelScope.launch {
-            savedStateHandle[SAVED_STATE_HANDLE_SETLIST] = repository.fetchSetlist(artistTicketMasterId)
+            savedStateHandle[SAVED_STATE_HANDLE_SETLIST] = repository.fetchSetlist(artistName)
         }
     }
 }

@@ -11,7 +11,7 @@ data class SetlistFMSetlistResponseSchema(
 @Parcelize
 data class SetlistResponse(
     val artist: SetlistFMArtist = SetlistFMArtist(),
-    val set: SetListFMSet = SetListFMSet(),
+    val sets : SetListFMSets = SetListFMSets(),
     val tour: SetlistFMTour = SetlistFMTour(),
     val url: String = "",
     val eventDate: String = "",
@@ -25,6 +25,11 @@ data class SetlistFMArtist(
     val name: String = "",
     val url: String = ""
 ) : Parcelable
+
+@Parcelize
+data class SetListFMSets(
+    val set: List<SetListFMSet> = emptyList()
+): Parcelable
 
 @Parcelize
 data class SetListFMSet(

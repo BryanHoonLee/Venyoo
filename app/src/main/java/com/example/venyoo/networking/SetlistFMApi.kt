@@ -6,9 +6,9 @@ import retrofit2.http.Query
 
 interface SetlistFMApi {
 
-    @GET("search/setlists?p=1")
+    @GET("search/setlists?p=1&sort=relevance")
     suspend fun fetchSetList(
-        @Query("artistTmid") artistTmid: String
+        @Query("artistName") artistName: String
     ): SetlistFMSetlistResponseSchema
 
 

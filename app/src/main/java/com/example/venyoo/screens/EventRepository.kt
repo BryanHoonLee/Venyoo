@@ -12,7 +12,7 @@ class EventRepository @Inject constructor(private val ticketMasterApi: TicketMas
         return ticketMasterApi.fetchVenueEvents(venueId)._embedded.events
     }
 
-    suspend fun fetchSetlist(artistTicketMasterId: String): List<SetlistResponse>{
-        return setlistFMApi.fetchSetList(artistTicketMasterId).setlist
+    suspend fun fetchSetlist(artistName: String): List<SetlistResponse>{
+        return setlistFMApi.fetchSetList(artistName).setlist
     }
 }

@@ -1,6 +1,7 @@
 package com.example.venyoo.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = BottomSheetDialogFragmentSetlistBinding.inflate(inflater)
+        binding = BottomSheetDialogFragmentSetlistBinding.inflate(inflater, container, false)
         val view = binding.root
 
         adapter = SetlistAdapter()
@@ -51,7 +52,8 @@ class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         eventViewModel.setlist.observe(viewLifecycleOwner, Observer { setResponse ->
-            val set = setResponse[0].set.song
+            Log.d("TEST", " or ${setResponse}")
+            val set = setResponse[0].sets.set[0].song
             if(!set.isNullOrEmpty()){
                 adapter.bindData(set)
             }

@@ -111,7 +111,8 @@ class EventDetailFragment: BaseFragment() {
 
             /** Event Setlist Button **/
             binding.eventSetlistButton.setOnClickListener {
-                eventViewModel.fetchSetlist(event._embedded.attractions[0].id)
+                Log.d("TEST", "id: ${event._embedded.attractions[0].name}")
+                eventViewModel.fetchSetlist(event._embedded.attractions[0].name)
                 navigateToSetlistBottomSheetDialogFragment()
             }
 
