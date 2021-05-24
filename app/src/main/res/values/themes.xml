@@ -19,6 +19,8 @@
         <item name="android:textColor">@color/white</item>
         <item name="colorAccent">?attr/colorPrimaryVariant</item>
 
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+
     </style>
 
 
