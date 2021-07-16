@@ -47,4 +47,11 @@ object Constants {
 
     const val SETLIST_API_KEY = "IC61qfBX03imCYYDJAe2QU5KxlKhRWsr7b8r"
     const val SETLIST_ACCEPT_HEADER = "application/json"
+
+    /*****************************
+     * SPOTIFY CONSTANTS
+     *****************************/
+    const val SPOTIFY_CLIENT_ID = "9cb165780115462eac0421a556cc6a54"
+    const val SPOTIFY_CLIENT_SECRET = "8e0a9b749cde4c3daac7ab5ed28f6861"
+    const val SPOTIFY_REDIRECT_URL = ""
 }

@@ -3,8 +3,12 @@ package com.example.venyoo.screens
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +16,8 @@ import android.view.ViewGroup
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -23,6 +29,9 @@ import com.example.venyoo.networking.UrlProvider
 import com.example.venyoo.screens.common.fragments.BaseFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
 import com.google.zxing.WriterException
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.net.URI
 import javax.inject.Inject
 
 class EventDetailFragment: BaseFragment() {
@@ -98,8 +107,14 @@ class EventDetailFragment: BaseFragment() {
             }
 
             /** Event URL QR CODE **/
-            val qrgEncoder = QRGEncoder(event._embedded.attractions[0].url, null, QRGContents.Type.TEXT, 800)
-            Log.d("TEST", event._embedded.attractions[0].url)
+            var eventUrl = ""
+            if(event._embedded.attractions.isNotEmpty()){
+                eventUrl = event._embedded.attractions[0].url
+            }else{
+                eventUrl = urlProvider.ticketMasterWebsiteUrl()
+            }
+
+            val qrgEncoder = QRGEncoder(eventUrl, null, QRGContents.Type.TEXT, 800)
             qrgEncoder.colorWhite = ContextCompat.getColor(requireContext(), R.color.white)
             qrgEncoder.colorBlack = ContextCompat.getColor(requireContext(), R.color.brand_primary_700)
             try{
@@ -150,19 +165,52 @@ class EventDetailFragment: BaseFragment() {
                 }
             }
 
+            /** Event Share Button **/
+            binding.eventShareButton.setOnClickListener {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+
+                val ticketView = binding.root
+                val ticketViewBitmap = (Bitmap.createBitmap(ticketView.width, ticketView.height, Bitmap.Config.ARGB_8888))
+                val canvas = Canvas(ticketViewBitmap)
+                view.draw(canvas)
+                val uri = convertBitmapToUri(ticketViewBitmap)
+
+                shareIntent.setDataAndType(uri,"image/png")
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+
+                var url = event._embedded.attractions[0].url
+                if(url.isNullOrBlank()){
+                    url = "URL Unavailable"
+                }
+                shareIntent.putExtra(Intent.EXTRA_TEXT, url)
+
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "${event.name} Event Tickets")
+
+                startActivity(Intent.createChooser(shareIntent, null))
+            }
+
             /** EVENT DESCRIPTION **/
             val eventDescription = "${event.info} ${event.pleaseNote}"
             binding.eventInfoTextView.text = eventDescription
-            var eventDescriptionExpanded= false
-            binding.eventInfoTextView.setOnClickListener {
-                eventDescriptionExpanded = !eventDescriptionExpanded
-                if(eventDescriptionExpanded){
-                    binding.eventInfoTextView.maxLines = 50
-                }else{
-                    binding.eventInfoTextView.maxLines = 3
-                }
-            }
+            binding.eventInfoTextView.movementMethod = ScrollingMovementMethod()
+
         })
+    }
+
+    private fun convertBitmapToUri(bitmap: Bitmap): Uri{
+        val file = File(requireContext().cacheDir, "Venyoo")
+        file.delete()
+        file.createNewFile()
+        val fileOutputStream = file.outputStream()
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        fileOutputStream.write(byteArray)
+        fileOutputStream.close()
+        byteArrayOutputStream.close()
+
+        val uri = FileProvider.getUriForFile(requireContext(), "com.example.venyoo.screens.provider", file)
+        return uri
     }
 
     private fun navigateToSetlistBottomSheetDialogFragment(){

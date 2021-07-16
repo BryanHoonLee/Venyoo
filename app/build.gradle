@@ -43,7 +43,7 @@ dependencies {
     def room = '2.2.6'
     def navigation = '2.3.2'
     def coroutine = '1.4.2'
-    def dagger2 = '2.30.1'
+    def dagger2 = '2.35.1'
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine"
@@ -95,6 +95,7 @@ dependencies {
     // QR Generator
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.google.zxing:core:3.3.2'
+
 
     implementation 'androidx.activity:activity-ktx:1.2.0-rc01'
 

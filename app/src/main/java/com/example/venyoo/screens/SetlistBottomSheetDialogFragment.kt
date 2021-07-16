@@ -12,6 +12,8 @@ import com.example.venyoo.R
 import com.example.venyoo.databinding.BottomSheetDialogFragmentSetlistBinding
 import com.example.venyoo.screens.common.fragments.BaseBottomSheetDialogFragment
 import com.example.venyoo.screens.common.viewmodel.ViewModelFactory
+import com.example.venyoo.venues.SetlistFMSong
+import com.example.venyoo.venues.SetlistResponse
 import javax.inject.Inject
 
 class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
@@ -53,11 +55,22 @@ class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
 
         eventViewModel.setlist.observe(viewLifecycleOwner, Observer { setResponse ->
             Log.d("TEST", " or ${setResponse}")
-            val set = setResponse[0].sets.set[0].song
-            if(!set.isNullOrEmpty()){
-                adapter.bindData(set)
+            if(setResponse.isNotEmpty() && setResponse[0].sets.set.isNotEmpty()) {
+                val set = setResponse[0].sets.set[0].song
+
+                if (!set.isNullOrEmpty()) {
+                    adapter.bindData(set)
+                }else{
+                    binding.notFoundImageView.visibility = View.VISIBLE
+                }
+            }else{
+                binding.notFoundImageView.visibility = View.VISIBLE
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
 }
