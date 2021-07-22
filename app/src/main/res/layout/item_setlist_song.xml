@@ -27,31 +27,31 @@
         android:text="Song Name"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spotify_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/song_position_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/spotify_button"
-        app:icon="@drawable/spotify_icon"
-        app:iconGravity="end"
-        app:iconSize="21dp"
-        app:iconTint="@null"
-        app:backgroundTint="@color/white"
-        android:text="PLAY"
-        android:textSize="14sp"
-        android:textColor="@color/brand_primary_400"
-        app:rippleColor="@color/brand_primary_400"
-        android:elevation="12dp"
-        android:textStyle="bold"
-        android:insetRight="8dp"
-        android:insetTop="8dp"
-        android:insetBottom="8dp"
-        android:insetLeft="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/song_position_text_view"
-        app:layout_constraintBottom_toBottomOf="@id/song_position_text_view"
-        app:layout_constraintEnd_toEndOf="parent"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/spotify_button"-->
+<!--        app:icon="@drawable/spotify_icon"-->
+<!--        app:iconGravity="end"-->
+<!--        app:iconSize="21dp"-->
+<!--        app:iconTint="@null"-->
+<!--        app:backgroundTint="@color/white"-->
+<!--        android:text="PLAY"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textColor="@color/brand_primary_400"-->
+<!--        app:rippleColor="@color/brand_primary_400"-->
+<!--        android:elevation="12dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:insetRight="8dp"-->
+<!--        android:insetTop="8dp"-->
+<!--        android:insetBottom="8dp"-->
+<!--        android:insetLeft="8dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="@id/song_position_text_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/song_position_text_view"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

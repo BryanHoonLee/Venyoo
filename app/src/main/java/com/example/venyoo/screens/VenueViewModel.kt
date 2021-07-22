@@ -42,8 +42,8 @@ class VenueViewModel @Inject constructor(
 
     var imageListObserversAdded: Boolean = false
 
-     fun fetchImages() {
-        if(!imageListObserversAdded) {
+    fun fetchImages() {
+        if (!imageListObserversAdded) {
             imageList.addSource(currentVenue) {
                 imageList.value = combineImages(currentVenue, additionalCurrentVenuePhotos)
             }
@@ -53,31 +53,33 @@ class VenueViewModel @Inject constructor(
             }
             imageListObserversAdded = true
         }
-     }
+    }
 
     private fun combineImages(
         currentVenue: LiveData<TicketMasterVenueResponse>,
         additionalVenuePhotos: LiveData<List<FourSquareImageItem>>
     ): List<TicketMasterVenueImage> {
         val currentVenue = currentVenue.value
-        if(currentVenue == null){
+        if (currentVenue == null) {
             return emptyList()
-        }else {
+        } else {
             val currentPhotos = currentVenue.images
             val additionalPhotos = additionalVenuePhotos.value
 
-            if(currentPhotos == null || additionalPhotos == null){
+            if (currentPhotos == null || additionalPhotos == null) {
                 return emptyList()
             }
 
             val transformFourSquareToTicketMasterImages =
                 additionalPhotos.map { photo ->
                     TicketMasterVenueImage(
-                        "${photo.prefix}${photo.width}x${photo.height}${photo.suffix}", photo.width, photo.height
+                        "${photo.prefix}${photo.width}x${photo.height}${photo.suffix}",
+                        photo.width,
+                        photo.height
                     )
                 }
 
-            val combinedList =  currentPhotos  + transformFourSquareToTicketMasterImages
+            val combinedList = currentPhotos + transformFourSquareToTicketMasterImages
             return combinedList
         }
     }
@@ -90,9 +92,11 @@ class VenueViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val venues: MutableList<TicketMasterVenueResponse> =
                 venueRepository.fetchVenues(venueName).toMutableList()
-            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
+            savedStateHandle.getLiveData<List<TicketMasterVenueResponse>>(
+                SAVED_STATE_HANDLE_VENUE_LIST
+            ).postValue(venues.filter { response ->
                 !response.images.isNullOrEmpty() || !response.social.twitter.handle.isNullOrEmpty() || !response.boxOfficeInfo.phoneNumberDetail.isNullOrEmpty()
-            }
+            })
         }
     }
 
@@ -100,23 +104,23 @@ class VenueViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val venues: MutableList<TicketMasterVenueResponse> =
                 venueRepository.fetchVenuesByCoordinates(latLong).toMutableList()
-            savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
+            savedStateHandle.getLiveData<List<TicketMasterVenueResponse>>(SAVED_STATE_HANDLE_VENUE_LIST).postValue(venues.filter { response ->
                 !response.images.isNullOrEmpty() || !response.social.twitter.handle.isNullOrEmpty() || !response.boxOfficeInfo.phoneNumberDetail.isNullOrEmpty()
-            }
+            })
         }
     }
 
     fun fetchFourSquareVenue(latlng: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_VENUE] =
-                venueRepository.fetchFourSquareVenue(latlng)
+            savedStateHandle.getLiveData<List<FourSquareVenueResponse>>(SAVED_STATE_HANDLE_ADDITIONAL_VENUE).postValue(
+                venueRepository.fetchFourSquareVenue(latlng))
         }
     }
 
     fun fetchFourSquarePhotos(venueId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS] =
-                venueRepository.fetchFourSquarePhotos(venueId)
+            savedStateHandle.getLiveData<List<FourSquareImageItem>>(SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS).postValue(
+                venueRepository.fetchFourSquarePhotos(venueId))
         }
     }
 }

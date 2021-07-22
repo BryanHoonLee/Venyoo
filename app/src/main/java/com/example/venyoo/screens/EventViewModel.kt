@@ -1,5 +1,6 @@
 package com.example.venyoo.screens
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.venyoo.screens.common.viewmodel.SavedStateViewModel
@@ -7,6 +8,7 @@ import com.example.venyoo.venues.SetlistResponse
 import com.example.venyoo.venues.TicketMasterEventResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class EventViewModel @Inject constructor(
@@ -16,8 +18,6 @@ class EventViewModel @Inject constructor(
         const val SAVED_STATE_HANDLE_EVENTS = "events"
         const val SAVED_STATE_HANDLE_CURRENT_EVENT = "current_event"
         const val SAVED_STATE_HANDLE_SETLIST = "setlist"
-        const val SAVED_STATE_HANDLE_ADDRESS = "address"
-
     }
 
     val venueEventList: LiveData<List<TicketMasterEventResponse>>
@@ -35,8 +35,7 @@ class EventViewModel @Inject constructor(
 
     fun fetchVenueEvents(venueId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            savedStateHandle[SAVED_STATE_HANDLE_EVENTS] =
-                repository.fetchVenueEvents(venueId)
+            savedStateHandle.getLiveData<List<TicketMasterEventResponse>>(SAVED_STATE_HANDLE_EVENTS).postValue(repository.fetchVenueEvents(venueId))
         }
     }
 
@@ -46,7 +45,12 @@ class EventViewModel @Inject constructor(
 
     fun fetchSetlist(artistName: String){
         viewModelScope.launch(Dispatchers.IO) {
-            savedStateHandle[SAVED_STATE_HANDLE_SETLIST] = repository.fetchSetlist(artistName)
+            try {
+                savedStateHandle.getLiveData<List<SetlistResponse>>(SAVED_STATE_HANDLE_SETLIST).postValue(repository.fetchSetlist(artistName))
+            }catch (httpException: HttpException){
+                savedStateHandle.getLiveData<List<SetlistResponse>>(SAVED_STATE_HANDLE_SETLIST).postValue(emptyList())
+                Log.e("EventViewModel", httpException.message())
+            }
         }
     }
 
