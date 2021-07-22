@@ -47,5 +47,5 @@ object Constants {
 
     const val SETLIST_API_KEY = "IC61qfBX03imCYYDJAe2QU5KxlKhRWsr7b8r"
     const val SETLIST_ACCEPT_HEADER = "application/json"
-    
+
 }

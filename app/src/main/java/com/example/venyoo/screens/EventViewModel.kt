@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.venyoo.screens.common.viewmodel.SavedStateViewModel
 import com.example.venyoo.venues.SetlistResponse
 import com.example.venyoo.venues.TicketMasterEventResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ class EventViewModel @Inject constructor(
         const val SAVED_STATE_HANDLE_EVENTS = "events"
         const val SAVED_STATE_HANDLE_CURRENT_EVENT = "current_event"
         const val SAVED_STATE_HANDLE_SETLIST = "setlist"
+        const val SAVED_STATE_HANDLE_ADDRESS = "address"
 
     }
 
@@ -24,13 +26,15 @@ class EventViewModel @Inject constructor(
     val currentEvent: LiveData<TicketMasterEventResponse>
         get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_CURRENT_EVENT)
 
+    var currentAddress = ""
+
     val setlist: LiveData<List<SetlistResponse>>
         get() = savedStateHandle.getLiveData(
             SAVED_STATE_HANDLE_SETLIST
         )
 
     fun fetchVenueEvents(venueId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             savedStateHandle[SAVED_STATE_HANDLE_EVENTS] =
                 repository.fetchVenueEvents(venueId)
         }
@@ -41,8 +45,12 @@ class EventViewModel @Inject constructor(
     }
 
     fun fetchSetlist(artistName: String){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             savedStateHandle[SAVED_STATE_HANDLE_SETLIST] = repository.fetchSetlist(artistName)
         }
+    }
+
+    fun updateCurrentAddress(address: String){
+        currentAddress = address
     }
 }

@@ -115,6 +115,7 @@ class VenueDetailFragment : BaseFragment() {
             if (!venue.address.line2.isNullOrBlank()) address += ", ${venue.address.line2}"
             if (!venue.address.line3.isNullOrBlank()) address += ", ${venue.address.line3}"
             address += ", ${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
+            eventViewModel.updateCurrentAddress(address)
             binding.addressTextView.text = address
             binding.addressTextView.setOnClickListener {
                 val uri = Uri.parse("geo:0,0?q=${address}")

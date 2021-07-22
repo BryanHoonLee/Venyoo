@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.venyoo.screens.common.viewmodel.SavedStateViewModel
 import com.example.venyoo.venues.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -86,7 +87,7 @@ class VenueViewModel @Inject constructor(
     }
 
     fun fetchVenues(venueName: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val venues: MutableList<TicketMasterVenueResponse> =
                 venueRepository.fetchVenues(venueName).toMutableList()
             savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
@@ -96,7 +97,7 @@ class VenueViewModel @Inject constructor(
     }
 
     fun fetchVenuesByCoordinates(latLong: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val venues: MutableList<TicketMasterVenueResponse> =
                 venueRepository.fetchVenuesByCoordinates(latLong).toMutableList()
             savedStateHandle[SAVED_STATE_HANDLE_VENUE_LIST] = venues.filter { response ->
@@ -106,14 +107,14 @@ class VenueViewModel @Inject constructor(
     }
 
     fun fetchFourSquareVenue(latlng: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_VENUE] =
                 venueRepository.fetchFourSquareVenue(latlng)
         }
     }
 
     fun fetchFourSquarePhotos(venueId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             savedStateHandle[SAVED_STATE_HANDLE_ADDITIONAL_PHOTOS] =
                 venueRepository.fetchFourSquarePhotos(venueId)
         }

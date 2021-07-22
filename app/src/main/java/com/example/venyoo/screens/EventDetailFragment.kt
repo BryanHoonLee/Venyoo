@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,7 +33,17 @@ import com.google.zxing.WriterException
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
+import kotlin.time.hours
+import kotlin.time.minutes
 
 class EventDetailFragment: BaseFragment() {
 
@@ -62,10 +73,17 @@ class EventDetailFragment: BaseFragment() {
         return view
     }
 
+    @ExperimentalTime
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         eventViewModel.currentEvent.observe(viewLifecycleOwner, Observer{ event ->
+
+            val startTime = event.dates.start.dateTime
+            val splitTime = startTime.split("T", "-", "Z", ":")
+
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.set(splitTime[0].toInt(), splitTime[1].toInt() - 1, splitTime[2].toInt(), splitTime[3].toInt(), splitTime[4].toInt())
 
             /** EVENT IMAGE **/
             binding.eventImageView.load(event.images[0].url){
@@ -80,26 +98,41 @@ class EventDetailFragment: BaseFragment() {
             binding.eventMonthTextView.text = convertedDate.month
             binding.eventDayTextView.text = convertedDate.day
 
-//            /** EVENT STATUS **/
-//            val eventStatus = event.dates.status.code
-//            if(eventStatus != null) {
-//                binding.eventStatusTextView.text = eventStatus.codeName
-//            }else{
-//                binding.eventStatusTextView.text = ""
-//            }
+            /** Event Price Range **/
+            if(!event.priceRanges.isNullOrEmpty()) {
+                val range = event.priceRanges[0]
+                if (range.min == null || range.max == null) {
+                    binding.eventPriceTextView.text = "Price TBA"
+                } else {
+                    if(range.min % 1.0 == 0.0){
+                        binding.eventPriceTextView.text = "$${range.min.toInt()} - $${range.max.toInt()}"
+                    }else{
+                        binding.eventPriceTextView.text = "$${range.min}0 - $${range.max}0"
+                    }
+                }
+            }else{
+                binding.eventPriceTextView.text = "Price TBA"
+            }
 
             /** EVENT START TIME **/
-            val startTime = event.dates.start.dateTime
+            val time = Instant.ofEpochMilli(calendar.timeInMillis)
+                .atZone(ZoneId.of(TimeZone.getDefault().id))
+            var startHour = time.hour
+            val startMinute = time.minute
+            val amPmNumber = startHour/12
+            startHour %= 12
+            var amPm = "AM"
+            if(amPmNumber == 0) amPm = "AM" else amPm = "PM"
+            var startHourConverted = if(startHour.toString().length == 1) "0${startHour}" else "${startHour}"
+            var startMinuteConverted = if(startMinute.toString().length == 1) "0${startMinute}" else "${startMinute}"
+
             if(!startTime.isNullOrBlank()) {
-                val splitTime = startTime.split("T")
-                val timeIn24HourFormat = "${splitTime[1].dropLast(1)} UTC"
-//            val splitTimeIn24HourFormat = timeIn24HourFormat.split(":")
-//            val hourConvertedToPST = splitTimeIn24HourFormat[0].toInt() - 8
+                val startTime = "${startHourConverted}:${startMinuteConverted} ${amPm}"
                 if (event.dates.start.noSpecificTime || startTime.isNullOrEmpty()) {
                     binding.eventStartTimeTextView.text =
                         resources.getString(R.string.no_start_time_declared)
                 } else {
-                    binding.eventStartTimeTextView.text = timeIn24HourFormat
+                    binding.eventStartTimeTextView.text = startTime
                 }
             }else{
                 binding.eventStartTimeTextView.text =
@@ -126,25 +159,22 @@ class EventDetailFragment: BaseFragment() {
 
             /** Event Setlist Button **/
             binding.eventSetlistButton.setOnClickListener {
-                Log.d("TEST", "id: ${event._embedded.attractions[0].name}")
                 eventViewModel.fetchSetlist(event._embedded.attractions[0].name)
                 navigateToSetlistBottomSheetDialogFragment()
             }
 
-            /** Event Price Range **/
-            if(!event.priceRanges.isNullOrEmpty()) {
-                val range = event.priceRanges[0]
-                if (range.min == null || range.max == null) {
-                    binding.eventPriceTextView.text = "Price TBA"
-                } else {
-                    if(range.min % 1.0 == 0.0){
-                        binding.eventPriceTextView.text = "$${range.min.toInt()} - $${range.max.toInt()}"
-                    }else{
-                        binding.eventPriceTextView.text = "$${range.min}0 - $${range.max}0"
-                    }
-                }
-            }else{
-                binding.eventPriceTextView.text = "Price TBA"
+            /** Event Calendar Button **/
+            binding.eventCalendarSaveButton.setOnClickListener {
+
+                val startMillis = calendar.timeInMillis
+
+                val calendarIntent = Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+                    .putExtra(CalendarContract.Events.TITLE, "${event.name} Event")
+                    .putExtra(CalendarContract.Events.EVENT_LOCATION, eventViewModel.currentAddress)
+                    .putExtra(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().id)
+                startActivity(calendarIntent)
             }
 
             /** Event Purchase Button **/

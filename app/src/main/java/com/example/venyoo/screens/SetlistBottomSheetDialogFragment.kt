@@ -59,12 +59,16 @@ class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
                 val set = setResponse[0].sets.set[0].song
 
                 if (!set.isNullOrEmpty()) {
+                    binding.notFoundImageView.visibility = View.GONE
+                    binding.notFoundTextView.visibility = View.GONE
                     adapter.bindData(set)
                 }else{
                     binding.notFoundImageView.visibility = View.VISIBLE
+                    binding.notFoundTextView.visibility = View.VISIBLE
                 }
             }else{
                 binding.notFoundImageView.visibility = View.VISIBLE
+                binding.notFoundTextView.visibility = View.VISIBLE
             }
         })
     }
