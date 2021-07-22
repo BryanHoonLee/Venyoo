@@ -9,7 +9,7 @@
         app:startDestination="@id/fragment_search_venue">
         <fragment
             android:id="@+id/fragment_search_venue"
-            android:name="com.example.venyoo.screens.SearchVenueFragment"
+            android:name="com.hoonstudio.venyoo.screens.SearchVenueFragment"
             android:label="Search Venue"
             tools:layout="@layout/fragment_search_venue">
 
@@ -19,7 +19,7 @@
         </fragment>
         <fragment
             android:id="@+id/venue_list_fragment"
-            android:name="com.example.venyoo.screens.VenueListFragment"
+            android:name="com.hoonstudio.venyoo.screens.VenueListFragment"
             android:label="VenueListFragment"
             tools:layout="@layout/fragment_venue_result_list">
             <action
@@ -38,7 +38,7 @@
             app:startDestination="@id/venueDetailFragment">
             <fragment
                 android:id="@+id/venueDetailFragment"
-                android:name="com.example.venyoo.screens.VenueDetailFragment"
+                android:name="com.hoonstudio.venyoo.screens.VenueDetailFragment"
                 android:label="VenueDetailFragment"
                 tools:layout="@layout/fragment_venue_detail" >
 
@@ -49,7 +49,7 @@
 
             <fragment
                 android:id="@+id/eventDetailFragment"
-                android:name="com.example.venyoo.screens.EventDetailFragment"
+                android:name="com.hoonstudio.venyoo.screens.EventDetailFragment"
                 android:label="VenueDetailFragment"
                 tools:layout="@layout/fragment_event_detail">
 
@@ -59,7 +59,7 @@
             </fragment>
 
                 <dialog android:id="@+id/setlistBottomSheetDialogFragment"
-                    android:name="com.example.venyoo.screens.SetlistBottomSheetDialogFragment"
+                    android:name="com.hoonstudio.venyoo.screens.SetlistBottomSheetDialogFragment"
                     android:label="SetlistBottomSheetDialogFragment"
                     tools:layout="@layout/bottom_sheet_dialog_fragment_setlist">
 
