@@ -1,37 +1,214 @@
-## Welcome to GitHub Pages
+<!doctype html>
+<html lang="en">
+<!--
+Page    : index / MobApp
+Version : 1.0
+Author  : Colorlib
+URI     : https://colorlib.com
+ -->
 
-You can use the [editor on GitHub](https://github.com/BryanHoonLee/Venyoo/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+<head>
+    <title>Venyoo</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Mobland - Mobile App Landing Page Template">
+    <meta name="keywords" content="HTML5, bootstrap, mobile, app, landing, ios, android, responsive">
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+    <!-- Font -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
 
-### Markdown
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- Main css -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<body data-spy="scroll" data-target="#navbar" data-offset="30">
 
-```markdown
-Syntax highlighted code block
+    <!-- Nav Menu -->
 
-# Header 1
-## Header 2
-### Header 3
+    <div class="nav-menu fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-dark navbar-expand-lg">
+                        <a class="navbar-brand" href="index.html"><img src="images/dumbbell/drawable-xxxhdpi/ic_dumbbell_white_18dp.png" class="img-fluid" alt="logo"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+                        <div class="collapse navbar-collapse" id="navbar">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"> <a class="nav-link active" href="#home">HOME <span class="sr-only">(current)</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" href="#features">FEATURES</a> </li>
+                                <li class="nav-item"> <a class="nav-link" href="#gallery">GALLERY</a> </li>
+                                <li class="nav-item"> <a class="nav-link" href="#contact">CONTACT</a> </li>
+                                <li class="nav-item"><a href="https://play.google.com/store/apps/details?id=hoonstudio.com.fitnow" class="btn btn-outline-light my-3 my-sm-0 ml-lg-3">Download</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+    <header class="bg-gradient" id="home">
+        <div class="container mt-5">
+            <h1>Welcome to Simple Fitness</h1>
+            <p class="tagline">   </p>
+        </div>
+        <div class="img-holder mt-3"><img src="images/iphonex.png" alt="phone" class="img-fluid"></div>
+    </header>
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+    <div class="section light-bg" id="features">
+        <div class="container">
+            <div class="section-title">
+                <small>FEATURES</small>
+                <h3>Do more with our app</h3>
+            </div>
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#Track">Track</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#Categorize">Categorize</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#Timer">Timer</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="Track">
+                    <div class="d-flex flex-column flex-lg-row">
+                        <img src="images/graphic.png" alt="graphic" class="img-fluid rounded align-self-start mr-lg-5 mb-5 mb-lg-0">
+                        <div>
 
-### Jekyll Themes
+                            <h2>Track Your Exercises</h2>
+                            <p class="lead">Never forget an exercise again.</p>
+                            <p> Simple Fitness allows you to store all of your exercises into one intuitive and easily accessible application. With access to unlimited local storage, you will never have to worry about not remembering to do an exercise.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="Categorize">
+                    <div class="d-flex flex-column flex-lg-row">
+                        <div>
+                            <h2>Categorize All of Your Exercises</h2>
+                            <p class="lead">Group all of your exercises into different sections and schedule them for different days.</p>
+                            <p> Arm day? Leg day? Forgetting which exercises to do on each day? Worry not - Simple Fitness allows you to put each exercise into their respective categories!
+                            </p>
+                        </div>
+                        <img src="images/graphic.png" alt="graphic" class="img-fluid rounded align-self-start mr-lg-5 mb-5 mb-lg-0">
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="Timer">
+                    <div class="d-flex flex-column flex-lg-row">
+                        <img src="images/graphic.png" alt="graphic" class="img-fluid rounded align-self-start mr-lg-5 mb-5 mb-lg-0">
+                        <div>
+                            <h2>Time Yourself</h2>
+                            <p class="lead">Never skip a beat.</p>       
+                            <p> Tick-tock. Consistently time your rest period after each set. Don't need to time your rest periods? No worries, you can also time yourself during exercises such as planks. In addition to that, you can set which day you want to do each category of exercises!
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BryanHoonLee/Venyoo/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+        </div>
+    </div>
+    <!-- // end .section -->
+    
+
+    <div class="section light-bg" id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <small>GALLERY</small>
+                <h3>App Screenshots</h3>
+            </div>
+
+            <div class="img-gallery owl-carousel owl-theme">
+                <img src="images/screen1.png" alt="image">
+                <img src="images/screen2.png" alt="image">
+                <img src="images/screen3.png" alt="image">
+                <img src="images/screen4.png" alt="image">
+                <img src="images/screen1.png" alt="image">
+            </div>
+
+        </div>
+
+    </div>
+    <!-- // end .section -->
+
+
+
+
+
+    <div class="section bg-gradient">
+        <div class="container">
+            <div class="call-to-action">
+
+                <div class="box-icon"><span class="ti-mobile gradient-fill ti-3x"></span></div>
+                <h2>Download on the Google Play Store</h2>
+                <p class="tagline"> </p>
+                <div class="my-4">
+                    <a href="https://play.google.com/store/apps/details?id=hoonstudio.com.fitnow" class="btn btn-light"><img src="images/playicon.png" alt="icon"> Google play</a>
+                </div>
+                <p class="text-primary"><small><i>*Works on Android Kitkat and above. </i></small></p>
+            </div>
+        </div>
+
+    </div>
+    <!-- // end .section -->
+
+    <div class="light-bg py-5" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center text-lg-left">
+                    <p class="mb-2"> <span class="ti-location-pin mr-2"></span> California</p>
+                    <div class=" d-block d-sm-inline-block">
+                        <p class="mb-2">
+                            <span class="ti-email mr-2"></span> <a class="mr-4" >bryanhoonlee@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="social-icons">
+                        <a href="https://github.com/BryanHoonLee"><span class="ti-github"></span></a>
+                        <a href="https://www.linkedin.com/in/bryanhoonlee/"><span class="ti-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- // end .section -->
+    <footer class="my-5 text-center">
+        <!-- Copyright removal is not prohibited! -->
+        <p class="mb-2"><small>COPYRIGHT © 2017. ALL RIGHTS RESERVED. MOBAPP TEMPLATE BY <a href="https://colorlib.com">COLORLIB</a></small></p>
+
+        <small>
+            <a href="#" class="m-2">PRESS</a>
+            <a href="#" class="m-2">TERMS</a>
+            <a href="#" class="m-2">PRIVACY</a>
+        </small>
+    </footer>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- Plugins JS -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
