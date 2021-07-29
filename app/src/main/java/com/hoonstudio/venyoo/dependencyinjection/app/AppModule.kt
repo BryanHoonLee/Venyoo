@@ -8,6 +8,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Module
 class AppModule(private val application: Application) {
@@ -143,8 +144,8 @@ class AppModule(private val application: Application) {
     @BaseOkHttpClient
     fun okHttpClientBase(
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-                .build()
+        var client = OkHttpClient().newBuilder().readTimeout(30,TimeUnit.SECONDS).retryOnConnectionFailure(true).build()
+        return client
     }
 
 
