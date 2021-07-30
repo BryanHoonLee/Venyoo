@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Venyoo</string>
 
-    <string name="search_venue">Search Venue...</string>
+    <string name="search">Search Venue/Artist...</string>
     <string name="discover_nearby">Discover Nearby</string>
 
     <string name="location_permission_denied">Location Permission Must Be Enabled To Use This Feature</string>

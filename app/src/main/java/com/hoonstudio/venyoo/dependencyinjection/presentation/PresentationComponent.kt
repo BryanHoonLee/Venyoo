@@ -6,7 +6,8 @@ import dagger.Subcomponent
 @PresentationScope
 @Subcomponent(modules = [PresentationModule::class])
 interface PresentationComponent {
-    fun inject(searchVenueFragment: SearchVenueFragment)
+    fun inject(homeFragment: HomeFragment)
+    fun inject(searchFragment: SearchFragment)
     fun inject(venueListFragment: VenueListFragment)
     fun inject(venueDetailFragment: VenueDetailFragment)
     fun inject(venueEventDetailFragment: EventDetailFragment)

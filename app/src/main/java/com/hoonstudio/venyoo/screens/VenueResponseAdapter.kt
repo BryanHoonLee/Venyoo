@@ -44,13 +44,15 @@ class VenueResponseAdapter(
         if(currentVenue.distance == null || currentVenue.distance <= 0.0) holder.distance.visibility = View.GONE else holder.distance.text = "${currentVenue.distance} mi"
 
         if(currentVenue.images.isNotEmpty()){
+            holder.venueImage.scaleType = ImageView.ScaleType.CENTER_CROP
             holder.venueImage.load(currentVenue.images[0].url){
                 listener(onSuccess = { request: ImageRequest, metadata: ImageResult.Metadata ->
                     holder.progressBar.visibility = View.GONE
                 })
             }
         }else{
-            holder.venueImage.load(R.drawable.ic_launcher_foreground)
+            holder.venueImage.load(R.drawable.venyoo)
+            holder.venueImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
             holder.progressBar.visibility = View.GONE
         }
 

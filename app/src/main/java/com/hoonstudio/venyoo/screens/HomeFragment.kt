@@ -15,14 +15,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.hoonstudio.venyoo.LocationService
 import com.hoonstudio.venyoo.R
-import com.hoonstudio.venyoo.databinding.FragmentSearchVenueBinding
 import com.hoonstudio.venyoo.screens.common.fragments.BaseFragment
 import com.hoonstudio.venyoo.screens.common.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.ResolvableApiException
+import com.hoonstudio.venyoo.databinding.FragmentHomeBinding
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class SearchVenueFragment : BaseFragment() {
+class HomeFragment : BaseFragment() {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -34,9 +34,9 @@ class SearchVenueFragment : BaseFragment() {
 
     private lateinit var requestMultiplePermissionsLauncher: ActivityResultLauncher<Array<String>>
 
-    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+    private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
-    private lateinit var binding: FragmentSearchVenueBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class SearchVenueFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchVenueBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(inflater)
         val view = binding.root
 
         return view
@@ -59,23 +59,10 @@ class SearchVenueFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    temporarilyEnableLoading(8000)
-                    venueViewModel.fetchVenues(query)
-                    lifecycleScope.launch{
-                        delay(600)
-                        navigateToVenueListFragment()
-                    }
-                }
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
+        binding.searchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
+//            v.clearFocus()
+            navigateToSearchFragment()
+        }
 
         binding.discoverButton.setOnClickListener {
             if (locationService.checkLocationPermission()) {
@@ -87,13 +74,17 @@ class SearchVenueFragment : BaseFragment() {
                             if (result is LocationService.Result.Success) {
                                 val latLong = "${result.latitude},${result.longitude}"
                                 venueViewModel.fetchVenuesByCoordinates(latLong)
-                                lifecycleScope.launch{
+                                lifecycleScope.launch {
                                     delay(600)
                                     navigateToVenueListFragment()
                                 }
-                            } else if(result is LocationService.Result.Failure){
+                            } else if (result is LocationService.Result.Failure) {
                                 disableLoading()
-                                Toast.makeText(requireContext(), "Failed to fetch location", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to fetch location",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
                     }
@@ -129,19 +120,26 @@ class SearchVenueFragment : BaseFragment() {
         binding.discoverButton.isEnabled = false
         binding.progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
-         delay(delayTime)
-            binding.discoverButton.isEnabled = true
-            binding.progressBar.visibility = View.GONE
+            delay(delayTime)
+            disableLoading()
         }
     }
 
-    private fun disableLoading(){
+    private fun disableLoading() {
         binding.discoverButton.isEnabled = true
         binding.progressBar.visibility = View.GONE
     }
 
     private fun navigateToVenueListFragment() {
-            findNavController().navigate(SearchVenueFragmentDirections.actionFragmentSearchVenueToVenueListFragment())
+        if (findNavController().currentDestination?.id != R.id.venue_list_fragment){
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToFragmentVenueList())
+        }
+    }
+
+    private fun navigateToSearchFragment() {
+        if (findNavController().currentDestination?.id != R.id.fragment_search){
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToFragmentSearch())
+        }
     }
 
     /**
