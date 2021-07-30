@@ -30,6 +30,18 @@
             <action
                 android:id="@+id/action_fragment_search_to_fragment_venue_list"
                 app:destination="@+id/venue_list_fragment"/>
+
+            <action
+                android:id="@+id/action_fragment_search_to_fragment_attraction_list"
+                app:destination="@+id/attraction_list_fragment"/>
+        </fragment>
+
+        <fragment
+            android:id="@+id/attraction_list_fragment"
+            android:name="com.hoonstudio.venyoo.screens.AttractionListFragment"
+            android:label="AttractionListFragment"
+            tools:layout="@layout/fragment_venue_result_list">
+
         </fragment>
         <fragment
             android:id="@+id/venue_list_fragment"

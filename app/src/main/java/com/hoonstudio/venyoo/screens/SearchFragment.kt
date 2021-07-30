@@ -24,6 +24,8 @@ class SearchFragment: BaseFragment() {
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
 
+    private val attractionViewModel: AttractionViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+
     private lateinit var binding: FragmentSearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +52,7 @@ class SearchFragment: BaseFragment() {
             // searchView.onActionViewExpanded causes keyboard to pop up. Delay is needed
             // because you need to wait for motion layout transition to finish before
             // calling the keyboard or the keyboard does not show.
-            delay(350)
+            delay(250)
             binding.searchView.onActionViewExpanded()
         }
 
@@ -67,7 +69,11 @@ class SearchFragment: BaseFragment() {
                             }
                         }
                         if (binding.artistRadioButton.isChecked) {
-
+                            attractionViewModel.fetchAttractions(query)
+                            lifecycleScope.launch{
+                                delay(600)
+                                navigateToAttractionListFragment()
+                            }
                         }
                     }
                 }
@@ -95,6 +101,12 @@ class SearchFragment: BaseFragment() {
     private fun navigateToVenueListFragment() {
         if(findNavController().currentDestination?.id != R.id.venue_list_fragment) {
             findNavController().navigate(SearchFragmentDirections.actionFragmentSearchToFragmentVenueList())
+        }
+    }
+
+    private fun navigateToAttractionListFragment(){
+        if(findNavController(). currentDestination?.id != R.id.attraction_list_fragment){
+            findNavController().navigate(SearchFragmentDirections.actionFragmentSearchToFragmentAttractionList())
         }
     }
 }

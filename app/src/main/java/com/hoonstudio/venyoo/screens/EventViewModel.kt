@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.hoonstudio.venyoo.Constants
 import com.hoonstudio.venyoo.screens.common.viewmodel.SavedStateViewModel
 import com.hoonstudio.venyoo.venues.SetlistResponse
+import com.hoonstudio.venyoo.venues.TicketMasterAttractionResponse
 import com.hoonstudio.venyoo.venues.TicketMasterEventResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class EventViewModel @Inject constructor(
         const val SAVED_STATE_HANDLE_EVENTS = "events"
         const val SAVED_STATE_HANDLE_CURRENT_EVENT = "current_event"
         const val SAVED_STATE_HANDLE_SETLIST = "setlist"
+        const val SAVED_STATE_HANDLE_ATTRACTIONS = "attractions"
+        const val SAVED_STATE_HANDLE_CURRENT_ATTRACTION = "current_attraction"
     }
 
     val venueEventList: LiveData<List<TicketMasterEventResponse>>
@@ -44,6 +47,8 @@ class EventViewModel @Inject constructor(
         savedStateHandle[SAVED_STATE_HANDLE_CURRENT_EVENT] = event
     }
 
+
+
     fun fetchSetlist(artistName: String){
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -58,6 +63,7 @@ class EventViewModel @Inject constructor(
             }
         }
     }
+
 
     fun updateCurrentAddress(address: String){
         currentAddress = address

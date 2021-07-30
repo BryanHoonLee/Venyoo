@@ -53,7 +53,7 @@ class EventAdapter(
             if (event.images.isNotEmpty()) {
                 binding.eventImageView.load(event.images[0].url)
             } else {
-                binding.eventImageView.load(R.drawable.ic_launcher_foreground)
+                binding.eventImageView.load(R.drawable.venyoo)
             }
 
             val convertedDate = ticketMasterLocalDateConverter(event.dates.start.localDate)

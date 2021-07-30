@@ -62,6 +62,14 @@
             android:visibility="gone"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/recycler_view"
+            motion:layout_constraintTop_toBottomOf="@id/recentSearchTextView"
+            motion:layout_constraintStart_toEndOf="@id/parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/vertical_margin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
     </ConstraintSet>
 
@@ -112,5 +120,13 @@
             android:visibility="gone"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/recycler_view"
+            motion:layout_constraintTop_toBottomOf="@id/recentSearchTextView"
+            motion:layout_constraintStart_toStartOf="@id/recentSearchTextView"
+            motion:layout_constraintEnd_toEndOf="@id/recent_search_divider"
+            android:layout_marginTop="@dimen/vertical_margin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
     </ConstraintSet>
 </MotionScene>
