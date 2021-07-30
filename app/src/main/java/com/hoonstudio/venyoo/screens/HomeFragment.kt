@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.searchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
-//            v.clearFocus()
+            v.clearFocus()
             navigateToSearchFragment()
         }
 

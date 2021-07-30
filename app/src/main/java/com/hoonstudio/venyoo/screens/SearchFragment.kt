@@ -46,13 +46,13 @@ class SearchFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchView.clearFocus()
-        binding.searchView.isFocusable = true
-        binding.searchView.requestFocus()
-        binding.searchView.onActionViewExpanded()
-        binding.searchView.isIconified = true
-        binding.searchView.isIconified = false
-        binding.searchView.setQuery("", false)
+        lifecycleScope.launch {
+            // searchView.onActionViewExpanded causes keyboard to pop up. Delay is needed
+            // because you need to wait for motion layout transition to finish before
+            // calling the keyboard or the keyboard does not show.
+            delay(350)
+            binding.searchView.onActionViewExpanded()
+        }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
