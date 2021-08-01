@@ -15,7 +15,7 @@ data class TicketMasterEventEmbedded(
 
 @Parcelize
 data class TicketMasterEventResponse(
-    val _embedded: TicketMasterEventAttractionEmbedded = TicketMasterEventAttractionEmbedded(),
+    val _embedded: TicketMasterEventAttractionAndVenueEmbedded = TicketMasterEventAttractionAndVenueEmbedded(),
     val id: String = "",
     val name: String = "",
     val description: String = "",
@@ -36,19 +36,20 @@ data class SeatMap(
     val staticUrl: String = ""
 ): Parcelable
 @Parcelize
-data class TicketMasterEventAttractionEmbedded(
-    val attractions: List<TicketMasterEventAttraction> = emptyList()
+data class TicketMasterEventAttractionAndVenueEmbedded(
+    val venues: List<TicketMasterVenueResponse> = emptyList(),
+    val attractions: List<TicketMasterAttractionResponse> = emptyList()
 ): Parcelable
 
-@Parcelize
-data class TicketMasterEventAttraction(
-    val id: String = "",
-    val name: String = "",
-    val description: String = "",
-    val additionalInfo: String = "",
-    val url: String = "",
-    val images: List<TicketMasterEventImage> = emptyList()
-): Parcelable
+//@Parcelize
+//data class TicketMasterEventAttraction(
+//    val id: String = "",
+//    val name: String = "",
+//    val description: String = "",
+//    val additionalInfo: String = "",
+//    val url: String = "",
+//    val images: List<TicketMasterEventImage> = emptyList()
+//): Parcelable
 
 @Parcelize
 data class TicketMasterEventLocation(

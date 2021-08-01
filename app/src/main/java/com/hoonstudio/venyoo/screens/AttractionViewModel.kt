@@ -19,20 +19,20 @@ class AttractionViewModel @Inject constructor(
 
 
     val attractions: LiveData<List<TicketMasterAttractionResponse>>
-        get() = savedStateHandle.getLiveData(EventViewModel.SAVED_STATE_HANDLE_ATTRACTIONS)
+        get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_ATTRACTIONS)
 
     val currentAttraction: LiveData<TicketMasterAttractionResponse>
-        get() = savedStateHandle.getLiveData(EventViewModel.SAVED_STATE_HANDLE_CURRENT_ATTRACTION)
+        get() = savedStateHandle.getLiveData(SAVED_STATE_HANDLE_CURRENT_ATTRACTION)
 
     fun fetchAttractions(attractionName: String){
         viewModelScope.launch(Dispatchers.IO) {
             savedStateHandle.getLiveData<List<TicketMasterAttractionResponse>>(
-                EventViewModel.SAVED_STATE_HANDLE_ATTRACTIONS
+                SAVED_STATE_HANDLE_ATTRACTIONS
             ).postValue(repository.fetchAttractions(attractionName))
         }
     }
 
     fun updateCurrentAttraction(attraction: TicketMasterAttractionResponse) {
-        savedStateHandle[EventViewModel.SAVED_STATE_HANDLE_CURRENT_ATTRACTION] = attraction
+        savedStateHandle[SAVED_STATE_HANDLE_CURRENT_ATTRACTION] = attraction
     }
 }

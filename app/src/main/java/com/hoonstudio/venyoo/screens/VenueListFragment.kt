@@ -73,7 +73,7 @@ class VenueListFragment : BaseFragment() {
         if(!isDataLoaded){
             isDataLoaded = true
             lifecycleScope.launch {
-                delay(600)
+                delay(700)
                 binding.progressBar.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
             }

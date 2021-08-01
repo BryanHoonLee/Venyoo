@@ -20,8 +20,6 @@ class EventViewModel @Inject constructor(
         const val SAVED_STATE_HANDLE_EVENTS = "events"
         const val SAVED_STATE_HANDLE_CURRENT_EVENT = "current_event"
         const val SAVED_STATE_HANDLE_SETLIST = "setlist"
-        const val SAVED_STATE_HANDLE_ATTRACTIONS = "attractions"
-        const val SAVED_STATE_HANDLE_CURRENT_ATTRACTION = "current_attraction"
     }
 
     val venueEventList: LiveData<List<TicketMasterEventResponse>>
@@ -45,6 +43,12 @@ class EventViewModel @Inject constructor(
 
     fun updateCurrentEvent(event: TicketMasterEventResponse){
         savedStateHandle[SAVED_STATE_HANDLE_CURRENT_EVENT] = event
+    }
+
+    fun fetchVenueEventsByAttractionId(attractionId: String){
+        viewModelScope.launch(Dispatchers.IO){
+            savedStateHandle.getLiveData<List<TicketMasterEventResponse>>(SAVED_STATE_HANDLE_EVENTS).postValue(repository.fetchVenueEventsByAttractionId(attractionId))
+        }
     }
 
 

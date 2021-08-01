@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/page_not_found_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/page_not_found"

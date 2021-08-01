@@ -29,7 +29,7 @@ class VenueDetailFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
-    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.event_navigation) { viewModelFactory }
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
     private lateinit var venueImageAdapter: VenueImageAdapter
     private lateinit var venueEventAdapter: EventAdapter

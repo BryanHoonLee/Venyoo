@@ -5,7 +5,8 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/venue_navigation">
 
-    <navigation android:id="@+id/venue_navigation"
+    <navigation
+        android:id="@+id/venue_navigation"
         app:startDestination="@id/fragment_home">
         <fragment
             android:id="@+id/fragment_home"
@@ -19,7 +20,7 @@
 
             <action
                 android:id="@+id/action_fragment_home_to_fragment_venue_list"
-                app:destination="@id/venue_list_fragment"/>
+                app:destination="@id/venue_list_fragment" />
         </fragment>
         <fragment
             android:id="@+id/fragment_search"
@@ -29,11 +30,11 @@
 
             <action
                 android:id="@+id/action_fragment_search_to_fragment_venue_list"
-                app:destination="@+id/venue_list_fragment"/>
+                app:destination="@+id/venue_list_fragment" />
 
             <action
                 android:id="@+id/action_fragment_search_to_fragment_attraction_list"
-                app:destination="@+id/attraction_list_fragment"/>
+                app:destination="@+id/attraction_list_fragment" />
         </fragment>
 
         <fragment
@@ -42,7 +43,24 @@
             android:label="AttractionListFragment"
             tools:layout="@layout/fragment_venue_result_list">
 
+            <action
+                android:id="@+id/action_attraction_list_fragment_to_attraction_event_list_fragment"
+                app:destination="@id/attraction_event_list_fragment" />
+
         </fragment>
+
+        <fragment
+            android:id="@+id/attraction_event_list_fragment"
+            android:name="com.hoonstudio.venyoo.screens.AttractionEventListFragment"
+            android:label="AttractionEventListFragment"
+            tools:layout="@layout/fragment_venue_result_list">
+
+            <action
+                android:id="@+id/action_attraction_event_list_fragment_to_event_detail_fragment"
+                app:destination="@+id/eventDetailFragment" />
+        </fragment>
+
+
         <fragment
             android:id="@+id/venue_list_fragment"
             android:name="com.hoonstudio.venyoo.screens.VenueListFragment"
@@ -50,42 +68,38 @@
             tools:layout="@layout/fragment_venue_result_list">
             <action
                 android:id="@+id/action_venue_list_fragment_to_venueDetailFragment"
-                app:destination="@id/event_navigation" />
+                app:destination="@id/venueDetailFragment" />
         </fragment>
 
-        <navigation android:id="@+id/event_navigation"
-            app:startDestination="@id/venueDetailFragment">
-            <fragment
-                android:id="@+id/venueDetailFragment"
-                android:name="com.hoonstudio.venyoo.screens.VenueDetailFragment"
-                android:label="VenueDetailFragment"
-                tools:layout="@layout/fragment_venue_detail" >
+        <fragment
+            android:id="@+id/venueDetailFragment"
+            android:name="com.hoonstudio.venyoo.screens.VenueDetailFragment"
+            android:label="VenueDetailFragment"
+            tools:layout="@layout/fragment_venue_detail">
 
-                <action
-                    android:id="@+id/action_venueDetailFragment_to_eventDetailFragment"
-                    app:destination="@id/eventDetailFragment" />
-            </fragment>
+            <action
+                android:id="@+id/action_venueDetailFragment_to_eventDetailFragment"
+                app:destination="@id/eventDetailFragment" />
+        </fragment>
 
-            <fragment
-                android:id="@+id/eventDetailFragment"
-                android:name="com.hoonstudio.venyoo.screens.EventDetailFragment"
-                android:label="VenueDetailFragment"
-                tools:layout="@layout/fragment_event_detail">
+        <fragment
+            android:id="@+id/eventDetailFragment"
+            android:name="com.hoonstudio.venyoo.screens.EventDetailFragment"
+            android:label="VenueDetailFragment"
+            tools:layout="@layout/fragment_event_detail">
 
-                <action
-                    android:id="@+id/action_eventDetailFragment_to_setlist_bottom_sheet_dialog_navigation"
-                    app:destination="@id/setlistBottomSheetDialogFragment"/>
-            </fragment>
+            <action
+                android:id="@+id/action_eventDetailFragment_to_setlist_bottom_sheet_dialog_navigation"
+                app:destination="@id/setlistBottomSheetDialogFragment" />
+        </fragment>
 
-                <dialog android:id="@+id/setlistBottomSheetDialogFragment"
-                    android:name="com.hoonstudio.venyoo.screens.SetlistBottomSheetDialogFragment"
-                    android:label="SetlistBottomSheetDialogFragment"
-                    tools:layout="@layout/bottom_sheet_dialog_fragment_setlist">
+        <dialog
+            android:id="@+id/setlistBottomSheetDialogFragment"
+            android:name="com.hoonstudio.venyoo.screens.SetlistBottomSheetDialogFragment"
+            android:label="SetlistBottomSheetDialogFragment"
+            tools:layout="@layout/bottom_sheet_dialog_fragment_setlist"></dialog>
 
-                </dialog>
-        </navigation>
     </navigation>
-
 
 
 </navigation>

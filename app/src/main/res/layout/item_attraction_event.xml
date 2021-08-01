@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/venue_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/venyoo"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@id/venue_image_view"
+            app:layout_constraintEnd_toEndOf="@id/venue_image_view"
+            app:layout_constraintStart_toStartOf="@id/venue_image_view"
+            app:layout_constraintTop_toTopOf="@id/venue_image_view" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Summer Festival 20"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/venue_image_view" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/venue_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Hollywood Bowl"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/price_range_text_view"
+            app:layout_constraintStart_toStartOf="@id/event_name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/event_name_text_view"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price_range_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$$"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/event_name_text_view"
+            app:layout_constraintTop_toTopOf="@id/venue_name_text_view"
+            app:layout_constraintBottom_toBottomOf="@id/venue_name_text_view"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Mar 21"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/price_range_text_view"
+            app:layout_constraintStart_toStartOf="@id/venue_name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/venue_name_text_view" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/address_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="33333 Monte Vu"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/event_date_text_view"
+            app:layout_constraintStart_toStartOf="@id/event_date_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/event_date_text_view" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/city_state_postal_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Temecula, CA, 91769"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/address_text_view"
+            app:layout_constraintStart_toStartOf="@id/address_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/address_text_view" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>>
+</com.google.android.material.card.MaterialCardView>

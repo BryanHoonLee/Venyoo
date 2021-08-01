@@ -19,6 +19,7 @@ class TicketMasterAttractionResponse(
     val id: String = "",
     val name: String = "",
     val description: String = "",
+    val additionalInfo: String = "",
     val url: String = "",
     val images: List<TicketMasterAttractionImage> = emptyList(),
 ): Parcelable

@@ -42,7 +42,7 @@ class EventDetailFragment: BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.event_navigation){ viewModelFactory}
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation){ viewModelFactory}
 
     private lateinit var binding: FragmentEventDetailBinding
 
@@ -73,9 +73,11 @@ class EventDetailFragment: BaseFragment() {
 
             val startTime = event.dates.start.dateTime
             val splitTime = startTime.split("T", "-", "Z", ":")
-
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            calendar.set(splitTime[0].toInt(), splitTime[1].toInt() - 1, splitTime[2].toInt(), splitTime[3].toInt(), splitTime[4].toInt())
+            if(!startTime.isNullOrBlank()){
+                calendar.set(splitTime[0].toInt(), splitTime[1].toInt() - 1, splitTime[2].toInt(), splitTime[3].toInt(), splitTime[4].toInt())
+            }
+
 
             var attractions = event._embedded.attractions
 

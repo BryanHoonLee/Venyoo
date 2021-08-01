@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,18 +18,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AttractionListFragment: BaseFragment() {
+class AttractionEventListFragment: BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: FragmentVenueResultListBinding
 
-    private lateinit var adapter: AttractionAdapter
+    private lateinit var adapter: AttractionEventAdapter
 
     private var isDataLoaded: Boolean = false
 
     private val attractionViewModel: AttractionViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +47,9 @@ class AttractionListFragment: BaseFragment() {
         binding = FragmentVenueResultListBinding.inflate(inflater)
         val view = binding.root
 
-        adapter = AttractionAdapter{ attractionResponse ->
-            attractionViewModel.updateCurrentAttraction(attractionResponse)
-            navigateToAttractionEventListFragment()
+        adapter = AttractionEventAdapter{ eventResponse ->
+            eventViewModel.updateCurrentEvent(eventResponse)
+            navigateToEventDetailFragment()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -58,10 +61,16 @@ class AttractionListFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        attractionViewModel.attractions.observe(viewLifecycleOwner, Observer { attractions ->
-            adapter.bindData(attractions)
-            if(attractions.isEmpty()){
+        attractionViewModel.currentAttraction.observe(viewLifecycleOwner, Observer { attraction ->
+            eventViewModel.fetchVenueEventsByAttractionId(attraction.id)
+        })
+
+        eventViewModel.venueEventList.observe(viewLifecycleOwner, Observer { events ->
+            adapter.bindData(events)
+
+            if(events.isEmpty()){
                 binding.pageNotFoundImageView.visibility = View.VISIBLE
+                binding.pageNotFoundTextView.text = "No Events Found"
                 binding.progressBar.visibility = View.GONE
             }else{
                 binding.pageNotFoundImageView.visibility = View.GONE
@@ -81,9 +90,11 @@ class AttractionListFragment: BaseFragment() {
         }
     }
 
-    private fun navigateToAttractionEventListFragment() {
-        if (findNavController().currentDestination?.id != R.id.attraction_event_list_fragment) {
-            findNavController().navigate(AttractionListFragmentDirections.actionAttractionListFragmentToAttractionEventListFragment())
+    private fun navigateToEventDetailFragment() {
+        if (findNavController().currentDestination?.id != R.id.eventDetailFragment) {
+            findNavController().navigate(AttractionEventListFragmentDirections.actionAttractionEventListFragmentToEventDetailFragment())
+            Toast.makeText(requireContext(), "NAVIGATING", Toast.LENGTH_LONG).show()
         }
     }
+
 }
