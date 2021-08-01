@@ -1,5 +1,7 @@
 package com.hoonstudio.venyoo.screens
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AttractionEventListFragment: BaseFragment() {
+class AttractionEventListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -29,9 +31,9 @@ class AttractionEventListFragment: BaseFragment() {
 
     private var isDataLoaded: Boolean = false
 
-    private val attractionViewModel: AttractionViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+    private val attractionViewModel: AttractionViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
-    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+    private val eventViewModel: EventViewModel by navGraphViewModels(R.id.venue_navigation) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +49,21 @@ class AttractionEventListFragment: BaseFragment() {
         binding = FragmentVenueResultListBinding.inflate(inflater)
         val view = binding.root
 
-        adapter = AttractionEventAdapter{ eventResponse ->
-            eventViewModel.updateCurrentEvent(eventResponse)
-            navigateToEventDetailFragment()
-        }
+        adapter = AttractionEventAdapter(
+            { eventResponse ->
+                eventViewModel.updateCurrentEvent(eventResponse)
+                navigateToEventDetailFragment()
+            },
+            { fullAddress ->
+                val uri = Uri.parse("geo:0,0?q=${fullAddress}")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.google.android.apps.maps")
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivity(intent);
+                }
+            }
+
+        )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(view.context)
         binding.recyclerView.adapter = adapter
@@ -68,23 +81,23 @@ class AttractionEventListFragment: BaseFragment() {
         eventViewModel.venueEventList.observe(viewLifecycleOwner, Observer { events ->
             adapter.bindData(events)
 
-            if(events.isEmpty()){
+            if (events.isEmpty()) {
                 binding.pageNotFoundImageView.visibility = View.VISIBLE
                 binding.pageNotFoundTextView.text = "No Events Found"
                 binding.progressBar.visibility = View.GONE
-            }else{
+            } else {
                 binding.pageNotFoundImageView.visibility = View.GONE
             }
         })
 
-        if(!isDataLoaded){
+        if (!isDataLoaded) {
             isDataLoaded = true
             lifecycleScope.launch {
                 delay(700)
                 binding.progressBar.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
             }
-        }else{
+        } else {
             binding.progressBar.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
         }
@@ -93,7 +106,6 @@ class AttractionEventListFragment: BaseFragment() {
     private fun navigateToEventDetailFragment() {
         if (findNavController().currentDestination?.id != R.id.eventDetailFragment) {
             findNavController().navigate(AttractionEventListFragmentDirections.actionAttractionEventListFragmentToEventDetailFragment())
-            Toast.makeText(requireContext(), "NAVIGATING", Toast.LENGTH_LONG).show()
         }
     }
 

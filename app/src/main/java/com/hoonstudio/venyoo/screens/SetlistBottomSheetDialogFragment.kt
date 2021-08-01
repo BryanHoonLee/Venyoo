@@ -60,20 +60,13 @@ class SetlistBottomSheetDialogFragment: BaseBottomSheetDialogFragment() {
                     binding.notFoundTextView.visibility = View.GONE
                     adapter.bindData(set)
                 }else{
-                    Toast.makeText(requireContext(), "TEST2", Toast.LENGTH_LONG).show()
                     binding.notFoundImageView.visibility = View.VISIBLE
                     binding.notFoundTextView.visibility = View.VISIBLE
                 }
             }else{
-                Toast.makeText(requireContext(), "TEST1", Toast.LENGTH_LONG).show()
                 binding.notFoundImageView.visibility = View.VISIBLE
                 binding.notFoundTextView.visibility = View.VISIBLE
             }
         })
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
 }

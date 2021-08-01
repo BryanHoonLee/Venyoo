@@ -23,7 +23,6 @@ class EventRepository @Inject constructor(private val ticketMasterApi: TicketMas
 
     private fun removeEmptySetLists(setlists: List<SetlistResponse>): List<SetlistResponse>{
         var sets: MutableList<SetlistResponse> = setlists.toMutableList()
-
         var remove = true
         while(remove){
             if(sets[0].sets.set.isNullOrEmpty()){

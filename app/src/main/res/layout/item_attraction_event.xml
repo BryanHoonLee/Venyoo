@@ -83,33 +83,24 @@
             android:maxLines="1"
             android:text="Mar 21"
             android:textSize="15sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/price_range_text_view"
             app:layout_constraintStart_toStartOf="@id/venue_name_text_view"
             app:layout_constraintTop_toBottomOf="@+id/venue_name_text_view" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/address_text_view"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="1"
             android:text="33333 Monte Vu"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:textColor="@color/brand_primary_400"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@+id/event_date_text_view"
             app:layout_constraintStart_toStartOf="@id/event_date_text_view"
             app:layout_constraintTop_toBottomOf="@+id/event_date_text_view" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/city_state_postal_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Temecula, CA, 91769"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/address_text_view"
-            app:layout_constraintStart_toStartOf="@id/address_text_view"
-            app:layout_constraintTop_toBottomOf="@+id/address_text_view" />
 
 
 

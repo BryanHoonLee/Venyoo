@@ -1,5 +1,7 @@
 package com.hoonstudio.venyoo.screens
 
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,8 @@ import com.hoonstudio.venyoo.databinding.ItemAttractionEventBinding
 import com.hoonstudio.venyoo.venues.TicketMasterEventResponse
 
 class AttractionEventAdapter(
-    val itemClicked: (TicketMasterEventResponse) -> Unit
+    val itemClicked: (TicketMasterEventResponse) -> Unit,
+    val addressClicked: (String) -> Unit
 ): RecyclerView.Adapter<AttractionEventAdapter.AttractionEventViewHolder>(){
     private var eventsList: List<TicketMasterEventResponse> = emptyList()
 
@@ -49,8 +52,15 @@ class AttractionEventAdapter(
             var address = venue.address.line1
             if(!venue.address.line2.isNullOrBlank()) address += ", ${venue.address.line2}"
             if(!venue.address.line3.isNullOrBlank()) address += ", ${venue.address.line3}"
-            binding.addressTextView.text = address
-            binding.cityStatePostalTextView.text = "${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
+            var fullAddress = "${address}, ${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
+
+            var spannableAddress = "${address}\n${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}"
+            var spannable = SpannableString(spannableAddress)
+            spannable.setSpan(UnderlineSpan(), 0, spannableAddress.length, 0)
+            binding.addressTextView.text = spannable
+            binding.addressTextView.setOnClickListener {
+                addressClicked(fullAddress)
+            }
 
             if(eventResponse.images.isNotEmpty()){
                 binding.venueImageView.scaleType = ImageView.ScaleType.CENTER_CROP

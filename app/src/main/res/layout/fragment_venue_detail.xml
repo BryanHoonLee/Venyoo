@@ -138,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/vertical_margin"
                     android:text="909-123-1234"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
                     app:layout_constraintEnd_toEndOf="@+id/twitter_text_view"
                     app:layout_constraintStart_toStartOf="@+id/twitter_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/twitter_divider" />
