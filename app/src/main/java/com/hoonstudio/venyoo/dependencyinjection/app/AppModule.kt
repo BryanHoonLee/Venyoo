@@ -1,6 +1,9 @@
 package com.hoonstudio.venyoo.dependencyinjection.app
 
 import android.app.Application
+import androidx.room.Room
+import com.hoonstudio.venyoo.AppDatabase
+import com.hoonstudio.venyoo.database.RecentSearchDao
 import com.hoonstudio.venyoo.dependencyinjection.qualifiers.*
 import com.hoonstudio.venyoo.networking.*
 import dagger.Module
@@ -12,6 +15,25 @@ import java.util.concurrent.TimeUnit
 
 @Module
 class AppModule(private val application: Application) {
+
+    @AppScope
+    @Provides
+    fun attractionDatabase(
+        application: Application
+    ): AppDatabase{
+        return Room.databaseBuilder(
+            application,
+            AppDatabase::class.java, "app-database"
+        ).build()
+    }
+
+    @AppScope
+    @Provides
+    fun recentSearchDo(
+        appDatabase: AppDatabase
+    ): RecentSearchDao{
+        return appDatabase.recentSearchDao()
+    }
 
     @AppScope
     @Provides

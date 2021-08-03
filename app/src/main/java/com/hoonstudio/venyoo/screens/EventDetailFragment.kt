@@ -69,6 +69,8 @@ class EventDetailFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         eventViewModel.currentEvent.observe(viewLifecycleOwner, Observer{ event ->
 
             val startTime = event.dates.start.dateTime

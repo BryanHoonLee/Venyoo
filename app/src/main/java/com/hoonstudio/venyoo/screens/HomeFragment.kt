@@ -61,6 +61,7 @@ class HomeFragment : BaseFragment() {
 
         binding.searchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
             v.clearFocus()
+
             navigateToSearchFragment()
         }
 

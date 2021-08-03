@@ -13,6 +13,7 @@ import com.hoonstudio.venyoo.R
 import com.hoonstudio.venyoo.databinding.FragmentVenueResultListBinding
 import com.hoonstudio.venyoo.screens.common.fragments.BaseFragment
 import com.hoonstudio.venyoo.screens.common.viewmodel.ViewModelFactory
+import com.hoonstudio.venyoo.venues.RecentSearch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,6 +47,7 @@ class AttractionListFragment: BaseFragment() {
 
         adapter = AttractionAdapter{ attractionResponse ->
             attractionViewModel.updateCurrentAttraction(attractionResponse)
+            attractionViewModel.insertAttraction(RecentSearch(0, attractionResponse.id, attractionResponse.name, "attraction"))
             navigateToAttractionEventListFragment()
         }
 

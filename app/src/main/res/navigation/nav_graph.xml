@@ -35,6 +35,10 @@
             <action
                 android:id="@+id/action_fragment_search_to_fragment_attraction_list"
                 app:destination="@+id/attraction_list_fragment" />
+
+            <action
+                android:id="@+id/action_search_fragment_to_attraction_event_list_fragment"
+                app:destination="@id/attraction_event_list_fragment" />
         </fragment>
 
         <fragment

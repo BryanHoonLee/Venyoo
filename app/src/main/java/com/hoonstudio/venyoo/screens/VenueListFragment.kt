@@ -13,6 +13,7 @@ import com.hoonstudio.venyoo.R
 import com.hoonstudio.venyoo.databinding.FragmentVenueResultListBinding
 import com.hoonstudio.venyoo.screens.common.fragments.BaseFragment
 import com.hoonstudio.venyoo.screens.common.viewmodel.ViewModelFactory
+import com.hoonstudio.venyoo.venues.RecentSearch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class VenueListFragment : BaseFragment() {
 
     private val venueViewModel: VenueViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
 
+    private val attractionViewModel: AttractionViewModel by navGraphViewModels(R.id.venue_navigation){viewModelFactory}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,6 +50,7 @@ class VenueListFragment : BaseFragment() {
 
         adapter = VenueResponseAdapter { venueResponse ->
             venueViewModel.updateCurrentVenue(venueResponse)
+            attractionViewModel.insertAttraction(RecentSearch(0, venueResponse.id, venueResponse.name, "venue"))
             navigateToVenueDetailFragment()
         }
 

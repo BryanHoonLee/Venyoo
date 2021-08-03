@@ -1,6 +1,7 @@
 package com.hoonstudio.venyoo.venues
 
 import android.os.Parcelable
+import androidx.room.*
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -15,7 +16,7 @@ data class TicketMasterAttractionEmbedded(
 ): Parcelable
 
 @Parcelize
-class TicketMasterAttractionResponse(
+data class TicketMasterAttractionResponse(
     val id: String = "",
     val name: String = "",
     val description: String = "",

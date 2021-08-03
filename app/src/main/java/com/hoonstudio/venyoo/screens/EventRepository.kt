@@ -33,8 +33,4 @@ class EventRepository @Inject constructor(private val ticketMasterApi: TicketMas
         }
         return sets
     }
-
-    suspend fun fetchAttractions(attractionName: String): List<TicketMasterAttractionResponse>{
-        return ticketMasterApi.fetchAttractions(attractionName)._embedded.attractions
-    }
 }
